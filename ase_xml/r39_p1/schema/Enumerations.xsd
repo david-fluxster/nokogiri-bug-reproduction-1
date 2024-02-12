@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Andrew Screen (AGL Energy Ltd) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>File version 7.0
+
+Enumerations file containing the enumerations that can be added to at short notice and can be released outside of the standard aseXML change cycle.  
+
+Guidelines for use of this file:
+- The included types and enumerated values should be controlled by bodies outside of participating industries (ie. councils, etc)
+- The included types should be unlikely to ever be involved in back end decision making processing
+- Only additions are allowed outside of the standard aseXML Change Process cycle
+- Deletions and modifications should be discouraged, but, if necessary, must be made through the aseXML Rapid Change Process</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="AustralianFlatOrUnitType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Define flat or unit types as per Australian Standard AS4590:2006
+
+	Version 4.0 additions
+	-- FLAT - FLAT
+	-- ANT  - ANTENNA
+	-- ATM  - AUTOMATED TELLER MACHINE
+	-- BBQ  - BARBEQUE
+	-- BLCK - BLOCK
+	-- BTSD - BOATSHED
+	-- BLDG - BUILDING
+	-- BNGW - BUNGALOW
+	-- CAGE - CAGE
+	-- CARP - CARPARK
+	-- CARS - CARSPACE
+	-- CLUB - CLUB
+	-- COOL - COOLROOM
+	-- DUPL - DUPLEX
+	-- FCTY - FACTORY
+	-- GRGE - GARAGE
+	-- HALL - HALL
+	-- LBBY - LOBBY
+	-- LOFT - LOFT
+	-- LOT  - LOT
+	-- LSE  - LEASE
+	-- MBTH - MARINE BERTH
+	-- OFFC - OFFICE
+	-- REAR - REAR
+	-- ROOM - ROOM
+	-- RESV - RESERVE
+	-- SEC  - SECTION
+	-- SHRM - SHOWROOM
+	-- SIGN - SIGN
+	-- STLL - STALL
+	-- STOR - STORE
+	-- STR  - STRATA UNIT
+	-- SUBS - SUBSTATION
+	-- TNCY - TENANCY
+	-- TWR  - TOWER
+	-- UNIT - UNIT
+	-- VLT  - VAULT
+	-- WHSE - WAREHOUSE
+	-- WKSH - WORKSHOP
+	Version 5.0 additions
+		Element AustralianFlatOrUnitType has been restricted to 4 characters
+		
+	Version 6.0 deletions because of duplicate  Australian flat or unit types
+	-- DUPL - DUPLEX 
+	-- FCTY - FACTORY
+	-- FLAT - FLAT
+	-- MBTH - MARINE BERTH
+	-- OFFC - OFFICE
+	-- ROOM - ROOM
+	-- STLL - STALL
+	-- UNIT - UNIT
+	-- WHSE - WAREHOUSE 
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+			<xsd:enumeration value="ANT"/>
+			<xsd:enumeration value="APT"/>
+			<xsd:enumeration value="ATM"/>
+			<xsd:enumeration value="BBQ"/>
+			<xsd:enumeration value="BLCK"/>
+			<xsd:enumeration value="BTSD"/>
+			<xsd:enumeration value="BLDG"/>
+			<xsd:enumeration value="BNGW"/>
+			<xsd:enumeration value="CAGE"/>
+			<xsd:enumeration value="CARP"/>
+			<xsd:enumeration value="CARS"/>
+			<xsd:enumeration value="CLUB"/>
+			<xsd:enumeration value="COOL"/>
+			<xsd:enumeration value="CTGE"/>
+			<xsd:enumeration value="DUP"/>
+			<xsd:enumeration value="F"/>
+			<xsd:enumeration value="FY"/>
+			<xsd:enumeration value="GRGE"/>
+			<xsd:enumeration value="HALL"/>
+			<xsd:enumeration value="HSE"/>
+			<xsd:enumeration value="KSK"/>
+			<xsd:enumeration value="LBBY"/>
+			<xsd:enumeration value="LOFT"/>
+			<xsd:enumeration value="LOT"/>
+			<xsd:enumeration value="LSE"/>
+			<xsd:enumeration value="MSNT"/>
+			<xsd:enumeration value="MB"/>
+			<xsd:enumeration value="OFF"/>
+			<xsd:enumeration value="PTHS"/>
+			<xsd:enumeration value="REAR"/>
+			<xsd:enumeration value="RESV"/>
+			<xsd:enumeration value="RM"/>
+			<xsd:enumeration value="SE"/>
+			<xsd:enumeration value="SEC"/>
+			<xsd:enumeration value="SHED"/>
+			<xsd:enumeration value="SHOP"/>
+			<xsd:enumeration value="SHRM"/>
+			<xsd:enumeration value="SIGN"/>
+			<xsd:enumeration value="SITE"/>
+			<xsd:enumeration value="SL"/>
+			<xsd:enumeration value="STOR"/>
+			<xsd:enumeration value="STR"/>
+			<xsd:enumeration value="STU"/>
+			<xsd:enumeration value="SUBS"/>
+			<xsd:enumeration value="TNCY"/>
+			<xsd:enumeration value="TNHS"/>
+			<xsd:enumeration value="TWR"/>
+			<xsd:enumeration value="U"/>
+			<xsd:enumeration value="VLLA"/>
+			<xsd:enumeration value="VLT"/>
+			<xsd:enumeration value="WARD"/>
+			<xsd:enumeration value="WE"/>
+			<xsd:enumeration value="WKSH"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AustralianFloorOrLevelType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Define floor or level types as per Australian Standard AS4590:2006
+
+	Version 4.0 additions
+	-- LB	- LOBBY
+	-- OD	- OBSERVATION DECK
+	-- P	- PARKING
+	-- RT	- ROOFTOP
+	-- SB	- SUB-BASEMENT
+	Version 5.0 additions
+	-- Element AustralianFloorOrLevelType has been restricted to 2 characters
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+			<xsd:enumeration value="B"/>
+			<xsd:enumeration value="FL"/>
+			<xsd:enumeration value="G"/>
+			<xsd:enumeration value="L"/>
+			<xsd:enumeration value="LB"/>
+			<xsd:enumeration value="LG"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="OD"/>
+			<xsd:enumeration value="P"/>
+			<xsd:enumeration value="UG"/>
+			<xsd:enumeration value="RT"/>
+			<xsd:enumeration value="SB"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AustralianStreetType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Define street types as per Australian Standard AS4590:2006.
+
+Detail - There are several additions in this list over and above those defined in AS4590:2006.  These additions are defined as follows:
+
+	-- GTWY - GATEWAY
+	-- HETH - HEATH
+	-- ISLD - ISLAND
+	-- RTRN - RETURN
+	-- WOOD - WOOD
+	
+	Version 2.0 addition
+	-- VLL	- VILLA
+
+	Version 3.0 addition
+	-- BAY  - BAY
+
+	Version 4.0 additions
+	-- ACRE	- ACRE
+	-- ARTL	- ARTERIAL
+	-- ARTY	- ARTERY
+	-- AV	- AVENUE
+	-- BA	- BANAN
+	-- BANK	- BANK
+	-- BR	- BRACE
+	-- BRAN	- BRANCH
+	-- BRET	- BRETT
+	-- BVDE	- BOULEVARDE
+	-- BWK	- BOARDWALK
+	-- BWLK	- BOARDWALK
+	-- CLR	- CLUSTER
+	-- CNCD	- CONCORD
+	-- CNN	- CONNECTION
+	-- CNTN	- CONNECTION
+	-- CR	- CRESCENT
+	-- CRF	- CRIEF
+	-- CRK	- CROOK
+	-- CSAC	- CUL-DE-SAC
+	-- CSWY	- CAUSEWAY
+	-- CUT	- CUT
+	-- CUTT	- CUTTING
+	-- DASH	- DASH
+	-- DE	- DEVIATION
+	-- DENE	- DENE
+	-- DIV	- DIVIDE
+	-- DOCK	- DOCK
+	-- DOM	- DOMAIN
+	-- DOWN	- DOWN
+	-- DVWY	- DRIVEWAY
+	-- DWNS	- DOWNS
+	-- ESMT	- EASEMENT
+	-- FBRK	- FIREBREAK
+	-- FK	- FORK
+	-- FLNE	- FIRELINE
+	-- FLTS	- FLATS
+	-- FORD	- FORD
+	-- FORK	- FORK
+	-- GLDE	- GLADE
+	-- GWY	- GATEWAY
+	-- HIRD	- HIGHROAD
+	-- HLLW	- HOLLOW
+	-- HRBR	- HARBOUR
+	-- HTH	- HEATH
+	-- HVN	- HAVEN
+	-- ID	- ISLAND
+	-- INLT	- INLET
+	-- KEYS	- KEYS
+	-- KNOL	- KNOLL
+	-- LADR	- LADDER
+	-- LEAD	- LEAD
+	-- LEDR	- LEADER
+	-- LYNN	- LYNNE
+	-- MANR	- MANOR
+	-- MART	- MART
+	-- MEAD	- MEAD
+	-- MILE	- MILE
+	-- MNR	- MANOR
+	-- MTWY	- MOTORWAY
+	-- NTH	- NORTH
+	-- NULL	- NULL
+	-- OTLT	- OUTLET
+	-- OVAL	- OVAL
+	-- PLMS	- PALMS
+	-- PRDS	- PARADISE
+	-- PREC	- PRECINCT
+	-- PSLA	- PENINSULA
+	-- PWAY	- PATHWAY
+	-- PWY	- PARKWAY
+	-- REEF	- REEF
+	-- ROFW	- RIGHT OF WAY
+	-- ROWE	- ROWE
+	-- RSNG	- RISING
+	-- RTN	- RETURN
+	-- SHUN	- SHUNT
+	-- SKLN	- SKYLINE
+	-- STAI	- STRAIT
+	-- STH	- SOUTH
+	-- STRT	- STRAIGHT
+	-- SVWY	- SERVICEWAY
+	-- THFR	- THOROUGHFARE
+	-- THRU	- THROUGHWAY
+	-- TMWY	- TRAMWAY
+	-- TUNL	- TUNNEL
+	-- TVSE	- TRAVERSE
+	-- TWAY	- TRAMWAY
+	-- VIAD	- VIADUCT
+	-- VLGE	- VILLAGE
+	-- VLLA	- VILLA
+	-- VLLY	- VALLEY
+	-- VUE	- VUE
+	-- VWS	- VIEWS
+	-- WD	- WOOD
+	-- WDS	- WOODS
+	-- WTWY	- WATERWAY
+	-- WWAY	- WATERWAY
+	Version 5.0 additions
+	-- Element AustralianStreetType has been restricted to 4 characters
+	
+	Version 6.0 deletions because of duplicate  Australian street types 
+	-- ARTY- ARTERY
+	-- AV - AVENUE
+	-- BWK - BOARDWALK
+	-- BR - BRACE
+	-- CSWY - CAUSEWAY
+	-- CNTN - CONNECTION 
+	-- CR- CRESCENT
+	-- CSAC-CUL-DE-SAC
+	-- CUTT - CUTTING
+	-- DE - DEVIATION
+	-- DVWY - DRIVEWAY
+	-- FORK - FORK
+	-- GLDE - GLADE
+	-- GWY - GATEWAY
+	-- HTH - HEATH
+	-- HIRD - HIGHROAD
+	-- ID - ISLAND
+	-- MNR - MANOR
+	-- MTWY - MOTORWAY
+	-- PWY - PARKWAY
+	-- PWAY - PATHWAY
+	-- ROFW - RIGHT OF WAY
+	-- RTN - RETURN
+	-- SVWY - SERVICEWAY
+	-- THFR - THOROUGHFARE
+	-- TWAY - TRAMWAY
+	-- VIAD - VIADUCT
+	-- VLLA - VILLA
+	-- WWAY - WATERWAY
+	-- WD - WOOD
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+			<xsd:enumeration value="ACCS"/>
+			<xsd:enumeration value="ALLY"/>
+			<xsd:enumeration value="ALWY"/>
+			<xsd:enumeration value="AMBL"/>
+			<xsd:enumeration value="ANCG"/>
+			<xsd:enumeration value="APP"/>
+			<xsd:enumeration value="ARC"/>
+			<xsd:enumeration value="ART"/>
+			<xsd:enumeration value="AVE"/>
+			<xsd:enumeration value="BASN"/>
+			<xsd:enumeration value="BAY"/>
+			<xsd:enumeration value="BCH"/>
+			<xsd:enumeration value="BEND"/>
+			<xsd:enumeration value="BLK"/>
+			<xsd:enumeration value="BVD"/>
+			<xsd:enumeration value="BOWL"/>
+			<xsd:enumeration value="BRCE"/>
+			<xsd:enumeration value="BRAE"/>
+			<xsd:enumeration value="BRK"/>
+			<xsd:enumeration value="BDGE"/>
+			<xsd:enumeration value="BDWY"/>
+			<xsd:enumeration value="BROW"/>
+			<xsd:enumeration value="BYPA"/>
+			<xsd:enumeration value="BYWY"/>
+			<xsd:enumeration value="CAUS"/>
+			<xsd:enumeration value="CRSE"/>
+			<xsd:enumeration value="CTR"/>
+			<xsd:enumeration value="CNWY"/>
+			<xsd:enumeration value="CH"/>
+			<xsd:enumeration value="CIR"/>
+			<xsd:enumeration value="CLT"/>
+			<xsd:enumeration value="CCT"/>
+			<xsd:enumeration value="CRCS"/>
+			<xsd:enumeration value="CL"/>
+			<xsd:enumeration value="CLDE"/>
+			<xsd:enumeration value="CMMN"/>
+			<xsd:enumeration value="CON"/>
+			<xsd:enumeration value="CPS"/>
+			<xsd:enumeration value="CNR"/>
+			<xsd:enumeration value="CSO"/>
+			<xsd:enumeration value="CT"/>
+			<xsd:enumeration value="CTYD"/>
+			<xsd:enumeration value="COVE"/>
+			<xsd:enumeration value="CRES"/>
+			<xsd:enumeration value="CRST"/>
+			<xsd:enumeration value="CRSS"/>
+			<xsd:enumeration value="CRSG"/>
+			<xsd:enumeration value="CRD"/>
+			<xsd:enumeration value="COWY"/>
+			<xsd:enumeration value="CUWY"/>
+			<xsd:enumeration value="CDS"/>
+			<xsd:enumeration value="CTTG"/>
+			<xsd:enumeration value="DALE"/>
+			<xsd:enumeration value="DELL"/>
+			<xsd:enumeration value="DEVN"/>
+			<xsd:enumeration value="DIP"/>
+			<xsd:enumeration value="DSTR"/>
+			<xsd:enumeration value="DR"/>
+			<xsd:enumeration value="DRWY"/>
+			<xsd:enumeration value="EDGE"/>
+			<xsd:enumeration value="ELB"/>
+			<xsd:enumeration value="END"/>
+			<xsd:enumeration value="ENT"/>
+			<xsd:enumeration value="ESP"/>
+			<xsd:enumeration value="EST"/>
+			<xsd:enumeration value="EXP"/>
+			<xsd:enumeration value="EXTN"/>
+			<xsd:enumeration value="FAWY"/>
+			<xsd:enumeration value="FTRK"/>
+			<xsd:enumeration value="FITR"/>
+			<xsd:enumeration value="FLAT"/>
+			<xsd:enumeration value="FOLW"/>
+			<xsd:enumeration value="FTWY"/>
+			<xsd:enumeration value="FSHR"/>
+			<xsd:enumeration value="FORM"/>
+			<xsd:enumeration value="FWY"/>
+			<xsd:enumeration value="FRNT"/>
+			<xsd:enumeration value="FRTG"/>
+			<xsd:enumeration value="GAP"/>
+			<xsd:enumeration value="GDN"/>
+			<xsd:enumeration value="GDNS"/>
+			<xsd:enumeration value="GTE"/>
+			<xsd:enumeration value="GTES"/>
+			<xsd:enumeration value="GTWY"/>
+			<xsd:enumeration value="GLD"/>
+			<xsd:enumeration value="GLEN"/>
+			<xsd:enumeration value="GRA"/>
+			<xsd:enumeration value="GRN"/>
+			<xsd:enumeration value="GRND"/>
+			<xsd:enumeration value="GR"/>
+			<xsd:enumeration value="GLY"/>
+			<xsd:enumeration value="HETH"/>
+			<xsd:enumeration value="HTS"/>
+			<xsd:enumeration value="HRD"/>
+			<xsd:enumeration value="HUB"/>
+			<xsd:enumeration value="HWY"/>
+			<xsd:enumeration value="HILL"/>
+			<xsd:enumeration value="INTG"/>
+			<xsd:enumeration value="INTN"/>
+			<xsd:enumeration value="ISLD"/>
+			<xsd:enumeration value="JNC"/>
+			<xsd:enumeration value="KEY"/>
+			<xsd:enumeration value="LDG"/>
+			<xsd:enumeration value="LANE"/>
+			<xsd:enumeration value="LNWY"/>
+			<xsd:enumeration value="LEES"/>
+			<xsd:enumeration value="LINE"/>
+			<xsd:enumeration value="LINK"/>
+			<xsd:enumeration value="LT"/>
+			<xsd:enumeration value="LKT"/>
+			<xsd:enumeration value="LOOP"/>
+			<xsd:enumeration value="LWR"/>
+			<xsd:enumeration value="MALL"/>
+			<xsd:enumeration value="MNDR"/>
+			<xsd:enumeration value="MEW"/>
+			<xsd:enumeration value="MEWS"/>
+			<xsd:enumeration value="MWY"/>
+			<xsd:enumeration value="MT"/>
+			<xsd:enumeration value="NOOK"/>
+			<xsd:enumeration value="OTLK"/>
+			<xsd:enumeration value="PDE"/>
+			<xsd:enumeration value="PARK"/>
+			<xsd:enumeration value="PKLD"/>
+			<xsd:enumeration value="PKWY"/>
+			<xsd:enumeration value="PART"/>
+			<xsd:enumeration value="PASS"/>
+			<xsd:enumeration value="PATH"/>
+			<xsd:enumeration value="PHWY"/>
+			<xsd:enumeration value="PIAZ"/>
+			<xsd:enumeration value="PL"/>
+			<xsd:enumeration value="PLAT"/>
+			<xsd:enumeration value="PLZA"/>
+			<xsd:enumeration value="PKT"/>
+			<xsd:enumeration value="PNT"/>
+			<xsd:enumeration value="PORT"/>
+			<xsd:enumeration value="PROM"/>
+			<xsd:enumeration value="PRST"/>
+			<xsd:enumeration value="PSGE"/>
+			<xsd:enumeration value="QUAD"/>
+			<xsd:enumeration value="QDGL"/>
+			<xsd:enumeration value="QDRT"/>
+			<xsd:enumeration value="QY"/>
+			<xsd:enumeration value="QYS"/>
+			<xsd:enumeration value="RMBL"/>
+			<xsd:enumeration value="RAMP"/>
+			<xsd:enumeration value="RNGE"/>
+			<xsd:enumeration value="RCH"/>
+			<xsd:enumeration value="RES"/>
+			<xsd:enumeration value="REST"/>
+			<xsd:enumeration value="RTT"/>
+			<xsd:enumeration value="RIDE"/>
+			<xsd:enumeration value="RDGE"/>
+			<xsd:enumeration value="RGWY"/>
+			<xsd:enumeration value="ROWY"/>
+			<xsd:enumeration value="RING"/>
+			<xsd:enumeration value="RISE"/>
+			<xsd:enumeration value="RVR"/>
+			<xsd:enumeration value="RVWY"/>
+			<xsd:enumeration value="RVRA"/>
+			<xsd:enumeration value="RD"/>
+			<xsd:enumeration value="RDS"/>
+			<xsd:enumeration value="RDSD"/>
+			<xsd:enumeration value="RDWY"/>
+			<xsd:enumeration value="RNDE"/>
+			<xsd:enumeration value="RSBL"/>
+			<xsd:enumeration value="RTY"/>
+			<xsd:enumeration value="RND"/>
+			<xsd:enumeration value="RTE"/>
+			<xsd:enumeration value="RTRN"/>
+			<xsd:enumeration value="ROW"/>
+			<xsd:enumeration value="RUE"/>
+			<xsd:enumeration value="RUN"/>
+			<xsd:enumeration value="SWY"/>
+			<xsd:enumeration value="SDNG"/>
+			<xsd:enumeration value="SLPE"/>
+			<xsd:enumeration value="SND"/>
+			<xsd:enumeration value="SPUR"/>
+			<xsd:enumeration value="SQ"/>
+			<xsd:enumeration value="STRS"/>
+			<xsd:enumeration value="SHWY"/>
+			<xsd:enumeration value="STPS"/>
+			<xsd:enumeration value="STRA"/>
+			<xsd:enumeration value="ST"/>
+			<xsd:enumeration value="STRP"/>
+			<xsd:enumeration value="SBWY"/>
+			<xsd:enumeration value="TARN"/>
+			<xsd:enumeration value="TCE"/>
+			<xsd:enumeration value="THOR"/>
+			<xsd:enumeration value="TLWY"/>
+			<xsd:enumeration value="TOP"/>
+			<xsd:enumeration value="TOR"/>
+			<xsd:enumeration value="TWRS"/>
+			<xsd:enumeration value="TRK"/>
+			<xsd:enumeration value="TRL"/>
+			<xsd:enumeration value="TRLR"/>
+			<xsd:enumeration value="TRI"/>
+			<xsd:enumeration value="TKWY"/>
+			<xsd:enumeration value="TURN"/>
+			<xsd:enumeration value="UPAS"/>
+			<xsd:enumeration value="UPR"/>
+			<xsd:enumeration value="VALE"/>
+			<xsd:enumeration value="VDCT"/>
+			<xsd:enumeration value="VIEW"/>
+			<xsd:enumeration value="VLL"/>
+			<xsd:enumeration value="VLLS"/>
+			<xsd:enumeration value="VSTA"/>
+			<xsd:enumeration value="WADE"/>
+			<xsd:enumeration value="WALK"/>
+			<xsd:enumeration value="WKWY"/>
+			<xsd:enumeration value="WAY"/>
+			<xsd:enumeration value="WHRF"/>
+			<xsd:enumeration value="WOOD"/>
+			<xsd:enumeration value="WTRS"/>
+			<xsd:enumeration value="WYND"/>
+			<xsd:enumeration value="YARD"/>
+			<xsd:enumeration value="ACRE"/>
+			<xsd:enumeration value="ARTL"/>
+			<xsd:enumeration value="BA"/>
+			<xsd:enumeration value="BANK"/>
+			<xsd:enumeration value="BRAN"/>
+			<xsd:enumeration value="BRET"/>
+			<xsd:enumeration value="BVDE"/>
+			<xsd:enumeration value="BWLK"/>
+			<xsd:enumeration value="CLR"/>
+			<xsd:enumeration value="CNCD"/>
+			<xsd:enumeration value="CNN"/>
+			<xsd:enumeration value="CRF"/>
+			<xsd:enumeration value="CRK"/>
+			<xsd:enumeration value="CUT"/>
+			<xsd:enumeration value="DASH"/>
+			<xsd:enumeration value="DENE"/>
+			<xsd:enumeration value="DIV"/>
+			<xsd:enumeration value="DOCK"/>
+			<xsd:enumeration value="DOM"/>
+			<xsd:enumeration value="DOWN"/>
+			<xsd:enumeration value="DWNS"/>
+			<xsd:enumeration value="ESMT"/>
+			<xsd:enumeration value="FBRK"/>
+			<xsd:enumeration value="FK"/>
+			<xsd:enumeration value="FLNE"/>
+			<xsd:enumeration value="FLTS"/>
+			<xsd:enumeration value="FORD"/>
+			<xsd:enumeration value="HLLW"/>
+			<xsd:enumeration value="HRBR"/>
+			<xsd:enumeration value="HVN"/>
+			<xsd:enumeration value="INLT"/>
+			<xsd:enumeration value="KEYS"/>
+			<xsd:enumeration value="KNOL"/>
+			<xsd:enumeration value="LADR"/>
+			<xsd:enumeration value="LEAD"/>
+			<xsd:enumeration value="LEDR"/>
+			<xsd:enumeration value="LYNN"/>
+			<xsd:enumeration value="MANR"/>
+			<xsd:enumeration value="MART"/>
+			<xsd:enumeration value="MEAD"/>
+			<xsd:enumeration value="MILE"/>
+			<xsd:enumeration value="NTH"/>
+			<xsd:enumeration value="NULL"/>
+			<xsd:enumeration value="OTLT"/>
+			<xsd:enumeration value="OVAL"/>
+			<xsd:enumeration value="PLMS"/>
+			<xsd:enumeration value="PRDS"/>
+			<xsd:enumeration value="PREC"/>
+			<xsd:enumeration value="PSLA"/>
+			<xsd:enumeration value="REEF"/>
+			<xsd:enumeration value="ROWE"/>
+			<xsd:enumeration value="RSNG"/>
+			<xsd:enumeration value="SHUN"/>
+			<xsd:enumeration value="SKLN"/>
+			<xsd:enumeration value="STAI"/>
+			<xsd:enumeration value="STH"/>
+			<xsd:enumeration value="STRT"/>
+			<xsd:enumeration value="THRU"/>
+			<xsd:enumeration value="TMWY"/>
+			<xsd:enumeration value="TUNL"/>
+			<xsd:enumeration value="TVSE"/>
+			<xsd:enumeration value="VLGE"/>
+			<xsd:enumeration value="VLLY"/>
+			<xsd:enumeration value="VUE"/>
+			<xsd:enumeration value="VWS"/>
+			<xsd:enumeration value="WDS"/>
+			<xsd:enumeration value="WTWY"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AustralianStreetSuffix">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Define street suffixes as per Australian Standard AS4590:2006
+
+	Version 4.0 additions
+	-- DE	- DEVIATION
+	-- ML	- MALL
+	-- IN	- INNER
+	-- OF	- OFF
+	-- ON	- ON
+	-- OP	- OVERPASS
+	-- OT	- OUTER
+	-- Version 5.0 additions
+	-- Element AustralianStreetSuffix has been restricted to 2 characters
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+			<xsd:enumeration value="CN"/>
+			<xsd:enumeration value="DE"/>
+			<xsd:enumeration value="E"/>
+			<xsd:enumeration value="EX"/>
+			<xsd:enumeration value="IN"/>
+			<xsd:enumeration value="LR"/>
+			<xsd:enumeration value="ML"/>
+			<xsd:enumeration value="N"/>
+			<xsd:enumeration value="NE"/>
+			<xsd:enumeration value="NW"/>
+			<xsd:enumeration value="OF"/>
+			<xsd:enumeration value="ON"/>
+			<xsd:enumeration value="OP"/>
+			<xsd:enumeration value="OT"/>
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="SE"/>
+			<xsd:enumeration value="SW"/>
+			<xsd:enumeration value="UP"/>
+			<xsd:enumeration value="W"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AustralianPostalDeliveryType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Define postal delivery types as per Australian Standard AS4590:2006
+Detail - There are several additions in this list over and above what is in AS4590:2006. The extra types have been derived from the Australia Post AMAS standard.
+	-- Version 5.0 additions	
+-- Element AustralianPostalDeliveryType has been restricted to 11 characters
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="11"/>
+			<xsd:enumeration value="CARE PO"/>
+			<xsd:enumeration value="CMA"/>
+			<xsd:enumeration value="CMB"/>
+			<xsd:enumeration value="CPA"/>
+			<xsd:enumeration value="GPO BOX"/>
+			<xsd:enumeration value="LOCKED BAG"/>
+			<xsd:enumeration value="MS"/>
+			<xsd:enumeration value="PO BOX"/>
+			<xsd:enumeration value="PRIVATE BAG"/>
+			<xsd:enumeration value="RSD"/>
+			<xsd:enumeration value="RMB"/>
+			<xsd:enumeration value="RMS"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--NSW Report Names-->
+	<xsd:simpleType name="MarketReportNamesType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Define the Name of any report that accepts CSV Report in the generic CSVReport format.
+Element MarketReportNames has been restricted to 80 characters. 
+
+	Version 7.0 additions
+		Added MarketReportNamesType for defining Market Report Names
+		
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+			<xsd:enumeration value="DPRExtractRpt"/>
+			<xsd:enumeration value="BasicConsumptionRpt"/>
+			<xsd:enumeration value="MeterReadingToUserRpt"/>
+			<xsd:enumeration value="MeterReadingToUserNonSTTMRpt"/>
+			<xsd:enumeration value="ChangeOfStandingDataRpt"/>
+			<xsd:enumeration value="CustomerChurnRpt"/>
+			<xsd:enumeration value="EstimationResultsToUserRpt"/>
+			<xsd:enumeration value="RevisedEstimationResultsToUserRpt"/>
+			<xsd:enumeration value="ReconciliationResultsRpt"/>
+			<xsd:enumeration value="ForecastingDataRpt"/>
+			<xsd:enumeration value="ApportionmentPercentageRpt"/>
+			<xsd:enumeration value="DailyNSLRpt"/>
+			<xsd:enumeration value="STTMPipelineAllocationDataRpt"/>
+			<xsd:enumeration value="DailyToSTTMRpt"/>
+			<xsd:enumeration value="DailyToUserRpt"/>
+			<xsd:enumeration value="WeeklyToSTTMRpt"/>
+			<xsd:enumeration value="MonthlyToSTTMRpt"/>
+			<xsd:enumeration value="PreMonthlyToSTTMRpt"/>
+			<xsd:enumeration value="FinMonthlyToSTTMRpt"/>
+			<xsd:enumeration value="RevMonthlyToSTTMRpt"/>
+			<xsd:enumeration value="MonthlyToUserRpt"/>
+			<xsd:enumeration value="TotalGasInjectedRpt"/>
+			<xsd:enumeration value="WeeklyToUserRpt"/>
+			<xsd:enumeration value="EstimationResultsToNWORpt"/>
+			<xsd:enumeration value="RevisedEstimationResultsToNWORpt"/>
+			<xsd:enumeration value="MatchedImbalanceTradeRpt"/>
+			<xsd:enumeration value="ExpiredImbalanceTradeRpt"/>
+			<xsd:enumeration value="ParticipantImbalanceAmountRpt"/>
+			<xsd:enumeration value="RevisedImbalanceRpt"/>
+			<xsd:enumeration value="T298NewStreetListingRpt"/>
+			<xsd:enumeration value="T299CompleteMIRNListingRpt"/>
+			<xsd:enumeration value="T900CustomerSiteDetailsMonthlyRpt"/>
+			<xsd:enumeration value="T2125AncillaryChargeListingRpt"/>
+			<xsd:enumeration value="T2130HeatingValueDailyRpt"/>
+			<xsd:enumeration value="T2131PublishedHeatingValueDailyRpt"/>
+			<xsd:enumeration value="T2145HaulageRightsRpt"/>
+			<xsd:enumeration value="T2270TotalCLPRpt"/>
+			<xsd:enumeration value="T2275TotalCLPRpt"/>
+			<xsd:enumeration value="T2305EffectiveDegreeDayRpt"/>
+			<xsd:enumeration value="T2420QuotationStatusRpt"/>
+			<xsd:enumeration value="T2421QuotationSubmissionRpt"/>
+			<xsd:enumeration value="T2422QuotationNotificationRpt"/>
+			<xsd:enumeration value="T2423QuotationAcceptedRpt"/>
+			<xsd:enumeration value="T2424QuotationAvailableRpt"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

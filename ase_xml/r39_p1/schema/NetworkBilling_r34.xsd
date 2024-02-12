@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Purpose - Define the transactions used to exchange billing information between network distribution businesses and retailers</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>R34 updates 31 Jan 2014 added new Tariff file A , B for NetworkDUoSBillingNotification</xsd:documentation>
+	</xsd:annotation>
+	<!-- Network billing process specific data types -->
+	<xsd:simpleType name="ChargeType">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define Charge Types as used by LNSPs. The following types of charges: NUoS, excluded service, GSL credit payments and meter reading are identified by this code".</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NUOS Charge"/>
+			<xsd:enumeration value="Event Based Charge"/>
+			<xsd:enumeration value="GSL Credit Charge"/>
+			<xsd:enumeration value="Excluded Service Charge"/>
+			<xsd:enumeration value="Interest Charge"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DisputeReasonCode">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define Dispute reason codes. 
+				This is a combination of Gas and NEM. 
+				Do we need a separate list for each jurisdiction?
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BPDF"/>
+			<xsd:enumeration value="CDFG"/>
+			<xsd:enumeration value="CDFO"/>
+			<xsd:enumeration value="CDFP"/>
+			<xsd:enumeration value="CDFS"/>
+			<xsd:enumeration value="DUPL"/>
+			<xsd:enumeration value="ESDF"/>
+			<xsd:enumeration value="ESDP"/>
+			<xsd:enumeration value="GPDF"/>
+			<xsd:enumeration value="INTP"/>
+			<xsd:enumeration value="LRTB"/>
+			<xsd:enumeration value="LRTD"/>
+			<xsd:enumeration value="LUKN"/>
+			<xsd:enumeration value="NDFG"/>
+			<xsd:enumeration value="NDFO"/>
+			<xsd:enumeration value="NDFP"/>
+			<xsd:enumeration value="NDFS"/>
+			<xsd:enumeration value="NNMI"/>
+			<xsd:enumeration value="ODIF"/>
+			<xsd:enumeration value="OTHR"/>
+			<xsd:enumeration value="PDIF"/>
+			<xsd:enumeration value="QDFG"/>
+			<xsd:enumeration value="QNTY"/>
+			<xsd:enumeration value="RATE"/>
+			<xsd:enumeration value="SCDF"/>
+			<xsd:enumeration value="SDIF"/>
+			<xsd:enumeration value="TARF"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ReadingType">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define meter reading type used in calculating the charged amount.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Actual"/>
+			<xsd:enumeration value="Substitute"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AdjustmentIndicator">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the adjustment action type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Cancelled"/>
+			<xsd:enumeration value="New"/>
+			<xsd:enumeration value="Rebilled"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DisputeStatusCode">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the adjustment action type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Open"/>
+			<xsd:enumeration value="Cancelled"/>
+			<xsd:enumeration value="Closed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="InvoiceNumber">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines the invoice number data type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="17"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LineDescription">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines the charge item line description type restricted to char(60)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransactionID">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines the invoice charge item ID data type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="17"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NetworkTariffCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identifies an LNSP specific network tariff
+MSATS Data Model Column - NetworkTariffCode
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ConsumptionVolume">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines numeric data type restricted to 9.5 digits</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="14"/>
+			<xsd:fractionDigits value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Rate">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines numeric data type restricted to 9.5 digits</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="14"/>
+			<xsd:fractionDigits value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="GSTDetails">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines the GST related details of the Retailer used in the Tax Invoice</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="BusinessName">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="50"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ABN">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="14"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GSTData">
+		<xsd:sequence>
+			<xsd:element name="Amount" type="Amount" minOccurs="0"/>
+			<xsd:element name="Indicator" type="xsd:boolean" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PaymentData">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - defines the payment data for the  items paid by the retailer</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Net" type="Amount"/>
+			<xsd:element name="GST" type="Amount" minOccurs="0"/>
+			<xsd:element name="Gross" type="Amount"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Network charge header data types -->
+	<xsd:complexType name="NETBHeader">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - Generic Header "010, 012, 910, 913, 920, 930, 940" - Headers</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="LNSP" type="PartyIdentifier"/>
+			<xsd:element name="Retailer" type="PartyIdentifier"/>
+			<xsd:element name="DateTime" type="xsd:dateTime"/>
+			<xsd:element name="Period" type="Period" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Network footer data types -->
+	<xsd:complexType name="ChargeFooter">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - defines the footer data type of the network charge items, used on is own for "013, 932, 942" and in composition for other footers</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RecordCount" type="RecordCount"/>
+			<xsd:element name="TotalAmount" type="Amount"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InvoiceFooter">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - defines the footer data type of the network charge items</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SummaryCount" type="RecordCount"/>
+			<xsd:element name="DetailCount" type="RecordCount"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DisputeFooter">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "912" - Dispute Footer </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RecordCount" type="RecordCount"/>
+			<xsd:element name="TotalExclGST" type="Amount" minOccurs="0"/>
+			<xsd:element name="TotalInclGST" type="Amount" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Network charge footer record types -->
+	<xsd:complexType name="InvoiceNotificationSummary">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - defines the footer network billing invoice for SA and Victoria</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NUOS" type="ChargeFooter" minOccurs="0"/>
+			<xsd:element name="GSL" type="ChargeFooter" minOccurs="0"/>
+			<xsd:element name="ExcludedService" type="ChargeFooter" minOccurs="0"/>
+			<xsd:element name="Interest" type="ChargeFooter" minOccurs="0"/>
+			<xsd:element name="EventCharge" type="ChargeFooter" minOccurs="0"/>
+			<xsd:element name="Invoice" type="InvoiceFooter" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InvoiceNotificationFooter">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - defines the footer network billing invoice for NSW</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InvoiceRecordCount" type="RecordCount"/>
+			<xsd:element name="ChargeRecordCount" type="RecordCount"/>
+			<xsd:element name="Payment" type="PaymentData"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Network charge record types -->
+	<xsd:complexType name="BaseChargeItem" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Base type for all Charge Item definitions
+Detail - Any network charge item must support these fields.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InvoiceNumber" type="InvoiceNumber"/>
+			<xsd:element name="TransactionID" type="TransactionID"/>
+			<xsd:element name="OldInvoiceNumber" type="InvoiceNumber" minOccurs="0"/>
+			<xsd:element name="OldTransactionID" type="TransactionID" minOccurs="0"/>
+			<xsd:element name="TransactionDate" type="xsd:date"/>
+			<xsd:element name="AdjustmentIndicator" type="AdjustmentIndicator"/>
+			<xsd:element name="AdjustmentReason" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="60"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="NMI" type="NMIWithChecksum"/>
+			<xsd:element name="NetworkRef" type="UniqueIdentifier" minOccurs="0"/>
+			<xsd:element name="RetailerRef" type="UniqueIdentifier" minOccurs="0"/>
+			<xsd:element name="Date" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="Charge" type="Amount"/>
+			<xsd:element name="GST" type="GSTData"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NUOS">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "100" - NUOS</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseChargeItem">
+				<xsd:sequence>
+					<xsd:element name="Description" type="LineDescription"/>
+					<xsd:element name="Quantity" type="ConsumptionVolume"/>
+					<xsd:element name="Rate" type="Rate"/>
+					<xsd:element name="TariffCode" type="NetworkTariffCode"/>
+					<xsd:element name="UnitOfMeasure" type="UnitsOfMeasure"/>
+					<xsd:element name="StepNumber" default="1" minOccurs="0">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:int">
+								<xsd:totalDigits value="3"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="BillingPeriod" type="Period"/>
+					<xsd:element name="TimeSplit" type="TimeSplit"/>
+					<xsd:element name="ReadingType" type="ReadingType" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r11" use="optional" default="r11"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="EventCharge">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "200" - EventCharge</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseChargeItem">
+				<xsd:sequence>
+					<xsd:element name="Description" type="LineDescription"/>
+					<xsd:element name="Quantity">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:decimal">
+								<xsd:totalDigits value="5"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="Rate" type="Rate"/>
+					<xsd:element name="UnitOfMeasure" type="UnitsOfMeasure"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r11" use="optional" default="r11"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GSL">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "400" - GSL</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseChargeItem">
+				<xsd:sequence>
+					<xsd:element name="Code">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:maxLength value="10"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="Description" type="LineDescription"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r11" use="optional" default="r11"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ExcludedService">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "600" - ExcludedService</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseChargeItem">
+				<xsd:sequence>
+					<xsd:element name="Code">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:maxLength value="10"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="Description" type="LineDescription"/>
+					<xsd:element name="Quantity">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:decimal">
+								<xsd:totalDigits value="5"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="Rate" type="Rate"/>
+					<xsd:element name="AfterHourIndicator">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:length value="1"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="CompletionCode" minOccurs="0">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:length value="1"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r11" use="optional" default="r11"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="InterestCharge">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "900" - InterestCharge</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseChargeItem">
+				<xsd:sequence>
+					<xsd:element name="OverdueInvoice" type="InvoiceNumber" minOccurs="0"/>
+					<xsd:element name="Principal" type="Amount"/>
+					<xsd:element name="Period" type="Period"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r11" use="optional" default="r11"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Network Invoice record types -->
+	<xsd:complexType name="BaseInvoice" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Defines the base type for all Invoice line used for billing
+Detail - Any network invoice item must support these fields.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Number" type="InvoiceNumber"/>
+			<xsd:element name="NMI" type="NMIWithChecksum" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InvoiceSummary">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network invoice record type - "020" - InvoiceSummary</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseInvoice">
+				<xsd:sequence>
+					<xsd:element name="InvoiceDate" type="xsd:date"/>
+					<xsd:element name="DueDate" type="xsd:date"/>
+					<xsd:element name="Retailer" type="GSTDetails"/>
+					<xsd:element name="Distributor" type="GSTDetails"/>
+					<xsd:element name="GSTStatus">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:maxLength value="150"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="Amount" type="PaymentData"/>
+					<xsd:element name="FirstTransactionID" type="TransactionID" minOccurs="0"/>
+					<xsd:element name="LastTransactionID" type="TransactionID" minOccurs="0"/>
+					<xsd:element name="TotalNumberOfChargeItems" minOccurs="0">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:decimal">
+								<xsd:totalDigits value="10"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="TotalNumberOfDetailRecords" minOccurs="0">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:decimal">
+								<xsd:totalDigits value="10"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="InvoiceDetail">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network invoice record type - "021" - InvoiceDetail</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseInvoice">
+				<xsd:sequence>
+					<xsd:element name="Charge" type="ChargeType"/>
+					<xsd:element name="NumberOfTransactions">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:decimal">
+								<xsd:totalDigits value="10"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="Amount" type="PaymentData"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Network Remittance Notification related data types -->
+	<xsd:complexType name="RemittanceDetail">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "810, 921" - RemittanceDetail</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InvoiceNumber" type="InvoiceNumber"/>
+			<xsd:element name="TransactionID" type="TransactionID"/>
+			<xsd:element name="NMI" type="NMIWithChecksum"/>
+			<xsd:choice>
+				<xsd:element name="Payment" type="PaymentData"/>
+				<xsd:element name="TotalPaid" type="Amount"/>
+			</xsd:choice>
+			<xsd:element name="DatePaid" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="PaymentReference" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="60"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RemittanceSummary">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "820, 922" - RemittanceSummary</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="Payment" type="PaymentData"/>
+				<xsd:element name="TotalPaid" type="Amount"/>
+			</xsd:choice>
+			<xsd:element name="RecordCount" type="RecordCount"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Network Dispute Notification related data types -->
+	<xsd:complexType name="DisputeItem">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "911" - Dispute Item </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InvoiceNumber" type="InvoiceNumber"/>
+			<xsd:element name="TransactionID" type="TransactionID"/>
+			<xsd:element name="NMI" type="NMIWithChecksum"/>
+			<xsd:element name="Charge" type="Amount" minOccurs="0"/>
+			<xsd:element name="GST" type="GSTData" minOccurs="0"/>
+			<xsd:element name="Code" type="DisputeReasonCode" minOccurs="0"/>
+			<xsd:element name="Comment" type="SpecialComments" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="status" type="DisputeStatusCode" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="ResolutionItem">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - defines the resolution details</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Date" type="xsd:date"/>
+			<xsd:element name="NumberOfTransactions" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:decimal">
+						<xsd:totalDigits value="10"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="AgreedAmount">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Gross" type="Amount"/>
+						<xsd:element name="Net" type="Amount" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Comments" type="SpecialComments" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Confirmation">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - establishes relationship between the dispute and the resolution items</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Dispute" type="DisputeItem"/>
+			<xsd:element name="Resolution" type="ResolutionItem"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Network Credit Management related data types -->
+	<xsd:complexType name="OustandingInvoiceDetail">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "931" - OustandingInvoiceDetail</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InvoiceNumber" type="InvoiceNumber"/>
+			<xsd:element name="InvoiceDate" type="xsd:date"/>
+			<xsd:element name="DueDate" type="xsd:date"/>
+			<xsd:element name="NMI" type="NMIWithChecksum"/>
+			<xsd:element name="Amount" type="Amount"/>
+			<xsd:element name="DisputeReceived" type="xsd:boolean"/>
+			<xsd:element name="Comment" type="SpecialComments" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CreditBalanceDetail">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Network charge record type - "941" - CreditBalanceDetail</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InvoiceNumber" type="InvoiceNumber"/>
+			<xsd:element name="NMI" type="NMIWithChecksum"/>
+			<xsd:element name="Amount" type="Amount"/>
+			<xsd:element name="Balance" type="Amount"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NetworkInvoiceData">
+		<xsd:sequence>
+			<xsd:element name="Header" type="NETBHeader"/>
+			<xsd:element name="Invoices" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Invoice" type="BaseInvoice" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ChargeItems">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ChargeItem" type="BaseChargeItem" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="Summary" type="InvoiceNotificationSummary"/>
+				<xsd:element name="Footer" type="InvoiceNotificationFooter"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DisputeNotificationData">
+		<xsd:sequence>
+			<xsd:element name="Header" type="NETBHeader"/>
+			<xsd:element name="DisputeItems">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DisputeItem" type="DisputeItem" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DisputeSummary" type="DisputeFooter"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RemittanceData">
+		<xsd:sequence>
+			<xsd:element name="Header" type="NETBHeader"/>
+			<xsd:element name="RemittanceItems">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="RemittanceItem" type="RemittanceDetail" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="RemittanceSummary" type="RemittanceSummary"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DisputeStatusData">
+		<xsd:sequence>
+			<xsd:element name="Header" type="NETBHeader"/>
+			<xsd:element name="DisputeItems">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DisputeItem" type="DisputeItem" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="RecordCount" type="RecordCount"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CreditData">
+		<xsd:sequence>
+			<xsd:element name="Header" type="NETBHeader"/>
+			<xsd:element name="Credits">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="OutstandingInvoice" type="OustandingInvoiceDetail" maxOccurs="unbounded"/>
+						<xsd:element name="CreditBalance" type="CreditBalanceDetail" maxOccurs="unbounded"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Summary" type="ChargeFooter"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Transaction Types -->
+	<xsd:complexType name="NetworkDUoSBillingNotification">
+		<xsd:annotation>
+			<xsd:documentation>Schema - NetworkBilling</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="CSVNetworkDUoSDataTariffA" type="CSVRequestFormat"/>
+			<xsd:element name="CSVNetworkDUoSDataTariffB" type="CSVRequestFormat"/>
+			<xsd:element name="CSVNetworkDUoSDataTariffV" type="CSVRequestFormat"/>
+			<xsd:element name="CSVNetworkDUoSDataTariffD" type="CSVRequestFormat"/>
+			<xsd:element name="CSVNetworkDUoSDataTariffH" type="CSVRequestFormat"/>
+			<xsd:element name="CSVNetworkDUoSDataExcludedServices" type="CSVRequestFormat"/>
+			<xsd:element name="CSVNetworkDUoSDataDisputeNotification" type="CSVRequestFormat"/>
+			<xsd:element name="CSVNetworkDUoSDataDisputeResolution" type="CSVRequestFormat"/>
+			<xsd:element name="CSVNetworkDUoSDataPaymentAdvice" type="CSVRequestFormat"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r34" use="optional" default="r34"/>
+	</xsd:complexType>
+	<xsd:complexType name="NetworkInvoiceNotification">
+		<xsd:annotation>
+			<xsd:documentation>
+				Application - Network Billing
+				TransactionExchange - 
+				TransactionGroup - NETB
+				Priority - Medium
+				Purpose - Submit network charges and invoice to the Retailer
+				
+				NEM
+					B2B_NB_NSW_IP_v2.3_-_Effective_from_9Dec2002.doc
+					B2B_NB_SA_IP_v1-0_-_Effective_13Apr2003.doc
+					B2B_NB_Vic_IP_v1-1_-_Effective_13Jan2002.doc
+					This complex type defines the transaction "NBCHARGES"
+					NMI data is only required for this transaction as per B2B_NB_NSW_IP_v2.3_-_Effective_from_9Dec2002.doc in the various Charge Record types
+					This transaction is for use only in SA, NSW and VIC.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="InvoiceData" type="NetworkInvoiceData"/>
+			<xsd:element name="CSVInvoice" type="CSVRequestFormat"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r11" use="optional" default="r11"/>
+	</xsd:complexType>
+	<xsd:complexType name="DisputeNotification">
+		<xsd:annotation>
+			<xsd:documentation>
+				Application - Network Billing
+				TransactionExchange - 
+				TransactionGroup - NETB
+				Priority - Medium
+				Purpose - Submit dispute items to the Distributor
+				NEM
+					B2B_NB_NSW_IP_v2.3_-_Effective_from_9Dec2002.doc
+					B2B_NB_SA_IP_v1-0_-_Effective_13Apr2003.doc
+					B2B_NB_Vic_IP_v1-1_-_Effective_13Jan2002.doc
+					This complex type defines the transaction "NBDISPUTES"
+					Optionally, disputed payment data may be provided for each line item for this transaction as per B2B_NB_NSW_IP_v2.3_-_Effective_from_9Dec2002.doc
+					This transaction is for use only in SA, NSW and VIC.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="DisputeData" type="DisputeNotificationData"/>
+			<xsd:element name="CSVDispute" type="CSVRequestFormat"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r11" use="optional" default="r11"/>
+	</xsd:complexType>
+	<xsd:complexType name="RemittanceNotification">
+		<xsd:annotation>
+			<xsd:documentation>
+				Application - Network Billing
+				TransactionExchange - 
+				TransactionGroup - NETB
+				Priority - Medium
+				Purpose - Submit remittance details to the Distributor
+				
+				NEM
+					B2B_NB_NSW_IP_v2.3_-_Effective_from_9Dec2002.doc
+					B2B_NB_SA_IP_v1-0_-_Effective_13Apr2003.doc
+					B2B_NB_Vic_IP_v1-1_-_Effective_13Jan2002.doc
+					This complex type defines the transaction "NBREMITT"
+					Only Gross Amount of Payment data is required for this transaction as per B2B_NB_NSW_IP_v2.3_-_Effective_from_9Dec2002.doc
+					This transaction is for use only in SA, NSW and VIC.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="RemittanceData" type="RemittanceData"/>
+			<xsd:element name="CSVRemittance" type="CSVRequestFormat"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r11_p1" use="optional" default="r11_p1"/>
+	</xsd:complexType>
+	<xsd:complexType name="DisputeResponse">
+		<xsd:annotation>
+			<xsd:documentation>
+				Application - Network Billing
+				TransactionExchange - 
+				TransactionGroup - NETB
+				Priority - Medium
+				Purpose - Submit dispute resolution details to the Retailer
+				
+				NEM
+					B2B_NB_NSW_IP_v2.3_-_Effective_from_9Dec2002.doc
+					B2B_NB_SA_IP_v1-0_-_Effective_13Apr2003.doc
+					B2B_NB_Vic_IP_Disputes_v1-2_-_Effective_13Jan2002 .doc
+					This complex type defines the transaction "NBDISRESOL"
+					This transaction is for use only in SA, NSW and VIC.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="Confirmations">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Confirmation" type="Confirmation" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DisputeStatus" type="DisputeStatusData"/>
+			<xsd:element name="CSVDisputeResponse" type="CSVRequestFormat"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r11" use="optional" default="r11"/>
+	</xsd:complexType>
+	<xsd:complexType name="CreditNotification">
+		<xsd:annotation>
+			<xsd:documentation>
+				Application - Network Billing
+				TransactionExchange - 
+				TransactionGroup - NETB
+				Priority - Medium
+				Purpose - Submit dispute status change details to the Retailer
+				
+				NEM
+					B2B_NB_NSW_IP_v2.3_-_Effective_from_9Dec2002.doc
+					B2B_NB_SA_IP_v1-0_-_Effective_13Apr2003.doc
+					This complex type defines the transaction "..." - unknown in tech spec v1.3
+					This transaction is for use only in SA and NSW.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="CreditData" type="CreditData"/>
+			<xsd:element name="CSVOutstandingInvoice" type="CSVRequestFormat"/>
+			<xsd:element name="CSVCreditBalance" type="CSVRequestFormat"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r11" use="optional" default="r11"/>
+	</xsd:complexType>
+</xsd:schema>

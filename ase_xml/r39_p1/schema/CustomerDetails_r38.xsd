@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 rel. 2 sp1 (x64) (http://www.altova.com) by ﻿Australian Energy Market Operator (Australian Energy Market Operator) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+		This file now complies with the following specifications:
+		NEM B2B
+			B2B_CD_NAT_Cust-Site-Dtls_DRAFT_v2-0_At_13Oct2003.doc
+			
+		VicGas	
+			Participant Build Pack 3 - B2B System Interface Definitions v1.5 dated 26/08/2002
+		All transactions and types have been defined in strict conformance to the above specifications.
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Support Types -->
+	<xsd:simpleType name="BusinessNameBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="200"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BusinessNameTypeCode">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OTH"/>
+			<xsd:enumeration value="MTR"/>
+			<xsd:enumeration value="OTR"/>
+			<xsd:enumeration value="MN"/>
+			<xsd:enumeration value="PRF"/>
+			<xsd:enumeration value="LGL"/>
+			<xsd:enumeration value="MAU"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="BusinessName">
+		<xsd:simpleContent>
+			<xsd:extension base="BusinessNameBase">
+				<xsd:attribute name="businessNameTypeCode" type="BusinessNameTypeCode" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="CustomerType">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines a list of valid customer types</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Industrial"/>
+			<xsd:enumeration value="Commercial"/>
+			<xsd:enumeration value="Residential"/>
+			<xsd:enumeration value="Farm"/>
+			<xsd:enumeration value="Lighting"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SpecialConditionCode">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Special Condition Code used in customer details notification
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="LSUP"/>
+			<xsd:enumeration value="NOTO"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SensitiveLoadType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Special Condition Code used in customer details notification
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Life Support"/>
+			<xsd:enumeration value="Sensitive Load"/>
+			<xsd:enumeration value="None"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MovementType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Special Condition Code used in customer details notification where:
+				RecCustConf: Reconciliation - Confirmed with Customer. Means that the Retailer has confirmed with the Customer that the SenstiveLoad value is correct.
+				RecPerRetailer: Reconciliation - As per Retailer. Means that the Retailer reasonably believes that the SensitiveLoad value provided is correct.  
+				RecPerDNSP: Reconciliation - As per DNSP. Means that the Retailer agrees that the SensitiveLoad value should be None, as inferred by the DNSP.
+
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Update"/>
+			<xsd:enumeration value="Reconciliation"/>
+			<xsd:enumeration value="Site Vacant"/>
+			<xsd:enumeration value="RecCustConf"/>
+			<xsd:enumeration value="RecPerRetailer"/>
+			<xsd:enumeration value="RecPerDNSP"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RequestReason">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Reasons used to request customer details
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Returned Mail"/>
+			<xsd:enumeration value="Missing Customer Details"/>
+			<xsd:enumeration value="Confirm Life Support"/>
+			<xsd:enumeration value="Other"/>
+			<xsd:enumeration value="Transfer Complete, no CDN Received"/>
+			<xsd:enumeration value="New Connection, no CDN Received"/>
+			<xsd:enumeration value="No response to rejected CDN"/>
+			<xsd:enumeration value="Data Quality Issue"/>
+			<xsd:enumeration value="Rec - confirm no SensitiveLoad"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RebateType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Defines the rebate type for the concession details
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Pension Card"/>
+			<xsd:enumeration value="Health Care Card"/>
+			<xsd:enumeration value="Health Benefit Card"/>
+			<xsd:enumeration value="Veteran Affairs Card"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LifeSupportStatus">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Life support status used in Life Support notification
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Registered - No Medical Confirmation"/>
+			<xsd:enumeration value="Registered - Medical Confirmation"/>
+			<xsd:enumeration value="Deregistered - No Medical Confirmation"/>
+			<xsd:enumeration value="Deregistered - Customer Advice"/>
+			<xsd:enumeration value="Deregistered - No Customer Response"/>
+			<xsd:enumeration value="None"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LifeSupportRequestReason">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Life support request reasons for a Life Support Request
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">	
+			<xsd:enumeration value="Confirm Life Support"/>
+			<xsd:enumeration value="Data Quality Issue"/>			
+			<xsd:enumeration value="No response to rejected LSN"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="UpdateReason">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the reasons for provision of details notification.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Update"/>
+			<xsd:enumeration value="Reconciliation"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactMethod">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the basic set of contact methods.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Postal Address"/>
+			<xsd:enumeration value="Site Address"/>
+			<xsd:enumeration value="Email Address"/>
+			<xsd:enumeration value="Phone"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="Product">
+		<xsd:sequence>
+			<xsd:element name="Code" maxOccurs="unbounded">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="10"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConcessionCard">
+		<xsd:sequence>
+			<xsd:element name="Number">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="10"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="FromDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="ToDate" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="rebateType" type="RebateType" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="CustomerDetail">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines the customer details for notification</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="PersonName" type="PersonName"/>
+				<xsd:sequence>
+					<xsd:element name="BusinessName" type="BusinessName"/>
+					<xsd:element name="ContactName" type="PersonName" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:choice>
+			<xsd:element name="PostalAddress" type="Address" minOccurs="0"/>
+			<xsd:element name="PhoneNumber" type="AustralianPhoneNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="EmailAddress" type="EmailAddress" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- xsd:element name="SpecialCondition" type="SpecialCondition" minOccurs="0"/  insert after phone number -->
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CustomerData">
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI"/>
+			<xsd:element name="CustomerDetail" type="CustomerDetail" minOccurs="0"/>
+			<xsd:element name="SensitiveLoad" type="SensitiveLoadType"/>
+			<xsd:element name="MovementType" type="MovementType"/>
+			<xsd:element name="LastModifiedDateTime" type="xsd:dateTime"/>
+			<xsd:element name="ConcessionCard" type="ConcessionCard" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LifeSupportData">
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI"/>
+			<xsd:element name="SiteAddress" type="Address" minOccurs="0"/>
+			<xsd:element name="Reason" type="UpdateReason"/>				
+			<xsd:element name="RegistrationOwner" type="YesNo" minOccurs="0"/>		
+			<xsd:element name="Status" type="LifeSupportStatus"/>			
+			<xsd:element name="DateRequired" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="Equipment" type="LifeSupportEquipmentType" minOccurs="0"/>
+			<xsd:element name="ManagementContactDetail" type="CustomerDetail" minOccurs="0"/>
+			<xsd:element name="PreferredContactMethod" type="ContactMethod" minOccurs="0"/>
+			<xsd:element name="SpecialNotes" type="SpecialComments" minOccurs="0"/>
+			<xsd:element name="LastModifiedDateTime" type="xsd:dateTime"/>			
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Abstract types for fuel specific extension-->
+
+	<!--Electricity specific extensions of abstract types-->
+	<!--Gas specific extensions of abstract types-->	
+	<!--Transaction Types-->
+	<xsd:complexType name="CustomerDetailsRequest">
+		<xsd:annotation>
+			<xsd:documentation>NEM - B2B Electricity: Transaction Group:  CUST; Purpose: Request Customer Details- National Electricity B2B Process - Tranche 1 Build Pack; VicGas:  Not Used.			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI"/>
+			<xsd:element name="Reason" type="RequestReason"/>
+			<xsd:element name="Comments" type="SpecialComments" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r32" use="optional" default="r32"/>
+	</xsd:complexType>
+	<xsd:complexType name="CustomerDetailsNotification">
+		<xsd:annotation>
+			<xsd:documentation>NEM - B2B Electricity - Fully XML tagged; Transaction Group: CUST; Purpose: Notify change of Customer Details- National Electricity B2B Process - Tranche 1 Build Pack; VicGas - CSV only;	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="Customer" type="CustomerData"/>
+			<xsd:element name="CSVCustomer" type="CSVRequestFormat"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+	</xsd:complexType>
+	<xsd:complexType name="SiteAddressDetails">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI"/>
+			<xsd:element name="Address" type="Address"/>
+			<xsd:element name="LastModifiedDateTime" type="xsd:dateTime"/>
+			<xsd:element name="CustomerType" type="CustomerType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SiteAccessDetails">
+		<xsd:annotation>
+			<xsd:documentation>	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMIStandingData">
+				<xsd:sequence>
+					<xsd:element name="AccessDetail" type="AccessDetail"/>
+					<xsd:element name="Hazard" type="SiteHazard" maxOccurs="unbounded"/>
+					<xsd:element name="LastModifiedDateTime" type="xsd:dateTime"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r19" use="optional" default="r19"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MultiMeterSiteAccessDetails">
+		<xsd:annotation>
+			<xsd:documentation>	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMIStandingData">
+				<xsd:sequence>
+					<xsd:element name="MeterData" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="Meter" type="GasMultiMeterStandingDataType"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="SiteData" type="ServicePoint" minOccurs="0"/>
+					<xsd:element name="Hazard" type="SiteHazard" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element name="LastModifiedDateTime" type="xsd:dateTime"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r34" use="optional" default="r34"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="AmendMeterRouteDetails">
+		<xsd:annotation>
+			<xsd:documentation>NEM - B2B Electricity;	Transaction Group: SITE	; Purpose: Provide Site Address Details and Site Access Details - National Electricity B2B Process - Tranche 1 Build Pack; 		Used for fully tagged transactions using derived types based on NMIStandingData;
+VicGas	
+				Participant Build Pack 3 - B2B System Interface Definitions v1.5 dated 26/08/2002
+				TransactionGroup - SITE
+				This complex type supports the following business transactions and are grouped as following:
+					Site Access Information
+						66	Meter Site Access Information Change from RB
+						67	Meter Site Access Information Change from DB
+					Site Address Information
+						68	Supply Point Information
+						69	Address Information Change from DB
+					Route Change
+						75	Meter Reading Route Change
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="AmendSiteAccessDetails" type="NMIStandingData"/>
+			<xsd:element name="AmendSiteAddressDetails" type="SiteAddressDetails"/>
+			<xsd:element name="CSVAmendSiteAddressDetails" type="CSVRequestFormat"/>
+			<xsd:element name="CSVAmendScheduledReadingDay" type="CSVRequestFormat"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r19" use="optional" default="r19"/>
+	</xsd:complexType>
+	<xsd:complexType name="SiteAccessRequest">
+		<xsd:annotation>
+			<xsd:documentation>NEM - B2B Electricity: Transaction Group:  SITE; Purpose: Request site access - National Electricity B2B Process - Tranche 1 Build Pack; VicGas:  Not Used.			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI"/>
+			<xsd:element name="Reason" type="SiteRequestReason"/>
+			<xsd:element name="SpecialNotes" type="SpecialComments" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+	</xsd:complexType>
+	<xsd:complexType name="LifeSupportRequest">
+		<xsd:annotation>
+			<xsd:documentation>NEM - B2B Electricity - Fully XML tagged; As adopted - B2B Gas - Fully XML tagged; Transaction Group: CUST; Purpose: Request Life support Details- National Electricity B2B Process - Tranche 1 Build Pack	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI"/>
+			<xsd:element name="Reason" type="LifeSupportRequestReason"/>
+			<xsd:element name="SpecialNotes" type="SpecialComments" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r38" use="optional" default="r38"/>
+	</xsd:complexType>	
+	<xsd:complexType name="LifeSupportNotification">
+		<xsd:annotation>
+			<xsd:documentation>NEM - B2B Electricity - Fully XML tagged; As adopted - B2B Gas - Fully XML tagged; Transaction Group: CUST; Purpose: Notify change of Life support Details- National Electricity B2B Process - Tranche 1 Build Pack	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="LifeSupportData" type="LifeSupportData"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r38" use="optional" default="r38"/>
+	</xsd:complexType>
+</xsd:schema>

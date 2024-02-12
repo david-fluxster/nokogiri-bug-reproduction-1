@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define the structure of the Balancing, Allocation and Reconciliation (BAR) transactions to extend the aseXML
+Detail - This schema complies with the aseXML common Transaction element and adds the set of BAR specific transactions that can appear within the Transaction element of the aseXML schema.
+</xsd:documentation>
+	</xsd:annotation>
+	<!-- Support Types -->
+	<!-- simpleType definitions -->
+	<xsd:simpleType name="AllocationType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Percent"/>
+			<xsd:enumeration value="Quantity"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UserProfieType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="UPF"/>
+			<xsd:enumeration value="UBPF"/>
+			<xsd:enumeration value="UIPF"/>
+			<xsd:enumeration value="RPF"/>
+			<xsd:enumeration value="SPF"/>
+			<xsd:enumeration value="UUAFGPF"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ShipperChangeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Add"/>
+			<xsd:enumeration value="Remove"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EnergyQuantity">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="12"/>
+			<xsd:maxInclusive value="999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PipelineIdentifier">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubnetIdentifier">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UsagePrecedenceType">
+		<xsd:restriction base="xsd:int">
+			<xsd:totalDigits value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SwingGasType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Park"/>
+			<xsd:enumeration value="Loan"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BidPriorityType">
+		<xsd:restriction base="xsd:int">
+			<xsd:totalDigits value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BidAllocationType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Fixed"/>
+			<xsd:enumeration value="Percentage of Surplus"/>
+			<xsd:enumeration value="Fixed of Surplus"/>
+			<xsd:enumeration value="Percentage of UETW"/>
+			<xsd:enumeration value="Fixed of UETW"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BidRejectionReasonType">
+		<xsd:restriction base="xsd:int">
+			<xsd:totalDigits value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Currency">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="15"/>
+			<xsd:fractionDigits value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NetSystemLoadQuantityType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="11"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- complexType definitions -->
+	<xsd:complexType name="AllocationQuantityType">
+		<xsd:simpleContent>
+			<xsd:extension base="EnergyQuantity">
+				<xsd:attribute name="type" type="AllocationType"/>
+				<xsd:attribute name="usagePrecedence" type="UsagePrecedenceType"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="NamedQuantityType">
+		<xsd:annotation>
+			<xsd:documentation>Allows to specify the energy type abbreviation used in formulae to calculate the provided Energy Quantity.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="EnergyQuantity">
+				<xsd:attribute name="name" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="HourlyQuantityType">
+		<xsd:annotation>
+			<xsd:documentation>Allows to specify the hour for which the Energy Quantity is specified.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="EnergyQuantity">
+				<xsd:attribute name="hour" type="xsd:int" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="SwingGasQuantityType">
+		<xsd:simpleContent>
+			<xsd:extension base="EnergyQuantity">
+				<xsd:attribute name="type" type="SwingGasType" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="HeatingDegreeType">
+		<xsd:annotation>
+			<xsd:documentation>Allows to specify the energy type abbreviation used in formulae to calculate the provided Energy Quantity.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="EnergyQuantity">
+				<xsd:attribute name="zone" type="SubnetIdentifier"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="NormalisationType">
+		<xsd:annotation>
+			<xsd:documentation>Allows to specify the energy type abbreviation used in formulae to calculate the provided Energy Quantity.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="NetSystemLoadQuantityType">
+				<xsd:attribute name="factor">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:decimal">
+							<xsd:totalDigits value="4"/>
+							<xsd:fractionDigits value="3"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- Subnet Quantity types -->
+	<xsd:complexType name="SubnetQuantityType">
+		<xsd:annotation>
+			<xsd:documentation>The Subnet and Pipeline identifiers are defined as attributes to allow XML sorting/filtering of the quantity elements</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="Allocation" type="AllocationQuantityType"/>
+			<xsd:element name="Value" type="NamedQuantityType" maxOccurs="unbounded"/>
+			<xsd:sequence>
+				<xsd:element name="Amount" type="HourlyQuantityType" minOccurs="24" maxOccurs="24"/>
+				<xsd:element name="Profile" type="HourlyQuantityType" minOccurs="0" maxOccurs="24"/>
+			</xsd:sequence>
+			<xsd:element name="Swing" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Provider" type="PartyIdentifier" minOccurs="0"/>
+						<xsd:element name="Receiver" type="PartyIdentifier" minOccurs="0"/>
+						<xsd:element name="Value" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:simpleContent>
+									<xsd:extension base="NamedQuantityType">
+										<xsd:attribute name="swing" type="SwingGasType"/>
+									</xsd:extension>
+								</xsd:simpleContent>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="Allocation" type="AllocationQuantityType" minOccurs="0"/>
+						<xsd:element name="Bid" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:simpleContent>
+									<xsd:extension base="Currency">
+										<xsd:attribute name="allocationType" type="BidAllocationType"/>
+										<xsd:attribute name="rejectionReason" type="BidRejectionReasonType"/>
+									</xsd:extension>
+								</xsd:simpleContent>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+					<xsd:attribute name="bidPriority" type="BidPriorityType"/>
+					<xsd:attribute name="bidTotal" type="Currency"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="HeatingDegree" type="HeatingDegreeType" maxOccurs="unbounded"/>
+			<xsd:element name="Normalisation" type="NormalisationType"/>
+			<xsd:element name="ClearingPrice" type="Currency"/>
+			<xsd:element name="PipelineRatio" type="xsd:decimal"/>
+		</xsd:choice>
+		<xsd:attribute name="id" type="SubnetIdentifier"/>
+		<xsd:attribute name="profileType" type="UserProfieType"/>
+		<xsd:attribute name="gatePoint" type="SubnetIdentifier"/>
+		<xsd:attribute name="historicalDay" type="xsd:date"/>
+	</xsd:complexType>
+	<!-- Subnet Quantity type containers -->
+	<xsd:complexType name="QuantityType">
+		<xsd:sequence>
+			<xsd:element name="Subnets">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Pipeline" type="PipelineIdentifier" minOccurs="0"/>
+						<xsd:element name="SubnetQty" type="SubnetQuantityType" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="gasDay" type="xsd:date"/>
+	</xsd:complexType>
+	<!-- Energy Quantity types -->
+	<xsd:complexType name="ParticipantQuantityType">
+		<xsd:sequence>
+			<xsd:element name="RoleAssignments" type="RoleAssignments" minOccurs="0"/>
+			<xsd:element name="Energy" type="QuantityType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Transaction Types -->
+	<xsd:complexType name="QuantityNotification">
+		<xsd:sequence>
+			<xsd:element name="Quantities" type="ParticipantQuantityType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ShipperChangeRequestType">
+		<xsd:sequence>
+			<xsd:element name="RoleAssignments" type="RoleAssignments" minOccurs="0"/>
+			<xsd:element name="Subnet" type="SubnetIdentifier" minOccurs="0"/>
+			<xsd:element name="Pipeline" type="PipelineIdentifier" minOccurs="0"/>
+			<xsd:element name="EffectiveDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="Reason" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="ShipperChangeType"/>
+	</xsd:complexType>
+	<xsd:complexType name="AllocationNotification">
+		<xsd:choice>
+			<xsd:annotation>
+				<xsd:documentation>AllocationNotification includes the following business transactions:
+User Allocation - 
+	UAI - User Allocation Instruction 					#	From: User				To: REMCo DEE; 
+	UA-SHP - User Allocation for a Shipper			#	From: REMCo DEE		To: Shipper; 
+	NOT-UAI-USR - UAI – Used Shipper Register 		#	From: REMCo GRMBS	To: REMCo RMA
+ShipperChange - 
+	SHPREGLST - Shipper Register Listing Request 	# 	From: User				To: REMCo GRMBS
+	SHPREGRMV - Shipper Register Removal			# 	From: Pipeline Operator	To: REMCo DEE
+ShipperReportRequest - 
+	SHPRPTREQ - Shipper Report Request			# 	From: Pipeline Operator	To: REMCo DEE
+ShipperReportResponse -
+	SHPREGRPT - Shipper Register Report			# 	From: REMCo DEE		To: Pipeline Operator
+PipelineNomination - 
+	UPNA - User’s Pipeline Nomination 				# 	From: User				To: REMCo DEE
+SubnetProfile - 
+	NPN - Sub-network Profiled Nomination 			# 	From: REMCo DEE		To: User, Shipper, Network Operator, Pipeline Operator
+PipelineProfile - 
+	PPN - Pipeline Profiled Nomination 				# 	From: REMCo DEE		To: User, Shipper, Network Operator, Pipeline Operator
+	PIPPRF - Pipeline Profile							# 	From: Pipeline Operator	To: REMCo DEE
+PipelineRatio - 
+ 	PIPRATIO - Pipeline Ratio							# 	From: REMCo DEE		To: Pipeline Operator
+AnticipatedWithdrawal
+	AUIW - Anticipated User Interval Withdrawal		# 	From: User				To: REMCo DEE
+IntervalMeterProfile
+	IMDPROF - Interval-Meter Demand Profile 			# 	From: User				To: REMCo DEE
+SubnetProfileForecast
+	NPF - Sub-Network Profile Forecast 				#	From: REMCo DEE		To: User, Shipper, Pipeline Operator
+UserProfileForecast
+	UPF - User's Profile Forecast 					#	From: REMCo DEE		To: User
+	PPF - Participant Profile Forecast					# 	From: REMCo DEE		To: Shipper, Pipeline Operator
+GatePointInflow
+	GPENG - Gate Point Energy Inflow 				#	From: Pipeline Operator, REMCo RMA	To: REMCo RMA, User
+GatePointProfile
+	GPENGPROF - Gate Point Energy and Profile 		#	From: REMCo RMA		To: User
+EstimatedConsumption
+	ECA - Estimated Consumption Amount 			#	From: REMCo RMA		To: User
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:element name="UserAllocation" type="QuantityNotification"/>
+			<xsd:element name="ShipperChange" type="ShipperChangeRequestType"/>
+			<xsd:element name="ShipperReportRequest" type="ShipperChangeRequestType"/>
+			<xsd:element name="ShipperReportResponse" type="ShipperChangeRequestType"/>
+			<xsd:element name="PipelineNomination" type="QuantityNotification"/>
+			<xsd:element name="SubnetProfile" type="QuantityNotification"/>
+			<xsd:element name="PipelineProfile" type="QuantityNotification"/>
+			<xsd:element name="PipelineRatio" type="QuantityNotification"/>
+			<xsd:element name="AnticipatedWithdrawal" type="QuantityNotification"/>
+			<xsd:element name="IntervalMeterProfile" type="QuantityNotification"/>
+			<xsd:element name="SubnetProfileForecast" type="QuantityNotification"/>
+			<xsd:element name="UserProfileForecast" type="QuantityNotification"/>
+			<xsd:element name="GatePointInflow" type="QuantityNotification"/>
+			<xsd:element name="GatePointProfile" type="QuantityNotification"/>
+			<xsd:element name="EstimatedConsumption" type="QuantityNotification"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r31" use="optional" default="r31"/>
+	</xsd:complexType>
+	<xsd:complexType name="ReconciliationNotification">
+		<xsd:choice>
+			<xsd:annotation>
+				<xsd:documentation>Reconciliation transactions are included in the following order:
+ReconciliationAmount - 
+	FUAFG - Forecasted unaccounted for gas		# 	From: Network Operator	To: REMCo DEE
+	UUAFG - User’s Unaccounted For Gas			# 	From: Network Operator	To: REMCo DEE
+	RUAFG - User’s Revised Unaccounted For Gas	# 	From: REMCo DEE		To: Network Operator
+	AUAFG - Actual Unaccounted For Gas			# 	From: REMCo DEE		To: Network Operator
+	MRA-NOTF - Miscellaneous Amount				# 	From: REMCo RMA		To: REMCo DEE
+EstimatedTotalWithdrawal - 
+	UETW - User’s estimated total withdrawal 		#	From: REMCo DEE		To: User
+HeatingDegreeDay - 
+	HDD - Heating Degree Day 						#	From: REMCo DEE		To: User
+TotalAmount - 
+	TRA - User’s total reconciliation amount 			#	From: REMCo DEE		To: User, Network Operator
+HistoricalAmount - 
+	UHRA - User’s Historical Reconciliation Amounts	#	From: REMCo DEE		To: User
+NetSystemLoad - 
+	NORM-NSL - Normalisation Factor, NSL			#	From: REMCo DEE		To: User
+DeemedWithdrawal - 
+	UDW - User’s total deemed withdrawal 			#	From: REMCo DEE		To: User
+DeemedInjection - 
+	SDI - Shippers’s Total Deemed Injections			# 	From: REMCo DEE		To: Shipper,Pipeline Operator
+GatePointApportionment - 
+	UHGA - User’s hourly gatepoint apportionment 	#	From: REMCo DEE		To: User
+	SHGA - Shipper’s hourly gatepoint apportionment	# 	From: REMCo DEE		To: ShipperPipeline Operator
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:element name="ReconciliationAmount" type="QuantityNotification"/>
+			<xsd:element name="EstimatedTotalWithdrawal" type="QuantityNotification"/>
+			<xsd:element name="HeatingDegreeDay" type="QuantityNotification"/>
+			<xsd:element name="TotalAmount" type="QuantityNotification"/>
+			<xsd:element name="HistoricalAmount" type="QuantityNotification"/>
+			<xsd:element name="NetSystemLoad" type="QuantityNotification"/>
+			<xsd:element name="DeemedWithdrawal" type="QuantityNotification"/>
+			<xsd:element name="DeemedInjection" type="QuantityNotification"/>
+			<xsd:element name="GatePointApportionment" type="QuantityNotification"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r31" use="optional" default="r31"/>
+	</xsd:complexType>
+	<xsd:complexType name="SwingServiceNotification">
+		<xsd:choice>
+			<xsd:annotation>
+				<xsd:documentation>Swing Service  transactions are included in the following order:
+SwingService - 
+	SS - Swing Service  							# 	From: REMCo DEE		To: User,Pipeline Operator
+UserSwingService - 
+	USS - User’s swing service amounts				# 	From: REMCo DEE		To: User
+SwingServiceRepayment - 
+	SSRA - Swing Service Repayment Amount 		# 	From: REMCo DEE		To: User
+OffMarketProcurement - 
+	OMP-USR - User off-market service procurement	# 	From: User				To: REMCo DEE
+	OMP-SSP - SS Provider off-market procurement	# 	From: SS Provider		To: REMCo DEE
+	OMP-APP - Applied Off-market procurement 		# 	From: REMCo DEE		To: SS Provider and User
+OffMarketProcurementStatus - 
+	OMP-STATUS - Off-market procurement Status	# 	From: REMCo DEE		To: Swing Service Provider and User
+BidStack - 
+	BID-PUB - Bid Stack Publicationt 					# 	From: REMCo DEE		To: Swing Service Provider and User
+	BID-SSP - Swing Service Bids					# 	From: SS Provider		To: REMCo DEE
+	BID-INV - Notification of Invalid Bid				# 	From: REMCo DEE		To: SS Provider
+BidAllocation - 
+	BID-ALLOC - Notification of SS Allocation through the Bid Stack # From: REMCo DEE	To: Swing Service Provider and User
+Bidnotification - 
+	SUBS-NOTF	- Notification to subscribers			# 	From: REMCo DEE		To: REMCo Subscriber
+ClearingPrice - 
+	MCP-TSS - MCP total SS through the bid stack 	# 	From: REMCo DEE		To: Swing Service Provider and User
+ClearingPriceNonAdjusted - 
+	MCP-TANUSA - MCP total adjusted SS amounts	#	From: REMCo DEE	To: Swing Service Provider and User
+SwingServiceApportionment - 
+	SRAAQ - SSRA Apportionment Quantity			# 	From: REMCo DEE		To: User
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:element name="SwingService" type="QuantityNotification"/>
+			<xsd:element name="UserSwingService" type="QuantityNotification"/>
+			<xsd:element name="SwingServiceRepayment" type="QuantityNotification"/>
+			<xsd:element name="OffMarketProcurement" type="QuantityNotification"/>
+			<xsd:element name="OffMarketProcurementStatus" type="QuantityNotification"/>
+			<xsd:element name="BidStack" type="QuantityNotification"/>
+			<xsd:element name="BidAllocation" type="QuantityNotification"/>
+			<xsd:element name="BidNotification" type="QuantityNotification"/>
+			<xsd:element name="ClearingPrice" type="QuantityNotification"/>
+			<xsd:element name="ClearingPriceNonAdjusted" type="QuantityNotification"/>
+			<xsd:element name="SwingServiceApportionment" type="QuantityNotification"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r31" use="optional" default="r31"/>
+	</xsd:complexType>
+</xsd:schema>

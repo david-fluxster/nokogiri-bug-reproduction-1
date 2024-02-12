@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Purpose - Define the structure of Peer to Peer open content transactions to extend the aseXML</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="AttachmentType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AttachmentName">
+		<xsd:restriction base="xsd:string">
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:complexType name="AttachmentList">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the structure of Work details.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Attachment" type="P2PAttachment" minOccurs="0" maxOccurs="unbounded"/>		
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="P2PAttachment">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the attributes for each attachment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="type" type="AttachmentType"/>
+		<xsd:attribute name="name" type="AttachmentName"/>	
+	</xsd:complexType>	
+	<!-- Transaction Types -->
+	<xsd:complexType name="PTPDataExchange">
+		<xsd:sequence>
+			<xsd:element name="FreeFormData" type="xsd:anyType" nillable="true"/>
+			<xsd:element name="AttachmentList" type="AttachmentList" minOccurs="0"/>		
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+	</xsd:complexType>	
+</xsd:schema>

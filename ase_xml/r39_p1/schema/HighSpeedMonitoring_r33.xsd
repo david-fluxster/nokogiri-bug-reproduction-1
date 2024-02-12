@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:simpleType name="HSMVendorSoftwareVersion">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--transaction types-->
+	<xsd:complexType name="HSMMonitorDataRequest">
+		<xsd:sequence>
+			<xsd:element name="RequestData" type="HSMMonitorDataRequestData"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r21" use="optional" default="r21"/>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorDataResponse">
+		<xsd:sequence>
+			<xsd:element name="ResponseData" type="HSMMonitorDataResponseData"/>
+			<xsd:element name="Event" type="Event"/>
+		</xsd:sequence>
+		<xsd:attribute name="vendorSoftwareVersion" type="HSMVendorSoftwareVersion" use="required"/>
+		<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+	</xsd:complexType>
+	<xsd:complexType name="HSMDataInventoryRequest">
+		<xsd:sequence>
+			<xsd:element name="RequestData" type="HSMDataInventoryRequestData"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+	</xsd:complexType>
+	<xsd:complexType name="HSMDataInventoryResponse">
+		<xsd:sequence>
+			<xsd:element name="ResponseData" type="HSMDataInventoryResponseData"/>
+			<xsd:element name="Event" type="Event"/>
+		</xsd:sequence>
+		<xsd:attribute name="vendorSoftwareVersion" type="HSMVendorSoftwareVersion" use="required"/>
+		<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+	</xsd:complexType>
+	<xsd:complexType name="HSMTriggersRequest">
+		<xsd:sequence>
+			<xsd:element name="RequestData" type="HSMTriggersRequestData"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+	</xsd:complexType>
+	<xsd:complexType name="HSMTriggersResponse">
+		<xsd:sequence>
+			<xsd:element name="ResponseData" type="HSMTriggersResponseData"/>
+			<xsd:element name="Event" type="Event"/>
+		</xsd:sequence>
+		<xsd:attribute name="vendorSoftwareVersion" type="HSMVendorSoftwareVersion" use="required"/>
+		<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorsRequest">
+		<xsd:sequence>
+			<xsd:element name="RequestData" type="HSMMonitorsRequestData"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r21" use="optional" default="r21"/>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorsResponse">
+		<xsd:sequence>
+			<xsd:element name="ResponseData" type="HSMMonitorsResponseData"/>
+			<xsd:element name="Event" type="Event"/>
+		</xsd:sequence>
+		<xsd:attribute name="vendorSoftwareVersion" type="HSMVendorSoftwareVersion" use="required"/>
+		<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+	</xsd:complexType>
+	<!--transaction payload definitions-->
+	<xsd:complexType name="HSMMonitorDataRequestData" abstract="true"/>
+	<xsd:complexType name="HSMMonitorDataResponseData" abstract="true"/>
+	<xsd:complexType name="HSMDataInventoryRequestData" abstract="true"/>
+	<xsd:complexType name="HSMDataInventoryResponseData" abstract="true"/>
+	<xsd:complexType name="HSMTriggersRequestData" abstract="true"/>
+	<xsd:complexType name="HSMTriggersResponseData" abstract="true"/>
+	<xsd:complexType name="HSMMonitorsRequestData" abstract="true"/>
+	<xsd:complexType name="HSMMonitorsResponseData" abstract="true"/>
+</xsd:schema>

@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define the transaction exchanges needed for delivery of meter data
+Details - The "Meter Data Delivery" transaction exchange allows interval and consumption meter data and profile shapes to be provided. It consists of a MeterDataNotification transaction and a resulting MeterDataResponse transaction.
+The "Settlement Data Delivery" transaction exchange provides information to the Market Settlement process. It consists of SettlementDataNotification transaction, with no response transactions.
+</xsd:documentation>
+	</xsd:annotation>
+	<!-- Support Types  -->
+	<xsd:simpleType name="MDMActivityIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify the submission of meter data via a MeterDataNotification transaction
+Detail - This identifier is assigned via MDM  to each block of data provided via a MeterDataNotification transaction.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:maxInclusive value="999999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransactionCode">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Add Meter or Register"/>
+			<xsd:enumeration value="Customer Transfer"/>
+			<xsd:enumeration value="Technical Data Change"/>
+			<xsd:enumeration value="Remove Meter"/>
+			<xsd:enumeration value="Special Read"/>
+			<xsd:enumeration value="On Request"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--WA Support Types-->
+	<xsd:simpleType name="MeterReadingGroupType">
+		<xsd:annotation>
+			<xsd:documentation>This is a method of grouping meters that belong to either one end-use customer (NMI), one Builder via all portable meters being defined as belonging to one Site (the builders address even though these meters are temporarily installed at building sites), or finally for a large company (eg Water Corp) by grouping all the Meters into one or more Routes (Route ID).  Values used by WA market are NMI, SITE or ROUTE.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NMI"/>
+			<xsd:enumeration value="Site"/>
+			<xsd:enumeration value="Route"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterReadingGroupId">
+		<xsd:annotation>
+			<xsd:documentation>This element is used to define the ID associated with the Meter Reading Group Type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RemoteServiceType">
+		<xsd:annotation>
+			<xsd:documentation>This element is used to define the RemoteService Type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RemoteServiceRequestCode">
+		<xsd:annotation>
+			<xsd:documentation>This element is used to define the RemoteServiceRequest code.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="ResponseFormat">
+		<xsd:annotation>
+			<xsd:documentation>This element is used to define the Response payload format. eg CSV, XML, MDFF, BASE64</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="UserDefinition">
+		<xsd:annotation>
+			<xsd:documentation>This element is used to define the User definitions as agreed between initiator and recipient.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>			
+	<xsd:simpleType name="ServiceRequestID">
+		<xsd:annotation>
+			<xsd:documentation>This element is used to define the Remote service request ID.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:complexType name="ResponsePayload">
+		<xsd:sequence>
+			<xsd:element name="RecordCount" type="RecordCount" minOccurs="0"/>
+			<xsd:element name="PayloadContent" type="xsd:anyType" nillable="true"/>
+		</xsd:sequence>	
+	</xsd:complexType>			
+	<xsd:complexType name="MeterSerialNumbers">
+		<xsd:annotation>
+			<xsd:documentation>Schema - RemoteService.  Collection of affected Meters</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MeterSerialNumber" type="MeterSerialNumber" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="UserDefData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - RemoteService.  User definitions block</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="UserDef1" type="UserDefinition" minOccurs="0"/>
+			<xsd:element name="UserDef2" type="UserDefinition" minOccurs="0"/>
+			<xsd:element name="UserDef3" type="UserDefinition" minOccurs="0"/>
+			<xsd:element name="UserDef4" type="UserDefinition" minOccurs="0"/>
+			<xsd:element name="UserDef5" type="UserDefinition" minOccurs="0"/>
+			<xsd:element name="UserDef6" type="UserDefinition" minOccurs="0"/>
+			<xsd:element name="UserDef7" type="UserDefinition" minOccurs="0"/>
+			<xsd:element name="UserDef8" type="UserDefinition" minOccurs="0"/>
+			<xsd:element name="UserDef9" type="UserDefinition" minOccurs="0"/>
+			<xsd:element name="UserDef10" type="UserDefinition" minOccurs="0"/>			
+		</xsd:sequence>
+	</xsd:complexType>			
+	
+	<xsd:complexType name="RemoteServiceData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - RemoteService
+			r36.1  WL.    Change Meters element to be optional.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RequestID" type="ServiceRequestID"/>
+			<xsd:element name="NMI" type="NMI"/>
+			<xsd:element name="Meters" type="MeterSerialNumbers" minOccurs="0"/>
+			<xsd:element name="ServiceType" type="RemoteServiceType"/>
+			<xsd:element name="RequestCode" type="RemoteServiceRequestCode"/>
+			<xsd:element name="ResponseFormat" type="ResponseFormat"/>
+			<xsd:element name="FromDateTime" type="xsd:dateTime" minOccurs="0"/>		
+			<xsd:element name="ToDateTime" type="xsd:dateTime" minOccurs="0"/>	
+			<xsd:element name="UserDef" type="UserDefData" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="RemoteServiceResponseData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - RemoteService</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ResponsePayload" type="ResponsePayload" minOccurs="0"/>
+			<xsd:element name="Event" type="Event" minOccurs="0"/>
+			<xsd:element name="Product" type="Product" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<!--WA Main Type-->
+	<xsd:complexType name="MeterReadingGroup">
+		<xsd:sequence>
+			<xsd:element name="MeterReadingGroupId" type="MeterReadingGroupId"/>
+		</xsd:sequence>
+		<xsd:attribute name="context" type="MeterReadingGroupType" use="optional"/>
+	</xsd:complexType>
+	<!-- Transaction Types -->
+	<xsd:complexType name="MeterDataVerifyRequest">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="VerifyRequestData" type="NMITransactionBase"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+	<xsd:complexType name="MeterDataVerifyResponse">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="VerifyResponseData" type="NMITransactionBase"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+	<xsd:complexType name="MeterDataHistoryRequest">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="SingleHistoryRequestData" type="NMITransactionBase"/>
+			<xsd:element name="CSVHistoryRequestData" type="CSVRequestFormat"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+	<xsd:complexType name="MeterDataHistoryResponse">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CSVHistoryResponseData" type="CSVResponseFormat"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+	<xsd:complexType name="AccountCreationNotification">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AccountCreationData" type="NMIStandingData"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+	<xsd:complexType name="MeterReadInputNotification">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ReadInputData" type="NMIStandingData"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+	<xsd:complexType name="MeterDataMissingNotification">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="MissingMeterData" type="NMITransactionBase"/>
+			<xsd:element name="CSVMissingMeterData" type="CSVRequestFormat"/>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r14" use="optional" default="r14"/>
+	</xsd:complexType>
+	<xsd:complexType name="MeterDataNotification">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Meter Data Management
+TransactionExchange - Meter Data Delivery
+TransactionGroup - MDMT for VicGas and SAWA Gas
+Priority - Low
+Purpose - Provide meter data
+Detail - Only one type of meter data can be delivered within a given transaction. 
+
+			Transaction Group: MTRD NEM - B2B Electricity National Electricity B2B Process Tranche 1 Build Pack;	Only CSVConsumptionData and CSVIntervalData used.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RecordCount" type="RecordCount" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:element name="CSVConsumptionData" type="CSVDataWithName" nillable="true">
+					<xsd:annotation>
+						<xsd:documentation>
+Purpose - Deliver consumption meter data (also called basic meter data).
+Detail - The following column headings will be employed in the default order as listed
+for each energy market.
+
+NEM
+	NMI - 10 characters
+	Suffix - 2 characters
+	MDPVersionDate - YYYYMMDDHHMMSS
+	FromDate - YYYYMMDD
+	ToDate - YYYYMMDD
+	Status - A or E
+	Reading - in kiloWattHours, no leading/trailing zeros
+	
+VICGAS
+	NMI
+	NMI_Checksum
+	RB_Reference_Number
+	Reason_For_Special_Read
+	Gas_Meter_Number
+	Gas_Meter_Units
+	Previous_Index_Value
+	Previous_Read_Date
+	Current_Index_Value
+	Current_Read_Date
+	Volume_Flow
+	Average_Heating_Value
+	Pressure_Correction_Factor
+	Consumed_Energy
+	Type_of_Read
+	Estimation_Substitution_Type
+	Estimation_Substitution_Reason_Code
+	Meter_Status
+	Next_Scheduled_Read_Date
+	Hi_Low_Failure
+	Meter_Capacity_Failure
+	Adjustment_Reason_Code
+	Energy_Calculation_Date_Stamp
+	Energy_Calculation_Time_Stamp
+For further details on VICGAS requirements refer to VENCorp Participant Build Pack 3                                                                                     B2B ELECTRICITY                                    Contains embedded data in CSV format for basic meters. This is the standard file format for basic meter data defined in a valid MDFF.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="CSVIntervalData" type="CSVDataWithName" nillable="true">
+					<xsd:annotation>
+						<xsd:documentation>
+Purpose - Deliver interval meter data
+Detail - The following column headings will be employed in the default order as listed 
+for each energy market.
+
+NEM
+	NMI - 10 characters
+	Suffix - 2 characters
+	MDPVersionDate - YYYYMMDDHHMMSS
+	SettlementDate - YYYYMMDD
+	Status - 48 characters, 1 per interval, A or E
+	Period01 - in kiloWattHours, no leading/trailing zeros	
+	Period02 - in kiloWattHours, no leading/trailing zeros
+	...
+	Period48 - in kiloWattHours, no leading/trailing zeros.                               
+B2B ELECTRICITY
+Contains embedded data in CSV format for interval meters. This is the standard file format for interval meter data defined in a valid MDFF.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="CSVProfileData" type="CSVDataWithName" nillable="true">
+					<xsd:annotation>
+						<xsd:documentation>
+Purpose - Deliver profile shape data
+Detail - The following column headings will be employed in the default order listed
+for each energy market.
+
+NEM
+	ProfileName - as per MDM
+	MDPVersionDate - YYYYMMDDHHMMSS
+	SettlementDate - YYYYMMDD
+	Period01- in kiloWattHours, no leading/trailing zeros
+	Period02 - in kiloWattHours, no leading/trailing zeros
+	...
+	Period48 - in kiloWattHours, no leading/trailing zeros
+	
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:element name="ParticipantRole" type="RoleAssignment" minOccurs="0"/>
+			<xsd:element name="MeterReadingGroup" type="MeterReadingGroup" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r25" use="optional" default="r25"/>
+	</xsd:complexType>
+	<xsd:complexType name="MeterDataResponse">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Meter Data Management
+TransactionExchange - Meter Data Delivery
+TransactionGroup - MDMT
+Priority - Low
+Purpose - Provide acknowledgment of the loading of meter data into MDM
+Detail - Any errors are reported via Event elements.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ActivityID" type="MDMActivityIdentifier"/>
+			<xsd:element name="AcceptedCount" type="xsd:nonNegativeInteger"/>
+			<xsd:element name="LoadDate" type="xsd:dateTime"/>
+			<xsd:element name="Event" type="Event" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r29" use="optional" default="r29"/>
+	</xsd:complexType>
+	<xsd:complexType name="SettlementDataNotification">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Meter Data Management
+TransactionExchange - Settlement Data Delivery
+TransactionGroup - MDMT
+Priority - Low
+Purpose - Provide settlement data
+Detail - Only one type of settlement data can be delivered within a given transaction. 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="CSVAggregatedSettlementData" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>
+Purpose - Deliver aggregated settlement data
+Detail - The following column headings will be employed in the default order listed
+for each energy market.
+
+NEM
+	TNI - as per MDM
+	FRMP - as per MDM
+	LR - as per MDM
+	MDP - as per MDM
+	SettlementDate - YYYYMMDD
+	Period01- in kiloWattHours, no leading/trailing zeros
+	Period02 - in kiloWattHours, no leading/trailing zeros
+	...
+	Period48 - in kiloWattHours, no leading/trailing zeros
+	
+			</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CSVNonAggregatedSettlementData" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>
+Purpose - Deliver non-aggregated settlement data
+Details - The following column headings will be employed in the default order listed
+for each energy market.
+
+NEM
+	TNI - as per MDM
+	FRMP - as per MDM
+	LR - as per MDM
+	MDP - as per MDM
+	NMI - 10 characters
+	Suffix - 2 characters	
+	SettlementDate  - YYYYMMDD
+	Period01- in kiloWattHours, no leading/trailing zeros
+	Period02 - in kiloWattHours, no leading/trailing zeros
+	...
+	Period48 - in kiloWattHours, no leading/trailing zeros
+	
+		</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+		<xsd:attribute name="version" type="r4" use="optional" default="r4"/>
+	</xsd:complexType>
+	<xsd:complexType name="RemoteServiceRequest">
+		<xsd:annotation>
+			<xsd:documentation>Prior to commencing the use of the Remote Service Process the Initiator and Recipient must agree the scope of the service(s) and the format of the response to the service request.
+			</xsd:documentation>
+		</xsd:annotation>	
+		<xsd:sequence>
+			<xsd:element name="RemoteServiceData" type="RemoteServiceData"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+	</xsd:complexType>		
+	<xsd:complexType name="RemoteServiceResponse">
+		<xsd:annotation>
+			<xsd:documentation>Prior to commencing the use of the Remote Service Process the Initiator and Recipient must agree the scope of the service(s) and the format of the response to the service request.
+			</xsd:documentation>
+		</xsd:annotation>	
+		<xsd:sequence>
+			<xsd:element name="RemoteServiceData" type="RemoteServiceData"/>
+			<xsd:element name="ResponseData" type="RemoteServiceResponseData"/>	
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+	</xsd:complexType>	
+	<!-- WA Transaction Types -->
+	<xsd:complexType name="MeterReadingReferenceDataRequest">
+		<xsd:annotation>
+			<xsd:documentation>For a given Reading Group Type (NMI, Site or Route), this transaction is used by an external system to request details of the meters related to the group id, such that an external system can accept meter readings and perform basic validation before submission to the Meter Reading System.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MeterReadingGroup" type="MeterReadingGroup"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r19" use="optional" default="r19"/>
+	</xsd:complexType>
+	<xsd:complexType name="MeterReadingReferenceDataResponse">
+		<xsd:sequence>
+			<xsd:element name="MeterReadingGroup" type="MeterReadingGroup"/>
+			<xsd:element name="NMIStandingData" type="NMIStandingData"/>
+			<xsd:element name="Event" type="Event" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r19" use="optional" default="r19"/>
+	</xsd:complexType>
+</xsd:schema>

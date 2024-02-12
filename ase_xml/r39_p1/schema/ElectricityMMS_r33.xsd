@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:annotation>
+    <xsd:documentation>
+      This schema file is part of the aseXML schema set, and is subject to the terms
+      and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is
+      used
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:annotation>
+    <xsd:documentation>
+      Purpose - Define the transaction exchanges needed by the "EMMS IntermittentGen Availibility Loader" application
+      Detail - This schema contains the necessary transaction exchange to support a request
+      to change the forecast wind farm availability.
+
+      The essential information is in BidDetails and identifies the intermittent generator by "Duid" and the time frame by
+      "TradingDate".  The other tags are essential.
+
+      The rest of the intermittent gen availability is in three sections, all and any can occur.  Periods allows the half hourly
+      upper limits on the intermittent generator to be specified. Clusters allows the half hourly number of cluster elements out of service
+      in each cluster of the intermittent generator.  A cluster is usually a set of generation elements of the same type and an
+      intermittent generator can have more than one cluster.
+
+      The MtPasa section defines the same information defined for one market day.
+
+    </xsd:documentation>
+  </xsd:annotation>
+  <!--MMS Types-->
+  <xsd:complexType name="MMSMtPasaIntermittentGenAvailability">
+    <xsd:annotation>
+      <xsd:documentation>
+        Purpose - Provide intermittent generator availability information for the MtPasa time frame
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="UpperLimit" type="UpperLimit" minOccurs="0"/>
+      <xsd:element name="Clusters" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Cluster" minOccurs="1"  maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="ElementClusterId" type="ElementClusterId"/>
+                  <xsd:element name="ElementsNotAvailable" type="ElementsNotAvailable"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="MMSClusterIntermittentGenAvailability">
+    <xsd:annotation>
+      <xsd:documentation>Purpose - Provide generation element availability in clusters for the StPasa time frame</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Cluster" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ElementClusterId" type="ElementClusterId"/>
+            <xsd:element name="MMSPeriods">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="MMSPeriod" nillable="false" maxOccurs="48">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="MMSPeriodId" type="MMSPeriodId"/>
+                        <xsd:element name="ElementsNotAvailable" type="ElementsNotAvailable"/>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="MMSUpperLimitsIntermittentGenAvailability">
+    <xsd:annotation>
+      <xsd:documentation>Purpose - Provide upper limits on whole intermittent generator in StPasa time frame</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="MMSPeriod" maxOccurs="48">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="MMSPeriodId" type="MMSPeriodId"/>
+            <xsd:element name="UpperLimit" type="UpperLimit"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="MMSBidDetails">
+    <xsd:annotation>
+      <xsd:documentation>Purpose - Defines the market day and intermittent generator and other essential details for bid</xsd:documentation>
+    </xsd:annotation>
+    <xsd:all>
+      <xsd:element name="Duid" type="Duid" nillable="false"/>
+      <xsd:element name="TradingDate" type="xsd:date" nillable="false"/>
+      <xsd:element name="AuthorisedByParticipant" type="AuthorisedByParticipant" nillable="false"/>
+      <xsd:element name="AuthorisedByUser" type="AuthorisedByUser" nillable="false"/>
+      <xsd:element name="OfferDateTime" type="xsd:dateTime" nillable="false"/>
+    </xsd:all>
+  </xsd:complexType>
+  <!-- Transaction Types -->
+  <xsd:complexType name="MMSIntermittentGenAvailabilityRequest">
+    <xsd:annotation>
+      <xsd:documentation>
+        Application - IntermittentGenAvaliability
+        TransactionExchange - IntermittentGenAvailability
+        TransactionGroup - EMMS
+        Priority - Low
+        Purpose - Provide new forecast intermittent generator availability for the Electricity MMS.
+        Detail -
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="BidDetails" type="MMSBidDetails"/>
+      <xsd:sequence>
+        <xsd:element name="MMSPeriods" type="MMSUpperLimitsIntermittentGenAvailability" minOccurs="0"/>
+        <xsd:element name="Clusters" type="MMSClusterIntermittentGenAvailability" minOccurs="0"/>
+        <xsd:element name="MtPasa" type="MMSMtPasaIntermittentGenAvailability" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="r33" use="optional" default="r33"/>
+  </xsd:complexType>
+  <xsd:simpleType name="Duid">
+    <xsd:annotation>
+      <xsd:documentation>
+        Id for windfarm
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="AuthorisedByParticipant">
+    <xsd:annotation>
+      <xsd:documentation>
+        Participant providing authorisation
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="AuthorisedByUser">
+    <xsd:annotation>
+      <xsd:documentation>
+        User providing authorisation
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="ElementClusterId">
+    <xsd:annotation>
+      <xsd:documentation>
+        Id for element clusters of intermittent generators
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="UpperLimit">
+    <xsd:annotation>
+      <xsd:documentation>
+        Upper limit on the output elements
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="-1"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ElementsNotAvailable">
+    <xsd:annotation>
+      <xsd:documentation>
+        To specify number of generation elements which are not available
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="MMSPeriodId">
+    <xsd:annotation>
+      <xsd:documentation>
+        Id for half hourly interval of the day. The term period is MMS is deeply ingrained in MMS nomenclature.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="1"/>
+      <xsd:maxInclusive value="48"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

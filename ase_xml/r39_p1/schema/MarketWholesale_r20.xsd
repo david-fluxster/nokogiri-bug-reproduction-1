@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:annotation>
+	<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+</xsd:annotation>
+  <!-- ================================================================= -->
+  <!-- Transaction Definitions -->
+  <!-- ================================================================= -->
+  <xsd:complexType name="WholesaleRetrieveRequest">
+    <xsd:sequence>
+      <xsd:element name="RetrieveRequestData" type="WholesaleRetrieveRequestData"/>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="r20" use="optional" default="r20"/>
+  </xsd:complexType>
+  <xsd:complexType name="WholesaleRetrieveResponse">
+    <xsd:sequence>
+      <xsd:element name="RetrieveResponseData" type="WholesaleRetrieveResponseData"/>
+      <xsd:element name="Event" type="Event" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="r20" use="optional" default="r20"/>
+  </xsd:complexType>
+  <xsd:complexType name="WholesaleSearchRequest">
+    <xsd:sequence>
+      <xsd:element name="SearchRequestData" type="WholesaleSearchRequestData"/>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="r20" use="optional" default="r20"/>
+  </xsd:complexType>
+  <xsd:complexType name="WholesaleSearchResponse">
+    <xsd:sequence>
+      <xsd:element name="SearchResponseData" type="WholesaleSearchResponseData"/>
+      <xsd:element name="Event" type="Event" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="r20" use="optional" default="r20"/>
+  </xsd:complexType>
+  <xsd:complexType name="WholesaleSubmitRequest">
+    <xsd:sequence>
+      <xsd:element name="SubmitRequestData" type="WholesaleSubmitRequestData"/>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="r20" use="optional" default="r20"/>
+  </xsd:complexType>
+  <xsd:complexType name="WholesaleSubmitResponse">
+    <xsd:sequence>
+      <xsd:element name="SubmitResponseData" type="WholesaleSubmitResponseData"/>
+      <xsd:element name="Event" type="Event" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="r20" use="optional" default="r20"/>
+  </xsd:complexType>
+  <xsd:complexType name="WholesaleInformationRequest">
+    <xsd:sequence>
+      <xsd:element name="InformationRequestData" type="WholesaleInformationRequestData"/>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="r20" use="optional" default="r20"/>
+  </xsd:complexType>
+  <xsd:complexType name="WholesaleInformationResponse">
+    <xsd:sequence>
+      <xsd:element name="InformationResponseData" type="WholesaleInformationResponseData"/>
+      <xsd:element name="Event" type="Event" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="r20" use="optional" default="r20"/>
+  </xsd:complexType>
+  <!-- ================================================================= -->
+  <!-- Transaction Payload Definitions -->
+  <!-- ================================================================= -->
+  <xsd:complexType name="WholesaleRetrieveRequestData" abstract="true"/>
+  <xsd:complexType name="WholesaleRetrieveResponseData" abstract="true"/>
+  <xsd:complexType name="WholesaleSearchRequestData" abstract="true"/>
+  <xsd:complexType name="WholesaleSearchResponseData" abstract="true"/>
+  <xsd:complexType name="WholesaleSubmitRequestData" abstract="true"/>
+  <xsd:complexType name="WholesaleSubmitResponseData" abstract="true"/>
+  <xsd:complexType name="WholesaleInformationRequestData" abstract="true"/>
+  <xsd:complexType name="WholesaleInformationResponseData" abstract="true"/>
+</xsd:schema>

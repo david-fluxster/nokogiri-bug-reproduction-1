@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 2 (http://www.altova.com) by Paul Spain (AEMO) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:simpleType name="HSMEID">
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:totalDigits value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMID">
+		<xsd:restriction base="NonZeroLengthString">
+			<xsd:maxLength value="40"/>
+			<xsd:pattern value="[A-Z0-9_]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMTriggerID">
+		<xsd:restriction base="NonZeroLengthString">
+			<xsd:maxLength value="40"/>
+			<xsd:pattern value="[A-Z0-9_]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMPlant">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Bus"/>
+			<xsd:enumeration value="Generator"/>
+			<xsd:enumeration value="Load"/>
+			<xsd:enumeration value="Region"/>
+			<xsd:enumeration value="Shunt"/>
+			<xsd:enumeration value="Station"/>
+			<xsd:enumeration value="Static VAR Compensator"/>
+			<xsd:enumeration value="Switch"/>
+			<xsd:enumeration value="Transformer"/>
+			<xsd:enumeration value="Transmission Line"/>
+			<xsd:enumeration value="Zero Impedance Branch"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMQuantity">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Voltage Angle Blue"/>
+			<xsd:enumeration value="Voltage Angle Positive Sequence"/>
+			<xsd:enumeration value="Voltage Angle Red"/>
+			<xsd:enumeration value="Voltage Angle White"/>
+			<xsd:enumeration value="Frequency"/>
+			<xsd:enumeration value="Power Blue"/>
+			<xsd:enumeration value="Power Red"/>
+			<xsd:enumeration value="Power Three Phase"/>
+			<xsd:enumeration value="Power White"/>
+			<xsd:enumeration value="Reactive Power Blue"/>
+			<xsd:enumeration value="Reactive Power Red"/>
+			<xsd:enumeration value="Reactive Power Three Phase"/>
+			<xsd:enumeration value="Reactive Power White"/>
+			<xsd:enumeration value="Voltage Blue"/>
+			<xsd:enumeration value="Voltage Positive Sequence"/>
+			<xsd:enumeration value="Voltage Red"/>
+			<xsd:enumeration value="Voltage White"/>
+			<xsd:enumeration value="Current Red"/>
+			<xsd:enumeration value="Current White"/>
+			<xsd:enumeration value="Current Blue"/>
+			<xsd:enumeration value="Current Angle Red"/>
+			<xsd:enumeration value="Current Angle Blue"/>
+			<xsd:enumeration value="Current Angle White"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMStatus">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Offline"/>
+			<xsd:enumeration value="Synchronised"/>
+			<xsd:enumeration value="Unsynchronised"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMData">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Continuous"/>
+			<xsd:enumeration value="Triggered"/>
+			<xsd:enumeration value="Waveform"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMCompression">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="7Zip"/>
+			<xsd:enumeration value="BZip2"/>
+			<xsd:enumeration value="Rar"/>
+			<xsd:enumeration value="Zip"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMTriggerValue">
+		<xsd:restriction base="xsd:double"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMFormat">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="COMTRADE Configuration"/>
+			<xsd:enumeration value="COMTRADE Data"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMMonitors">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="RollCall"/>
+			<xsd:enumeration value="ContinuousCapability"/>
+			<xsd:enumeration value="TriggeredCapability"/>
+			<xsd:enumeration value="WaveformCapability"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="HSMMonitorIdentities">
+		<xsd:sequence>
+			<xsd:element name="MonitorIdentity" type="HSMMonitorIdentity" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorIdentity">
+		<xsd:sequence>
+			<xsd:element name="StationEID" type="HSMEID"/>
+			<xsd:element name="MonitorID" type="HSMID"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorCapabilities">
+		<xsd:sequence>
+			<xsd:element name="MonitorCapability" type="HSMMonitorCapability" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorCapability">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorIdentity">
+				<xsd:sequence>
+					<xsd:element name="MonitorChannels" type="HSMMonitorChannels" nillable="true"/>
+				</xsd:sequence>
+				<xsd:attribute name="capabilityDate" type="xsd:dateTime" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorChannel">
+		<xsd:sequence>
+			<xsd:element name="EID" type="HSMEID"/>
+			<xsd:element name="Index">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:positiveInteger">
+						<xsd:totalDigits value="10"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Plant" type="HSMPlant"/>
+			<xsd:element name="Quantity" type="HSMQuantity"/>
+			<xsd:element name="Name" type="HSMID" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorChannels">
+		<xsd:sequence>
+			<xsd:element name="MonitorChannel" type="HSMMonitorChannel" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorRollCalls">
+		<xsd:sequence>
+			<xsd:element name="MonitorRollCall" type="HSMMonitorRollCall" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorRollCall">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorIdentity">
+				<xsd:sequence>
+					<xsd:element name="Status" type="HSMStatus"/>
+					<xsd:element name="LastCapabilityUpdate" type="xsd:dateTime" nillable="true"/>
+					<xsd:element name="EarliestData" type="xsd:dateTime" nillable="true"/>
+					<xsd:element name="LatestData" type="xsd:dateTime" nillable="true"/>
+					<xsd:element name="CurrentMonitorTime" type="xsd:dateTime" nillable="true"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="HSMMonitorData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorIdentity">
+				<xsd:sequence>
+					<xsd:sequence>
+						<xsd:element name="CapabilityDate" type="xsd:dateTime" nillable="false"/>
+						<xsd:element name="MonitorStatus" type="HSMStatus"/>
+					</xsd:sequence>
+					<xsd:choice>
+						<xsd:element name="ComtradeText" type="HSMComtradeText" nillable="true"/>
+						<xsd:element name="ComtradeCompressed" nillable="true">
+							<xsd:complexType>
+								<xsd:simpleContent>
+									<xsd:extension base="xsd:base64Binary">
+										<xsd:attribute name="format" type="HSMCompression" use="required"/>
+									</xsd:extension>
+								</xsd:simpleContent>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="HSMContinuousMonitorData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorData">
+				<xsd:sequence>
+					<xsd:element name="StartTime" type="xsd:dateTime"/>
+					<xsd:element name="EndTime" type="xsd:dateTime"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="HSMTriggeredMonitorData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorData">
+				<xsd:sequence>
+					<xsd:element name="FaultTime" type="xsd:dateTime"/>
+					<xsd:element name="BlockNumber" type="ReplicationSequenceNumber"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="HSMComtradeText">
+		<xsd:sequence>
+			<xsd:element name="Header" type="NonZeroLengthString" nillable="true" minOccurs="0"/>
+			<xsd:element name="Configuration" type="NonZeroLengthString" nillable="true"/>
+			<xsd:element name="Data" type="NonZeroLengthString" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HSMTriggeredEvents">
+		<xsd:sequence>
+			<xsd:element name="TriggeredEvent" type="HSMTriggeredEvent" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HSMTriggeredEvent">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorIdentity">
+				<xsd:sequence>
+					<xsd:element name="FaultTime" type="xsd:dateTime"/>
+					<xsd:element name="LastBlockNumber" type="ReplicationSequenceNumber"/>
+					<xsd:element name="TriggerID" type="HSMTriggerID" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="HSMTrigger">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorIdentity">
+				<xsd:sequence>
+					<xsd:element name="TriggerID" type="HSMTriggerID" nillable="false"/>
+					<xsd:element name="Description" type="xsd:string" nillable="true"/>
+					<xsd:element name="MonitorChannelIndex" nillable="false">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:positiveInteger">
+								<xsd:totalDigits value="10"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="PreFaultLength" type="xsd:nonNegativeInteger" nillable="false"/>
+					<xsd:element name="PostFaultLength" type="xsd:nonNegativeInteger" nillable="false"/>
+					<xsd:element name="Quantity" type="HSMQuantity" nillable="false"/>
+					<xsd:choice>
+						<xsd:element name="OverValue" type="HSMTriggerValue" nillable="false"/>
+						<xsd:element name="UnderValue" type="HSMTriggerValue" nillable="false"/>
+						<xsd:sequence>
+							<xsd:element name="WindowMinValue" type="HSMTriggerValue" nillable="false"/>
+							<xsd:element name="WindowMaxValue" type="HSMTriggerValue" nillable="false"/>
+						</xsd:sequence>
+						<xsd:sequence>
+							<xsd:element name="ChangeRateValue" type="HSMTriggerValue" nillable="false"/>
+							<xsd:element name="ChangeRateDenominatorUnit" type="xsd:string" nillable="false"/>
+						</xsd:sequence>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="HSMTriggers">
+		<xsd:sequence>
+			<xsd:element name="Trigger" type="HSMTrigger" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--concrete transaction payload types-->
+	<xsd:complexType name="ElectricityHSMMonitorDataRequestData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorDataRequestData">
+				<xsd:sequence>
+					<xsd:element name="MonitorIdentity" type="HSMMonitorIdentity"/>
+					<xsd:choice>
+						<xsd:element name="Continuous">
+							<xsd:complexType>
+								<xsd:attribute name="startTime" type="xsd:dateTime" use="required"/>
+								<xsd:attribute name="endTime" type="xsd:dateTime" use="required"/>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="Triggered">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="BlockNumber" type="ReplicationSequenceNumber" maxOccurs="unbounded"/>
+								</xsd:sequence>
+								<xsd:attribute name="faultTime" type="xsd:dateTime" use="required"/>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityHSMMonitorDataResponseData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorDataResponseData">
+				<xsd:choice>
+					<xsd:element name="ContinuousData" type="HSMContinuousMonitorData" nillable="true"/>
+					<xsd:element name="TriggeredData" type="HSMTriggeredMonitorData" nillable="true"/>
+				</xsd:choice>
+				<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityHSMMonitorsRequestData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorsRequestData">
+				<xsd:sequence>
+					<xsd:element name="MonitorIdentities" type="HSMMonitorIdentities" nillable="true"/>
+				</xsd:sequence>
+				<xsd:attribute name="requestName" type="HSMMonitors" use="required"/>
+				<xsd:attribute name="allMonitors" type="xsd:boolean" use="required"/>
+				<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityHSMMonitorsResponseData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMMonitorsResponseData">
+				<xsd:choice>
+					<xsd:element name="MonitorRollCalls" type="HSMMonitorRollCalls" nillable="true"/>
+					<xsd:element name="MonitorCapabilities" type="HSMMonitorCapabilities" nillable="true"/>
+				</xsd:choice>
+				<xsd:attribute name="responseName" type="HSMMonitors" use="required"/>
+				<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityHSMDataInventoryRequestData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMDataInventoryRequestData">
+				<xsd:sequence>
+					<xsd:element name="StartTime" type="xsd:dateTime"/>
+					<xsd:element name="EndTime" type="xsd:dateTime"/>
+					<xsd:element name="MonitorIdentities" type="HSMMonitorIdentities" nillable="true"/>
+				</xsd:sequence>
+				<xsd:attribute name="allMonitors" type="xsd:boolean" use="required"/>
+				<xsd:attribute name="dataCategory" type="HSMData" use="required"/>
+				<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityHSMDataInventoryResponseData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMDataInventoryResponseData">
+				<xsd:sequence>
+					<xsd:element name="TriggeredEvents" type="HSMTriggeredEvents" nillable="true"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityHSMTriggersRequestData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMTriggersRequestData">
+				<xsd:sequence>
+					<xsd:element name="MonitorIdentities" type="HSMMonitorIdentities" nillable="true"/>
+				</xsd:sequence>
+				<xsd:attribute name="allMonitors" type="xsd:boolean" use="required"/>
+				<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityHSMTriggersResponseData">
+		<xsd:complexContent>
+			<xsd:extension base="HSMTriggersResponseData">
+				<xsd:sequence>
+					<xsd:element name="Triggers" type="HSMTriggers" nillable="true"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r26" use="optional" default="r26"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

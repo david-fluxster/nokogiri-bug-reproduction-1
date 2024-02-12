@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define the transaction exchanges needed for delivery of Fault information for requesting and reporting faults; under the TransactionGroup - FLTS.
+Details - The "Fault Info Request" transaction allows a Retailer or service provider  to request fault information about a premise or vicinity from an LNSP.
+The "Fault Outage Advice" transaction allows an LNSP to pass fault information to a Retailer or service provider in response to the "Fault Info Request" transaction.
+The "Fault Notification" transaction is to be used by an a Retailer to notify an LNSP of a fault where the FaultOutageAdvice was returned as "unknown", thus the Retailer has more information about a fault and must report it to the LNSP.
+</xsd:documentation>
+	</xsd:annotation>
+	<!-- Support Types -->
+	<xsd:simpleType name="PublicLightingGSLIndicator">
+		<xsd:annotation>
+			<xsd:documentation>Public lighting guaranteed service level type fault</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Adjacent"/>
+			<xsd:enumeration value="Not Applicable"/>
+			<xsd:enumeration value="Opposite"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OutageType">
+		<xsd:annotation>
+			<xsd:documentation>Category of outage type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Load Shed"/>
+			<xsd:enumeration value="Planned"/>
+			<xsd:enumeration value="Unplanned"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FaultResponseType">
+		<xsd:annotation>
+			<xsd:documentation>The type of response provided by a Fault Advice</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="Update"/>
+			<xsd:enumeration value="Completed"/>
+			<xsd:enumeration value="Close"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="FaultInformant">
+		<xsd:annotation>
+			<xsd:documentation>Person who reported fault</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ContactDetail"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="FaultLocation">
+		<xsd:annotation>
+			<xsd:documentation>Location of the fault i.e. vicinty if not strcitly at a premise, otherwise premise</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="AustralianAddress">
+				<xsd:attribute name="locationType" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="Premise"/>
+							<xsd:enumeration value="Vicinity"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="FaultSymptoms">
+		<xsd:annotation>
+			<xsd:documentation>Symptom/s of the fault</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Symptom" maxOccurs="4">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="ACR tripped"/>
+						<xsd:enumeration value="Area street lights out"/>
+						<xsd:enumeration value="Car hit pole"/>
+						<xsd:enumeration value="Dim lights"/>
+						<xsd:enumeration value="Damage to u/ground pillar"/>
+						<xsd:enumeration value="Electric shock"/>
+						<xsd:enumeration value="Explosion reports"/>
+						<xsd:enumeration value="Fuse down"/>
+						<xsd:enumeration value="Fire"/>
+						<xsd:enumeration value="Glow reports"/>
+						<xsd:enumeration value="High voltage injection"/>
+						<xsd:enumeration value="Hot water 16h boost"/>
+						<xsd:enumeration value="Intermittent supply"/>
+						<xsd:enumeration value="Insufficient hot water"/>
+						<xsd:enumeration value="Light/s out found by patrol"/>
+						<xsd:enumeration value="Loss of supply - complete"/>
+						<xsd:enumeration value="Loss of supply - partial"/>
+						<xsd:enumeration value="Meter/timeswitch faulty"/>
+						<xsd:enumeration value="No hot water"/>
+						<xsd:enumeration value="Not listed"/>
+						<xsd:enumeration value="Other"/>
+						<xsd:enumeration value="Pole Down"/>
+						<xsd:enumeration value="Pole Fire"/>
+						<xsd:enumeration value="Urgent Public Hazard Report "/>
+						<xsd:enumeration value="Urgent Public Hazard Report - fire"/>
+						<xsd:enumeration value="Planned Outage"/>
+						<xsd:enumeration value="Street lights out"/>
+						<xsd:enumeration value="Sparks Reports"/>
+						<xsd:enumeration value="Tree Near Wire"/>
+						<xsd:enumeration value="Tree On Wire"/>
+						<xsd:enumeration value="TV Interference"/>
+						<xsd:enumeration value="Underground Cable"/>
+						<xsd:enumeration value="Unknown"/>
+						<xsd:enumeration value="Voltage complaints"/>
+						<xsd:enumeration value="Wires down - pole to house"/>
+						<xsd:enumeration value="Wires down - pole to pole"/>
+						<xsd:enumeration value="Watchman Light Out"/>
+						<xsd:enumeration value="Wildlife report"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SensitiveLoad">
+		<xsd:annotation>
+			<xsd:documentation>To provide information about Sensitive Load  customers</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SensitiveLoadComments" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Line" type="CommentLine" maxOccurs="3"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="indicator" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PublicLightingGSL">
+		<xsd:annotation>
+			<xsd:documentation>Public lighting guaranteed service level type fault information</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Address" type="AustralianAddress">
+				<xsd:annotation>
+					<xsd:documentation>The actual address that the public lighting is opposite (in front of)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FixedByDate" type="xsd:date">
+				<xsd:annotation>
+					<xsd:documentation>Date by which the public lighting will (must) be fixed</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="indicator" type="PublicLightingGSLIndicator" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="FaultCallBack">
+		<xsd:annotation>
+			<xsd:documentation>Call back required to customer/informant</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ContactDetail">
+				<xsd:attribute name="callBackRequired" type="xsd:boolean" use="required"/>
+				<xsd:attribute name="timeRequired" type="xsd:dateTime" use="optional"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="FaultCallBackStatus">
+		<xsd:annotation>
+			<xsd:documentation>Status of the call back, ie has the person been contacted.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="calledBack" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="timeStamp" type="xsd:dateTime" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="FaultDispatchStatus">
+		<xsd:annotation>
+			<xsd:documentation>Indication if the fault has been dispatched or not</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="dispatched" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="timeStamp" type="xsd:dateTime" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="CustomersAffected">
+		<xsd:annotation>
+			<xsd:documentation>Total number of customers affected per fault</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="total" type="xsd:positiveInteger" use="required"/>
+		<xsd:attribute name="sensitiveLoad" type="xsd:positiveInteger" use="required"/>
+		<xsd:attribute name="lifeSupport" type="xsd:positiveInteger" use="required"/>
+	</xsd:complexType>
+	<xsd:simpleType name="TroubleCause">
+		<xsd:annotation>
+			<xsd:documentation>Cause of the fault</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Animal or bird damage"/>
+			<xsd:enumeration value="Associated to work on a nearby outage"/>
+			<xsd:enumeration value="Associated with planned outage"/>
+			<xsd:enumeration value="Damage caused by tree"/>
+			<xsd:enumeration value="False call"/>
+			<xsd:enumeration value="No access"/>
+			<xsd:enumeration value="No identified cause"/>
+			<xsd:enumeration value="OK on arrival"/>
+			<xsd:enumeration value="Pollution buildup"/>
+			<xsd:enumeration value="Problem in zone substation"/>
+			<xsd:enumeration value="Problem on customer's property"/>
+			<xsd:enumeration value="Problem with overhead cable or equipment"/>
+			<xsd:enumeration value="Problem with underground cable"/>
+			<xsd:enumeration value="Problem with underground equipment"/>
+			<xsd:enumeration value="Reconnection / restoration"/>
+			<xsd:enumeration value="Storm damage"/>
+			<xsd:enumeration value="Third party damage"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Main Types -->
+	<xsd:complexType name="FaultDescription">
+		<xsd:annotation>
+			<xsd:documentation>Description of the fault and associated information</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="FaultLocation" type="FaultLocation"/>
+			<xsd:element name="Symptoms" type="FaultSymptoms"/>
+			<xsd:element name="SensitiveLoad" type="SensitiveLoad"/>
+			<xsd:element name="LifeSupport" type="xsd:boolean"/>
+			<xsd:element name="PublicLightingGSL" type="PublicLightingGSL" minOccurs="0"/>
+			<xsd:element name="FaultDescriptionComments" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Line" type="CommentLine" maxOccurs="10"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Transaction Types -->
+	<xsd:complexType name="FaultInformationRequest">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - To be used to request fault information when a retail customer has called with a fault
+TransactionExchange - Initial transaction from a Retailer or service provider  to an LNSP
+TransactionGroup - FLTS
+Priority - High
+Purpose - Used for requesting fault information about a premise or location
+Detail -
+	  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI" minOccurs="0"/>
+			<xsd:element name="FaultLocation" type="FaultLocation"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r12" use="optional" default="r12"/>
+	</xsd:complexType>
+	<xsd:complexType name="FaultNotification">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - To be used by an a Retailer to notify an LNSP of a fault where the FaultOutageAdvice was returned as "unknown", thus the Retailer has more information about a fault and must report it to the LNSP.
+TransactionExchange - This tranaction would follow a FaultOutageAdvice if returned as unknown.
+TransactionGroup - FLTS
+Priority - High
+Purpose - For a Retailer to notify an LNSP of a fault in the even that the Retailer has more information about the fault.
+Detail -
+	  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI" minOccurs="0"/>
+			<xsd:element name="TimeOfCall" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Timestamp indicating when the informant advised of the fault.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TimeOfOccurrence" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Timestamp indicating when the fault first occurred.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FaultInformant" type="FaultInformant" minOccurs="0"/>
+			<xsd:element name="FaultDescription" type="FaultDescription"/>
+			<xsd:element name="CallBack" type="FaultCallBack" minOccurs="0"/>
+			<xsd:element name="RetailerPriority" type="Priority" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r14" use="optional" default="r14"/>
+	</xsd:complexType>
+	<xsd:complexType name="FaultOutageAdvice">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - To be used by an LNSP to pass fault information to a Retailer.
+TransactionExchange -  The reponse transaction to a "FaultInfoRequest".
+TransactionGroup - FLTS
+Priority - High
+Purpose -
+Detail -
+	  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI" minOccurs="0"/>
+			<xsd:element name="FaultDescription" type="FaultDescription"/>
+			<xsd:element name="TimeOfOccurrence" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Timestamp indicating the start of the fault as recognised by the LNSP.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CallBackStatus" type="FaultCallBackStatus" minOccurs="0"/>
+			<xsd:element name="EstimatedTimeToRestore" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DispatchStatus" type="FaultDispatchStatus" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SiteArrival" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MakeSafe" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MostSupplyRestored" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TimeRestored" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CustomersAffected" type="CustomersAffected" minOccurs="0"/>
+			<xsd:element name="TroubleCause" type="TroubleCause" minOccurs="0"/>
+			<xsd:element name="FaultOutageAdviceComments" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Line" type="CommentLine" maxOccurs="10"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="outageType" type="OutageType" use="required"/>
+		<xsd:attribute name="faultResponseType" type="FaultResponseType" use="optional" default="Update"/>
+		<xsd:attribute name="version" type="r14" use="optional" default="r14"/>
+	</xsd:complexType>
+</xsd:schema>

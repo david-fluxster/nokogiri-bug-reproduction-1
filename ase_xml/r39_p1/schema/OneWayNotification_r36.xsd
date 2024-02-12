@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Purpose - Define the structure of One Way Notification transaction to extend the aseXML</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="NoticeOfWorksID">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="NotificationNotes">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>		
+	<xsd:simpleType name="NotificationStatus">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+			<xsd:enumeration value="SO Requested"/>
+			<xsd:enumeration value="SO Rejected"/>	
+			<xsd:enumeration value="SO Completion"/>
+			<xsd:enumeration value="Accepted by Notified Party"/>
+			<xsd:enumeration value="Rejection by Notified Party"/> 
+			<xsd:enumeration value="Notified Party Stopped"/> 
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="Duration">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:complexType name="RemovedMeteringEquipments">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Parent container holding list of removed metering equipment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RemovedMeteringEquipment" type="RemovedMeteringEquipment" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>			
+	<xsd:complexType name="RemovedMeteringEquipment">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the structure of removed equipment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RemovedEquipmentType" type="MeterEquipmentType"/>
+			<xsd:element name="MeteringEquipment" type="NMIStandingData"/>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="NewEquipment">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the details of installed metering equipment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InstalledMeterEquipment" type="ElectricityMeters" minOccurs="0"/>				
+			<xsd:element name="InstalledNetworkDevices" type="NetworkDevices" minOccurs="0"/>					
+			<xsd:element name="InstalledControlEquipment" type="NMIStandingData" minOccurs="0"/>	
+			<xsd:element name="InstalledTransformers" type="ElectricityMeters" minOccurs="0"/>					
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="WorksDetail">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the structure of Work details.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="WorkType" type="WorkType"/>
+			<xsd:element name="FieldWorkCompleteDateTime" type="xsd:dateTime"/>
+			<xsd:element name="TotalInstalledMeters" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="TotalInstalledNetworkDevices" type="xsd:integer" minOccurs="0"/>		
+			<xsd:element name="TotalInstalledControlEquipment" type="xsd:integer" minOccurs="0"/>		
+			<xsd:element name="TotalInstalledTransformers" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="TotalRemovedMeters" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="TotalRemovedOther" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="NewMeterEquipment" type="NewEquipment" minOccurs="0"/>	
+			<xsd:element name="RemovedMeteringEquipments" type="RemovedMeteringEquipments" minOccurs="0"/>				
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NotificationPayload">
+		<xsd:annotation>
+			<xsd:documentation>Purpose – Provide the parent holder for payload content for based on aseXML instances.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice>			
+				<xsd:element name="TransactionNotified" type="Transaction"/>
+				<xsd:element name="TransAckNotified" type="TransactionAcknowledgement"/>
+				<xsd:element name="MsgAckNotified" type="MessageAcknowledgement"/>					
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<!-- Transaction Types -->
+	<xsd:complexType name="OneWayNotification">
+		<xsd:sequence>
+			<xsd:element name="CSVNotificationDetail" type="CSVDataWithName"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r25" use="optional" default="r25"/>
+	</xsd:complexType>
+	<xsd:complexType name="NoticeOfMeteringWorks">
+		<xsd:sequence>
+			<xsd:element name="NoticeOfWorksID" type="NoticeOfWorksID"/>
+			<xsd:element name="NMIStandingData" type="NMIStandingData"/>
+			<xsd:element name="GeographicCoordinate" type="GeographicCoordinate" minOccurs="0"/>			
+			<xsd:element name="MeterWorksDetail" type="WorksDetail"/>			
+			<xsd:element name="Notes" type="NotificationNotes" minOccurs="0"/>		
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+	</xsd:complexType>
+	<xsd:complexType name="NotifiedParty">
+		<xsd:sequence>
+			<xsd:element name="ServiceOrder" type="ServiceOrderHeader"/>
+			<xsd:element name="ServiceRequestor" type="PartyIdentifier"/>	
+			<xsd:element name="ServiceProvider" type="PartyIdentifier"/>	
+			<xsd:element name="ScheduledDate" type="xsd:date"/>			
+			<xsd:element name="ActualDateTime" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="NotificationStatus" type="NotificationStatus"/>
+			<xsd:element name="RefTransaction" type="NotificationPayload"/>				
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+	</xsd:complexType>	
+	<xsd:complexType name="PlannedInterruptionNotification">
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI"/>
+			<xsd:element name="StartDate" type="xsd:date"/>		
+			<xsd:element name="StartTime" type="xsd:time"/>			
+			<xsd:element name="EndDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="Duration" type="Duration"/>					
+			<xsd:element name="ReasonForInter" type="ReasonForInter" minOccurs="0"/>
+			<xsd:element name="Notes" type="NotificationNotes" minOccurs="0"/>				
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+	</xsd:complexType>		
+	<xsd:complexType name="MeterFaultAndIssueNotification">
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI"/>
+			<xsd:element name="DateIdentified" type="xsd:date"/>					
+			<xsd:element name="StartDate" type="xsd:date" minOccurs="0"/>		
+			<xsd:element name="StartTime" type="xsd:time" minOccurs="0"/>			
+			<xsd:element name="EndDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="Duration" type="Duration" minOccurs="0"/>					
+			<xsd:element name="SupplyOn" type="YesNo"/>
+			<xsd:element name="SupplyOff" type="SupplyOff" minOccurs="0"/>		
+			<xsd:element name="Meters" type="ElectricityMeters" minOccurs="0"/>		
+			<xsd:element name="ReasonForNotice" type="ReasonForNotice"/>			
+			<xsd:element name="Notes" type="NotificationNotes" minOccurs="0"/>				
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+	</xsd:complexType>		
+</xsd:schema>

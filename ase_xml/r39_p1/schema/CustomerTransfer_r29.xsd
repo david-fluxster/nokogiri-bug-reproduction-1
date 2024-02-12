@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define the transaction exchanges needed by the "Customer Transfer" application
+Detail - The use of the term customer is somewhat incorrect in that no customer data is manipulated by these transactions. Rather, they are intended to manipulate the standing data associated with NMIs, and allow the necessary changes to be performed when a cusmoter transfers.
+
+The heart of these transactions is the NMIStandingData definition. The structure is entirely optional, allowing application level logic to decide what elements need to appear according to the transaction context. At the same time, the schema does say WHERE a given data item should appear if it is to be provided, and WHAT should be provided in terms of data format.
+
+Because the NMIStandingData definition declares it to be abstract, derived definitions must be generated for each fuel type. Transaction instances must indicate, via the use of the xsi:type attribute, the fuel specific structure being provided.
+
+The "CATS Change Request" transaction exchange allows the updating of a portion of the standing data. The exchange consists of a CATSChangeRequest and a resulting CATSChangeResponse. 
+
+The "CATS Change Request Withdrawal" transaction exchange allows the withdrawal of a previously submitted change request. It consists of a CATSChangeWithdrawal, with the acknowledgement carrying the success or otherwise of the request.
+
+The "CATS Objection Request" transaction exchange allows the lodgement of an objection to a chnage request. The exchange consists of a CATSObjectionRequest and a resulting CATSObjectionResponse. 
+
+The "CATS Objection  Withdrawal" transaction exchange allows the withdrawal of a previously submitted objection. It consists of a CATSObjectionWithdrawal, with the acknowledgement carrying the success or otherwise of the request.
+
+The "CATS Notification" transaction exchange provides notification of a change of state of a change request or an objection submission or withdrawal against a change request. It consists of a CATSNotification transaction.
+
+The "CATS Data Request" transaction exchange allows the repository of NMI standing data to request aarbitrary subset of the data for a NMI. It consists of a CATSDataRequest.
+
+Depending on the task to be performed, multiple transaction exchanges will be necessary for its completion. For instance, multiple notification transaction exchanges will occur wth interested parties each type a change request changes state. Similarly, a data request will trigger a separate change request, that will actually provide the requested data to the NMI standing data repository.
+</xsd:documentation>
+	</xsd:annotation>
+	<!-- Support Types-->
+	<xsd:simpleType name="CATSRequestIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Uniquely identify each change request
+MSATS Data Model Column - RequestD
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:maxInclusive value="999999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSChangeReasonCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify the type of change request
+MSATS Data Model Column - CRCode
+Detail - The change request is the key piece of information in a change request. It drives the logic to determine what other data items are required and the extent of involvement of other parties as the request is processed.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSChangeReasonDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe the types of change request
+MSATS Data Model Column - CRDesc
+Detail - The description is intended to assist in identification of the correct type. The mapping between codee and descriptions will be provided to participants via the Table Replication transaction exchanges.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSChangeStatusCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify the current status of a change request
+MSATS Data Model Column - CRStatusCode
+Detail - Each status represents a particular point in the lifecycle of a change request.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSChangeStatusDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe a change request type
+MSATS Data Model Column - CRStatusDesc
+Detail - The description is intended to assist in identification of the correct code. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSReadTypeCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - indicate the type of meter read desired for the chnage request
+MSATS Data Model Column - ReadTypeCode
+Detail - This field provides information to the meter data provider as to the type of read required for a change request, e.g. estimated read or  next scheduled read. It should not be confused with the ReadTypeCode included in the meter register data.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSReadTypeDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe a change request read type code
+MSATS Data Model Column - ReadTypeDesc
+Detail - The description is intended to assist in identification of the correct code. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSObjectionIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Uniquely identify each objection
+MSATS Data Model Column - ObjectionID
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:maxInclusive value="999999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSObjectionCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Indicate the reason for objecting to a change request
+MSATS Data Model Column - ObjectionCode
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSObjectionDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe the reason for objecting to a change request
+MSATS Data Model Column - ObjectionDesc
+Detail - The description is intended to assist in identification of the correct code. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSObjectionAction">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - indicate on a notification whether an objection is raised or withdrawn.
+MSATS Data Model Column - ObjectionAction
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Raised"/>
+			<xsd:enumeration value="Withdrawn"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSRoleStatus">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Indicates of the the role is currently being played (C) or is proposed to be played (N).
+MSATS Data Model Column - RoleStatus
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="N"/>
+			<xsd:enumeration value="C"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSObjectionLodgementPeriod">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Maximum number of business days permitted in the objection logging period
+MSATS Data Model Column - ObjLogPeriod
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSObjectionClearancePeriod">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Maximum number of business days permitted in the objection clearance period
+MSATS Data Model Column - ObjClearPeriod
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSNotificationPeriod">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Maximum number of business days that must elapse after the proposed change date if no actual change date supplied before retailers should be notified
+MSATS Data Model Column - NotificationPeriod
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSRetrospectiveDays">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Maximum number of business days in the past for which a retrospective change may occur
+MSATS Data Model Column - RetrospectiveDays
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSProspectiveDays">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Maximum number of business days into the future for a proposed or actual change date
+MSATS Data Model Column - ProspectiveDays
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSTransactionTypeCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Internal code used to identify trasnactions within the various rule tables that are used to validate transactions
+MSATS Data Model Column - TransTypeCode
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSTransactionTypeDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - TransTypeDesc
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSDataSourceCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Used as part of change request validation to determine what requirements are to be placed on data fields for completion of the change request
+MSATS Data Model Column - DataSourceCode
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CATSDataSourceDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - DataSourceDesc
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Main Types -->
+	<xsd:complexType name="CATSChangeRequestData">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Data provided via a change request
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ChangeReasonCode" type="CATSChangeReasonCode"/>
+			<xsd:choice>
+				<xsd:element name="ProposedDate" type="xsd:date"/>
+				<xsd:element name="ActualChangeDate" type="xsd:date"/>
+			</xsd:choice>
+			<xsd:element name="MeterReadTypeCode" type="CATSReadTypeCode" minOccurs="0"/>
+			<xsd:element name="ActualEndDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="InitiatingRequestID" type="CATSRequestIdentifier" minOccurs="0"/>
+			<xsd:element name="NMIStandingData" type="NMIStandingData"/>
+			<xsd:element name="AccessContract" type="AccessContract" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CATSChangeRequestNotificationData">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Data provided on a notification with respect to a change request
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Participant" type="PartyIdentifier" nillable="true"/>
+			<xsd:element name="RequestID" type="CATSRequestIdentifier"/>
+			<xsd:element name="ChangeStatusCode" type="CATSChangeStatusCode"/>
+			<xsd:element name="ChangeData" type="CATSChangeRequestData"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CATSObjectionData">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Data provided via an objection
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InitiatingRequestID" type="CATSRequestIdentifier"/>
+			<xsd:element name="Role" type="RoleIdentifier"/>
+			<xsd:element name="ObjectionCode" type="CATSObjectionCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CATSObjectionNotificationData">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Data provided on a notification with respect to an objection
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Participant" type="PartyIdentifier"/>
+			<xsd:element name="ObjectionID" type="CATSObjectionIdentifier"/>
+			<xsd:element name="ObjectionAction" type="CATSObjectionAction"/>
+			<xsd:element name="ObjectionData" type="CATSObjectionData"/>
+			<xsd:element name="ObjectionDate" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AccessContract">
+		<xsd:sequence>
+			<xsd:element name="Name" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="50"/>
+						<xsd:minLength value="1"/>
+						<xsd:whiteSpace value="collapse"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Date" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Transaction Types -->
+	<xsd:complexType name="CATSChangeRequest">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Customer Transfer
+TransactionExchange - CATS Change Request
+TransactionGroup - CATS
+Priority - Medium
+Purpose - Submit a change request
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="CATSChangeRequestData">
+				<xsd:attribute name="version" type="r29" use="optional" default="r29"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSChangeResponse">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Customer Transfer
+TransactionExchange - CATS Change Request
+TransactionGroup - CATS
+Priority - Medium
+Purpose - Provide the results of submitting a change request
+Detail - The primary purpose of this response transaction is to provide the unique identifier allocated by the system to the request. At least one Event element must be present in the response to indicate the success or otherwise of the change request.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RequestID" type="CATSRequestIdentifier"/>
+			<xsd:element name="Event" type="Event" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r29" use="optional" default="r29"/>
+	</xsd:complexType>
+	<xsd:complexType name="CATSChangeWithdrawal">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Customer Transfer
+TransactionExchange - CATS Change Request Withdrawal
+TransactionGroup - CATS
+Priority - Medium
+Purpose - Withdraw a change request
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RequestID" type="CATSRequestIdentifier"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r29" use="optional" default="r29"/>
+	</xsd:complexType>
+	<xsd:complexType name="CATSObjectionRequest">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Customer Transfer
+TransactionExchange - CATS Objection Request
+TransactionGroup - CATS
+Priority - Medium
+Purpose - Submit a objection request
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="CATSObjectionData">
+				<xsd:attribute name="version" type="r29" use="optional" default="r29"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSObjectionResponse">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Customer Transfer
+TransactionExchange - CATS Objection Request
+TransactionGroup - CATS
+Priority - Medium
+Purpose - Provide the results of submitting an objection request
+Detail - The primary purpose of this response transaction is to provide the unique identifier allocated by the system to the objection. At least one Event element must be present in the response to indicate the success or otherwise of the objection request.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ObjectionID" type="CATSObjectionIdentifier"/>
+			<xsd:element name="Event" type="Event" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r29" use="optional" default="r29"/>
+	</xsd:complexType>
+	<xsd:complexType name="CATSObjectionWithdrawal">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Customer Transfer
+TransactionExchange - CATS Objection Withdrawal
+TransactionGroup - CATS
+Priority - Medium
+Purpose - Withdraw an objection request
+Detail - Logically, all that is needed here is the objectionID much as all that is provided to withdraw a change request is the requestID. The remaining fields are purely for cross-validation that the correct objectionID has been provided, and exist purely because of the structure of the MSATS functional specification.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ObjectionID" type="CATSObjectionIdentifier"/>
+			<xsd:element name="InitiatingRequestID" type="CATSRequestIdentifier"/>
+			<xsd:element name="Role" type="RoleIdentifier"/>
+			<xsd:element name="ObjectionCode" type="CATSObjectionCode"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r29" use="optional" default="r29"/>
+	</xsd:complexType>
+	<xsd:complexType name="CATSNotification">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Customer Transfer
+TransactionExchange - CATS Notification
+TransactionGroup - CATS
+Priority - Medium
+Purpose - Provide details of an accepted change request or objection
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Role" type="RoleIdentifier"/>
+			<xsd:element name="RoleStatus" type="CATSRoleStatus"/>
+			<xsd:element name="ChangeRequest" type="CATSChangeRequestNotificationData"/>
+			<xsd:element name="Objection" type="CATSObjectionNotificationData" minOccurs="0"/>
+			<xsd:element name="JurisdictionCode" type="JurisdictionCode" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>This is what the Jurisdiction code would be after CR completes (if the jurisdiction code is being changed in the CR)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NMIClassificationCode" type="NMIClassificationCode" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>This is what the NMI Classification code would be after CR completes (if the NMI Classification code is being changed in the CR)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NMIStatus" type="NMIStatusCode" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Will be populated only in notifications of CRs which are for transfer of de-energised NMIs. This would be the current value of the NMI Classification code. It could be different than what the NMI Classification code would be after CR completes (if the NMI Classification code is also being changed in the CR - which currently is not allowed in tranfer CRs)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ObjectionEndDate" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r29" use="optional" default="r29"/>
+	</xsd:complexType>
+	<xsd:complexType name="CATSDataRequest">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Customer Transfer
+TransactionExchange - CATS Data Request
+TransactionGroup - CATS
+Priority - Medium
+Purpose - Request the provision of a subset of the standing data for a NMI
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Role" type="RoleIdentifier"/>
+			<xsd:element name="RoleStatus" type="CATSRoleStatus"/>
+			<xsd:element name="InitiatingRequestID" type="CATSRequestIdentifier"/>
+			<xsd:element name="ActualChangeDate" type="xsd:date" nillable="true" minOccurs="0"/>
+			<xsd:element name="NMIStandingData" type="NMIStandingData"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r29" use="optional" default="r29"/>
+	</xsd:complexType>
+	<xsd:complexType name="CATSChangeAlert">
+		<xsd:sequence>
+			<xsd:element name="InitiatingRequestID" type="CATSRequestIdentifier"/>
+			<xsd:element name="Role" type="RoleIdentifier"/>
+			<xsd:element name="RoleStatus" type="CATSRoleStatus"/>
+			<xsd:element name="Participant" type="PartyIdentifier"/>
+			<xsd:element name="Event" type="Event" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r29" use="optional" default="r29"/>
+	</xsd:complexType>
+</xsd:schema>

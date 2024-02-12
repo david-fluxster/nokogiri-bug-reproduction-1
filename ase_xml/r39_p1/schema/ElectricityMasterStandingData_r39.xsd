@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.0">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>	
+
+		File version r39
+Added optional element TransmissionNodeIdentifier2.
+
+		File version r37
+Renamed to _r37 to become versioned file again as of r37.  This is due to the issue where an operator has multiple versions in one folder making it incompatible.
+
+Defunct Guidelines for use of this file:
+- Only additions of the Electricity Master Standing Data are allowed outside of the standard aseXML Change Process cycle
+- Deletions and modifications should be discouraged, but, if necessary, must be made through the standard aseXML Change Process
+
+		File version 3.0
+Added optional elements EnergisationStatus, PrimaryVoltage, ControlEquipments, NetworkDevices to type ElectricityMasterStandingData.
+
+		File version 2.0
+Added optional elements FromDate and ToDate to type ElectricityMasterStandingData.
+
+		File version 1.1
+ElectricityMasterStandingData file containing the electricity master standing data that can be added to at short notice and can be released outside of the standard aseXML change cycle.
+
+Changes since file version 1.0
+Added elements CustomerClassificationCode and CustomerThresholdCode to group ElectricityNMIMasterGroup.
+Added elements CustomerClassificationCode and CustomerThresholdCode to type ElectricityMasterStandingData.
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:group name="ElectricityNMIMasterGroup">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Common NMI Master elements across Standing Data and Change Requests
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="JurisdictionCode" type="JurisdictionCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="NMIClassificationCode" type="NMIClassificationCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="TransmissionNodeIdentifier" type="TransmissionNodeIdentifier" nillable="true" minOccurs="0"/>
+			<xsd:element name="DistributionLossFactorCode" type="DistributionLossFactorCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="ParentEmbeddedNetworkIdentifier" type="EmbeddedNetworkIdentifier" nillable="true" minOccurs="0"/>
+			<xsd:element name="ChildEmbeddedNetworkIdentifier" type="EmbeddedNetworkIdentifier" nillable="true" minOccurs="0"/>
+			<xsd:element name="Address" type="AustralianPartialAddress" nillable="true" minOccurs="0"/>
+			<xsd:element name="Aggregate" type="YesNo" nillable="true" minOccurs="0"/>
+			<xsd:element name="Status" type="NMIStatusCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="FlatOrUnitType" type="AustralianFlatOrUnitType" nillable="true" minOccurs="0"/>
+			<xsd:element name="FlatOrUnitNumber" type="AustralianFlatOrUnitNumber" nillable="true" minOccurs="0"/>
+			<xsd:element name="FloorOrLevelType" type="AustralianFloorOrLevelType" nillable="true" minOccurs="0"/>
+			<xsd:element name="FloorOrLevelNumber" type="AustralianFloorOrLevelNumber" nillable="true" minOccurs="0"/>
+			<xsd:element name="BuildingOrPropertyName" type="AustralianBuildingOrPropertyName" nillable="true" minOccurs="0"/>
+			<xsd:element name="BuildingOrPropertyName2" type="AustralianBuildingOrPropertyName" nillable="true" minOccurs="0"/>
+			<xsd:element name="LocationDescriptor" type="AustralianLocationDescriptor" nillable="true" minOccurs="0"/>
+			<xsd:element name="HouseNumber" type="AustralianHouseNumber" nillable="true" minOccurs="0"/>
+			<xsd:element name="HouseNumberSuffix" type="AustralianHouseNumberSuffix" nillable="true" minOccurs="0"/>
+			<xsd:element name="HouseNumber2" type="AustralianHouseNumber" nillable="true" minOccurs="0"/>
+			<xsd:element name="HouseNumber2Suffix" type="AustralianHouseNumberSuffix" nillable="true" minOccurs="0"/>
+			<xsd:element name="LotNumber" type="AustralianLotNumber" nillable="true" minOccurs="0"/>
+			<xsd:element name="StreetName" type="AustralianStreetName" nillable="true" minOccurs="0"/>
+			<xsd:element name="StreetType" type="AustralianStreetType" nillable="true" minOccurs="0"/>
+			<xsd:element name="StreetSuffix" type="AustralianStreetSuffix" nillable="true" minOccurs="0"/>
+			<xsd:element name="AddressLine1" type="AustralianAddressLine" nillable="true" minOccurs="0"/>
+			<xsd:element name="AddressLine2" type="AustralianAddressLine" nillable="true" minOccurs="0"/>
+			<xsd:element name="AddressLine3" type="AustralianAddressLine" nillable="true" minOccurs="0"/>
+			<xsd:element name="SuburbOrPlaceOrLocality" type="AustralianSuburbOrPlaceOrLocality" nillable="true" minOccurs="0"/>
+			<xsd:element name="StateOrTerritory" type="AustralianStateOrTerritory" nillable="true" minOccurs="0"/>
+			<xsd:element name="PostCode" type="AustralianPostCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="DeliveryPointIdentifier" type="AustralianDeliveryPointIdentifier" nillable="true" minOccurs="0"/>
+			<xsd:element name="DistanceFromSubstation" type="DistanceFromSubstation" nillable="true" minOccurs="0"/>
+			<xsd:element name="VoltageType" type="VoltageType" nillable="true" minOccurs="0"/>
+			<xsd:element name="PoleNumber" type="PoleNumber" nillable="true" minOccurs="0"/>
+			<xsd:element name="AccessDetails" type="AccessDetail" nillable="true" minOccurs="0"/>
+			<xsd:element name="FeederClass" type="FeederClass" nillable="true" minOccurs="0"/>
+			<xsd:element name="CustomerClassificationCode" type="EMSDCustomerClassificationCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="CustomerThresholdCode" type="EMSDCustomerThresholdCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="TransmissionNodeIdentifier2" type="TransmissionNodeIdentifier" nillable="true" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ElectricityMasterStandingData">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for non-repeating standing data associated with an electricity NMI
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="JurisdictionCode" type="JurisdictionCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="NMIClassificationCode" type="NMIClassificationCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="TransmissionNodeIdentifier" type="TransmissionNodeIdentifier" nillable="true" minOccurs="0"/>
+			<xsd:element name="DistributionLossFactorCode" type="DistributionLossFactorCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="ParentEmbeddedNetworkIdentifier" type="EmbeddedNetworkIdentifier" nillable="true" minOccurs="0"/>
+			<xsd:element name="ChildEmbeddedNetworkIdentifier" type="EmbeddedNetworkIdentifier" nillable="true" minOccurs="0"/>
+			<xsd:element name="Address" type="AustralianPartialAddress" nillable="true" minOccurs="0"/>
+			<xsd:element name="Aggregate" type="YesNo" nillable="true" minOccurs="0"/>
+			<xsd:element name="Status" type="NMIStatusCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="DistanceFromSubstation" type="DistanceFromSubstation" nillable="true" minOccurs="0"/>
+			<xsd:element name="VoltageType" type="VoltageType" nillable="true" minOccurs="0"/>
+			<xsd:element name="PoleNumber" type="PoleNumber" nillable="true" minOccurs="0"/>
+			<xsd:element name="AccessDetails" type="AccessDetail" nillable="true" minOccurs="0"/>
+			<xsd:element name="FeederClass" type="FeederClass" nillable="true" minOccurs="0"/>
+			<xsd:element name="CustomerClassificationCode" type="EMSDCustomerClassificationCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="CustomerThresholdCode" type="EMSDCustomerThresholdCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="ControlEquipments" type="ControlEquipments" nillable="true" minOccurs="0"/>
+			<xsd:element name="NetworkDevices" type="NetworkDevices" nillable="true" minOccurs="0"/>
+			<xsd:element name="EnergisationStatus" type="EnergisationStatus" nillable="true" minOccurs="0"/>
+			<xsd:element name="PrimaryVoltage" type="PrimaryVoltage" nillable="true" minOccurs="0"/>
+			<xsd:element name="FromDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="ToDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="TransmissionNodeIdentifier2" type="TransmissionNodeIdentifier" nillable="true" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="EMSDCustomerClassificationCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Classification of customer type, value assigned by FRMP.Examples might include "BUS" or "RES". This is not related to the CustomerType defined on the Service Order. 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EMSDCustomerThresholdCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Classification of customer consumption threshold, value assigned by DNSP. Examples might include LOW, MED, HIGH. 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

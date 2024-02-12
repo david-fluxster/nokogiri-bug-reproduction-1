@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 rel. 2 sp1 (x64) (http://www.altova.com) by ﻿Australian Energy Market Operator (Australian Energy Market Operator) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Provide the transaction exchanges needed by reports within each application
+Detail - Reports are a common feature of most applications. However, the parameters to and format of each report are likely to vary widely. Thus, the transactions defined in this schema are defined using abstract types for report parameters and formats. Each new application that wishes to use the transactions defines, where necessary, its own derived types for report parameters and formats. Instances of report requests or reponses then use the xsi:type attribute to indicate the specific report details required. 
+The "Report" transaction exchange allows the request of a report and the return of the results. It consists of a ReportRequest and a ReportResult.
+		</xsd:documentation>
+	</xsd:annotation>
+	<!-- Support Types -->
+	<xsd:simpleType name="ReportName">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identifies the required report
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ReportType">
+		<xsd:annotation>
+			<xsd:documentation>The type reports.
+				PRE- Preliminary
+				REV-Revision
+				FIN-Final
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="3"/>
+			<xsd:enumeration value="PRE"/>
+			<xsd:enumeration value="REV"/>
+			<xsd:enumeration value="FIN"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PipelineID">
+		<xsd:annotation>
+			<xsd:documentation>A unique identifier for a Pipeline</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Base Report Types -->
+	<xsd:complexType name="BaseReportParameters" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - base type from which all report parameter definitions derive. 
+Detail - The minimum parameters required for a report is a report name
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ReportName" type="ReportName"/>
+			<xsd:element name="MaximumRows" type="xsd:nonNegativeInteger" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BaseReportFormat" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - base types from which all report format definitions derive
+Detail - The only limitation made by this definition is that the content will be complex.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:complexType>
+	<!--Generic Report Parameters-->
+	<xsd:complexType name="ReportParameterType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a genericParameterType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="NonZeroLengthString"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MRBlockParameterType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Definition of Block Parameters to be used in Market Reports that are required to be delivered in chunks.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TotalBlockNumber" type="ReplicationSequenceNumber"/>
+			<xsd:element name="CurrentBlockNumber" type="ReplicationSequenceNumber"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StringParameter">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a genericParameterType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ReportParameterType">
+				<xsd:sequence>
+					<xsd:element name="Value" type="NonZeroLengthString" nillable="true"/>
+					<xsd:element name="Description" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DateParameter">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a genericParameterType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ReportParameterType">
+				<xsd:sequence>
+					<xsd:element name="Value" type="xsd:date" nillable="true"/>
+					<xsd:element name="Description" type="NonZeroLengthString" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DateTimeParameter">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a genericParameterType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ReportParameterType">
+				<xsd:sequence>
+					<xsd:element name="Value" type="xsd:dateTime" nillable="true"/>
+					<xsd:element name="Description" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="IntegerParameter">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a genericParameterType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ReportParameterType">
+				<xsd:sequence>
+					<xsd:element name="Value" type="xsd:integer" nillable="true"/>
+					<xsd:element name="Description" type="NonZeroLengthString" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="BooleanParameter">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a genericParameterType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ReportParameterType">
+				<xsd:sequence>
+					<xsd:element name="Value" type="xsd:boolean" nillable="true"/>
+					<xsd:element name="Description" type="NonZeroLengthString" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DecimalParameter">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a genericParameterType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ReportParameterType">
+				<xsd:sequence>
+					<xsd:element name="Value" type="xsd:decimal" nillable="true"/>
+					<xsd:element name="Description" type="NonZeroLengthString" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="TimeParameter">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a genericParameterType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ReportParameterType">
+				<xsd:sequence>
+					<xsd:element name="Value" type="xsd:time" nillable="true"/>
+					<xsd:element name="Description" type="NonZeroLengthString" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ReportParametersType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for  list of generic parameters
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence maxOccurs="unbounded">
+			<xsd:element name="Parameter" type="ReportParameterType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Generic Report Format Types -->
+	<xsd:complexType name="CSVReportFormat">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for a CSV formatted report
+Detail - Where the report is using CSV as the output format, this generic container may be used to return the results.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportFormat">
+				<xsd:sequence>
+					<xsd:element name="CSVData" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ReplicationReportFormat">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for a report having the same structure as used by the table replication transactions
+Detail - Where a report returns a related set of table contents, a standard container may be used, since the structure of the replication block will impose structure on the report in terms of format.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportFormat">
+				<xsd:sequence>
+					<xsd:element name="ReplicationBlock" type="ReplicationBlock" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GenericReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Generic Report Parameters for a MDMT and CATS  Reports 
+Report Name - 
+MSATS Report - 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="Parameters" type="ReportParametersType" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r22" use="optional" default="r22"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MRMissingBlockParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameters for requesting a Market Report. Provide the ReportID which will be the same for all chunks.
+For example if chunk 6 is required out of a report sent as 10 chunks populate BeginBlockNumber and EndBlockNumber as 6
+and TotalBlockNumber as 10.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:choice>
+					<xsd:element name="BlockParameters">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="ReportID" type="UniqueIdentifier"/>
+								<xsd:element name="BeginBlockNumber" type="ReplicationSequenceNumber"/>
+								<xsd:element name="EndBlockNumber" type="ReplicationSequenceNumber"/>
+								<xsd:element name="TotalBlockNumber" minOccurs="0"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="RecreateReport" type="xsd:boolean"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Transaction Types -->
+	<xsd:complexType name="ReportRequest">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Reports
+TransactionExchange - Report Request
+TransactionGroup - Multiple
+Priority - Low
+Purpose - Request a report
+Detail - This is a generic transaction that relies on the details of the exact report required being determined by the xsi:type attribute provided by the sender on the ReportParameters element.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ReportParameters" type="BaseReportParameters"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r10" use="optional" default="r10"/>
+	</xsd:complexType>
+	<xsd:complexType name="ReportResponse">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Reports
+TransactionExchange - Report Request
+TransactionGroup - CATS for CATSReportRequest, MDMT for MDMReportRequest
+Priority - Low
+Purpose - Return the results of a report
+Detail - This is a generic transaction that relies on the details of the exact report format returned being determined by the xsi:type attribute provided by the sender on the ReportParameters and ReportResults elements. At least one Event element must be present in the response to indicate the success or otherwise of the report.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ReportParameters" type="BaseReportParameters"/>
+			<xsd:element name="ResultBlock" type="MRBlockParameterType" minOccurs="0"/>
+			<xsd:element name="ReportResults" type="BaseReportFormat" minOccurs="0"/>
+			<xsd:element name="Event" type="Event" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r39" use="optional" default="r39"/>
+	</xsd:complexType>
+	<!--NSW-ACT Specific Reports-->
+	<xsd:complexType name="MarketReport">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Reports
+TransactionExchange - Report Request
+TransactionGroup - (NSW/ACT Gas Transactions)
+Priority - Low
+Purpose - Publish a Report
+Detail - This is a generic transaction that relies on the details of the exact report format returned being determined by the xsi:type attribute.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ReportName" type="MarketReportNamesType"/>
+			<xsd:element name="CSVFileName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="RecordCount" type="RecordCount" minOccurs="0"/>
+			<xsd:element name="ReportID" type="UniqueIdentifier" minOccurs="0"/>
+			<xsd:element name="BlockDetails" type="MRBlockParameterType" minOccurs="0"/>
+			<xsd:element name="ReportDetails" type="BaseReportFormat"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r34" use="optional" default="r34"/>
+	</xsd:complexType>
+	<xsd:complexType name="EstimationResultsRpt">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Definition for ERFTEstimationResultsToUserRpt
+Report Details - Users Results of Estimation and Reconciliation
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportFormat">
+				<xsd:sequence maxOccurs="unbounded">
+					<xsd:element name="EstimationResultsData" type="EstimationResultsDataType"/>
+				</xsd:sequence>
+				<xsd:attribute name="reportType" type="ReportType" use="optional"/>
+				<xsd:attribute name="version" type="r34" use="optional" default="r34"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MatchedImbalanceTradeRpt">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Definition for IAITMatchedImbalanceTradeRpt
+Report Details - Notification of a Matched Trade.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportFormat">
+				<xsd:sequence>
+					<xsd:element name="MatchedImbalanceData">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="CumulativeImbalance" type="QuantityOfGasMJ"/>
+							</xsd:sequence>
+							<xsd:attribute name="initiatingReceiptID" type="ReceiptIdentifier" use="required"/>
+							<xsd:attribute name="networkID" type="NetworkID" use="required"/>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ExpiredImbalanceTradeRpt">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Definition for IAITExpiredImbalanceTradeRpt
+Report Details - Notification of a Expired Trade.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportFormat">
+				<xsd:sequence>
+					<xsd:element name="ExpiredImbalanceData">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="InitiatingReceiptID" type="ReceiptIdentifier"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ParticipantImbalanceAmountRpt">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Definition for IAITParticipantImbalanceAmountRpt
+Report Details - Notification of Allocated Participant Imbalance Amount.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportFormat">
+				<xsd:sequence>
+					<xsd:element name="ParticipantImbalanceAmountData">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="ParticipantImbalanceAmount"/>
+							</xsd:sequence>
+							<xsd:attribute name="gasDate" use="required"/>
+							<xsd:attribute name="networkID" use="required"/>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="RevisedImbalanceRpt">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Definition for IAITRevisedImbalanceRpt
+Report Details - Notification of Revised Participant Imbalance Amount.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportFormat">
+				<xsd:sequence maxOccurs="unbounded">
+					<xsd:element name="RevisedImbalanceData">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:annotation>
+									<xsd:documentation>Cumulative Imbalance per Network Section.</xsd:documentation>
+								</xsd:annotation>
+								<xsd:element name="CumulativeImbalance" type="QuantityOfGasMJ"/>
+								<xsd:element name="TradeRevision" minOccurs="0">
+									<xsd:complexType>
+										<xsd:sequence maxOccurs="unbounded">
+											<xsd:annotation>
+												<xsd:documentation>Details of Trades on this gas day, in this network section.</xsd:documentation>
+											</xsd:annotation>
+											<xsd:element name="TradeType" type="TradeType"/>
+											<xsd:element name="CounterpartyParticipantID" type="PartyIdentifier"/>
+											<xsd:element name="TradedImbalanceAmount" type="QuantityOfGasMJ"/>
+											<xsd:element name="CumulativeImbalance" type="QuantityOfGasMJ"/>
+										</xsd:sequence>
+										<xsd:attribute name="initiatingReceiptID" use="required"/>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:attribute name="gasDate" type="xsd:date" use="required"/>
+							<xsd:attribute name="networkID" type="NetworkID" use="required"/>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="EstimationResultsDataType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Definition for ERFTRevisedEstimationResultsData
+Details - Results of Estimation and Reconciliation to User (Sent as a Notification Transaction)
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TotalEstimatedWithdrawal" type="QuantityOfGasMJ"/>
+			<xsd:element name="TotalApportionmentPercentage" type="ApportionmentPercentage" minOccurs="0"/>
+			<xsd:element name="ReconciliationAdjustmentAmount" type="QuantityOfGasMJ" minOccurs="0"/>
+			<xsd:element name="ReconciliationAccountBalance" type="QuantityOfGasMJ" minOccurs="0"/>
+			<xsd:element name="TotalDailyWithdrawal" type="QuantityOfGasMJ" minOccurs="0"/>
+			<xsd:element name="AllocationOfNetSectionLoad" type="QuantityOfGasMJ" minOccurs="0"/>
+			<xsd:element name="TotalDistributedWithdrawal" type="QuantityOfGasMJ" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="gasDate" type="xsd:date" use="required"/>
+		<xsd:attribute name="networkID" type="NetworkID" use="required"/>
+		<xsd:attribute name="participantID" type="xsd:string" use="required"/>
+	</xsd:complexType>
+</xsd:schema>

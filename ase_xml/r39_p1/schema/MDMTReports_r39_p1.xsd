@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define the MDMT specific report parameters and formats
+		</xsd:documentation>
+	</xsd:annotation>
+	<!-- Support Types -->
+	<xsd:simpleType name="MDMSettlementCaseIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Uniquely identify each settlement run
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:totalDigits value="38"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MDMTReportsDataStreamType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - MDM Reports only provide support for "Interval" and "Consumption" data streams.That restriction is implemented in MSATS.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="DataStreamType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MDMSettlementRunType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify settlement run type: PRELIM, FINAL, REV1 etc.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="RREV2"/>
+			<xsd:enumeration value="RREV1"/>
+			<xsd:enumeration value="SPECIAL"/>
+			<xsd:enumeration value="PRELIMINARY"/>
+			<xsd:enumeration value="FINAL"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MDMNMISelectionType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Allows for selection between 'SecondTierNMIs' and 'AllNMIs' 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="SecondTierNMIs"/>
+			<xsd:enumeration value="AllNMIs"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Report Parameter Groups -->
+	<xsd:group name="MDMTSettlementDateGroup">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Settlement Date Information Group
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="FromDate" type="xsd:date"/>
+			<xsd:element name="ToDate" type="xsd:date"/>
+			<xsd:element name="AsAtDate" type="xsd:dateTime"/>
+			<xsd:element name="LastSequenceNumber" type="ReplicationSequenceNumber" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="MDMTSettlementCaseGroup">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Settlement Case Identifier plus date range Information Group
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SettlementCase" type="MDMSettlementCaseIdentifier"/>
+			<xsd:element name="FromDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="ToDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="LastSequenceNumber" type="ReplicationSequenceNumber" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- Report Parameter Types -->
+	<xsd:complexType name="MDMTSettlementCaseDataReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for reports requiring only the settlement case identifier
+Report Names - SettlementAggregatedData, SettlementNonAggregatedData, SettlementProfileShape
+MSATS Reports - RM23, RM24, RM25 
+Detail - Note that the same report parameters type can be used for several reports since they all use the
+same parameters. It is thus the report name that will indicate what output will be produced.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="SettlementCase" type="MDMSettlementCaseIdentifier"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTMDPDataDeliveryReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a MDP Data Delivery Report
+Report Name - MDPDataDelivery
+MSATS Report - RM7
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementDateGroup"/>
+					<xsd:element name="DataType" type="MDMTReportsDataStreamType"/>
+					<xsd:element name="MDP" type="PartyIdentifier"/>
+					<xsd:element name="NMI" type="NMIBase" minOccurs="0"/>
+					<xsd:element name="LoadDate" type="xsd:dateTime" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTDatePPSBMPGeneratedReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a Date PPS and BMP Generated Report
+Report Name - DatePPSBMPGenerated
+MSATS Report - RM8
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementDateGroup"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTActualvsEstimateReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for an Actual vs Estimate Data Report
+Report Name - ActualvsEstimate
+MSATS Report - RM9
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementDateGroup"/>
+					<xsd:element name="DataType" type="MDMTReportsDataStreamType" minOccurs="0"/>
+					<xsd:element name="MDP" type="PartyIdentifier" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTMSPLoadAggregationErrorReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a MSP Load Aggregation Error Report
+Report Name - MSPLoadAggregationError
+MSATS Report - RM10
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="SettlementCase" type="MDMSettlementCaseIdentifier"/>
+					<xsd:element name="LastSequenceNumber" type="ReplicationSequenceNumber" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTMissingDataReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a Missing Data (null) Report
+Report Name - MissingData
+MSATS Report - RM11
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementDateGroup"/>
+					<xsd:element name="MDP" type="PartyIdentifier" minOccurs="0"/>
+					<xsd:element name="NMI" type="NMIBase" minOccurs="0"/>
+					<xsd:element name="DataType" type="MDMTReportsDataStreamType"/>
+					<xsd:element name="NMISelection" type="MDMNMISelectionType"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r10" use="optional" default="r10"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTWholesaleMaxValueReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a Max Value for Wholesale Report
+Report Name - WholesaleMaxValue
+MSATS Report - RM12
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementDateGroup"/>
+					<xsd:element name="MaxValue" type="xsd:decimal"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTNMIDataStreamsHistoryReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a NMI Data Streams History Report
+Report Name - NMIDataStreamsHistory
+MSATS Report - RM13
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementDateGroup"/>
+					<xsd:element name="NMI" type="NMIBase"/>
+					<xsd:element name="DataType" type="MDMTReportsDataStreamType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTDataVersionComparisonReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a Data Version Comparison Report
+Report Name - DataVersionComparison
+MSATS Report - RM14
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementDateGroup"/>
+					<xsd:element name="NMI" type="NMIBase"/>
+					<xsd:element name="LoadDate1" type="xsd:dateTime"/>
+					<xsd:element name="LoadDate2" type="xsd:dateTime"/>
+					<xsd:element name="ReportNonZeroDifference" type="YesNo"/>
+					<xsd:element name="DataType" type="MDMTReportsDataStreamType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTMultipleVersionsReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a Count of Multiple Versions Report
+Report Name - MultipleVersions
+MSATS Report - RM15
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementDateGroup"/>
+					<xsd:element name="MDP" type="PartyIdentifier"/>
+					<xsd:element name="DataType" type="MDMTReportsDataStreamType"/>
+					<xsd:element name="Versions" type="xsd:positiveInteger" minOccurs="0"/>
+					<xsd:element name="NMI" type="NMIBase" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTSettlementCaseDateRangeReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for reports requiring the settlement case identifier and optionally a date range within it
+Report Names - Level1SettlementReconciliation, AggregatedActualvsEstimate, DataEstimation
+MSATS Reports - RM16, RM19, RM22
+Detail - Note that the same report parameters type can be used for several reports since they all use the
+same parameters. It is thus the report name that will indicate what output will be produced.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementCaseGroup"/>
+					<xsd:element name="SettlementRun" type="MDMSettlementRunType" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r10" use="optional" default="r10"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTLevel3SettlementReconciliationReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a Level  3 Settlement Reconciliation Report
+Report Name - Level3SettlementReconciliation
+MSATS Reports - RM17
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementCaseGroup"/>
+					<xsd:element name="NMI" type="NMIBase"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTElectricityIntervalDataReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for an Electricity Interval Data Report
+Report Name - ElectricityIntervalData
+MSATS Reports - RM18
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementDateGroup"/>
+					<xsd:element name="TransmissionNodeIdentifier" type="TransmissionNodeIdentifier"/>
+					<xsd:element name="FRMP" type="PartyIdentifier"/>
+					<xsd:element name="LR" type="PartyIdentifier"/>
+					<xsd:element name="MDP" type="PartyIdentifier"/>
+					<xsd:element name="MDPVersion" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="NMI" type="NMIBase" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTPPSReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a PPS Report
+Report Name - PPS
+MSATS Reports - RM20
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element name="SettlementCase" type="MDMSettlementCaseIdentifier"/>
+						<xsd:element name="AsAtDate" type="xsd:dateTime"/>
+					</xsd:choice>
+					<xsd:element name="FromDate" type="xsd:date" minOccurs="0"/>
+					<xsd:element name="ToDate" type="xsd:date" minOccurs="0"/>
+					<xsd:element name="LastSequenceNumber" type="ReplicationSequenceNumber" minOccurs="0"/>
+					<xsd:element name="ProfileName" type="ProfileName" minOccurs="0"/>
+					<xsd:element name="MDPVersion" type="xsd:string" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTLevel2SettlementReconciliationReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for a Level  2 Settlement Reconciliation Report
+Report Name - Level2SettlementReconciliation
+MSATS Reports - RM21
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:group ref="MDMTSettlementCaseGroup"/>
+					<xsd:element name="TransmissionNodeIdentifier" type="TransmissionNodeIdentifier"/>
+					<xsd:element name="FRMP" type="PartyIdentifier" minOccurs="0"/>
+					<xsd:element name="LR" type="PartyIdentifier"/>
+					<xsd:element name="MDP" type="PartyIdentifier" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r10" use="optional" default="r10"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTHighPriorityMissingDataReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for HighPriorityMissingData
+Report Name - HighPriorityMissingData
+MSATS Reports - RM37
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:date"/>
+					<xsd:element name="ToDate" type="xsd:date"/>
+					<xsd:element name="AsAtDate" type="xsd:dateTime"/>
+					<xsd:element name="MDP" type="PartyIdentifier" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTDataStreamMissingDataReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for Data Stream Missing Data Report
+Report Name - DataStreamMissingData
+MSATS Reports - RM38
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:date"/>
+					<xsd:element name="ToDate" type="xsd:date"/>
+					<xsd:element name="AsAtDate" type="xsd:dateTime"/>
+					<xsd:element name="MDP" type="PartyIdentifier" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTMismatchDataReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for Mismatch Data Report
+Report Name - MismatchData
+MSATS Reports - RM39
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:date"/>
+					<xsd:element name="ToDate" type="xsd:date"/>
+					<xsd:element name="AsAtDate" type="xsd:dateTime"/>
+					<xsd:element name="MDP" type="PartyIdentifier" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="UFEFactorValuesByLocalAreaReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for UFE Factor Values By Local Area Report
+Report Name - UFEFactorValuesByLocalArea
+MSATS Reports - RM43
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="SettlementCase" type="MDMSettlementCaseIdentifier"/>
+					<xsd:element name="LocalArea" type="ProfileDescription" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="UFEValidationReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for UFE Validation Report
+Report Name - UFEValidation
+MSATS Reports - RM46
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="SettlementCase" type="MDMSettlementCaseIdentifier"/>
+					<xsd:element name="LocalArea" type="ProfileDescription" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

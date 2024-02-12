@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Purpose - Define the structure of Hub management transactions to extend the aseXML</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="HubMessageType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+			<xsd:enumeration value="Transaction Message"/>
+			<xsd:enumeration value="Transaction Acknowledgement"/>
+			<xsd:enumeration value="Message Acknowledgement"/>			
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MessageContextID">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>		
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="ParameterName">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>			
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="ParameterValue">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>			
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="AlertType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>			
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FlowControlAction">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ADD"/>
+			<xsd:enumeration value="REMOVE"/>				
+		</xsd:restriction>
+	</xsd:simpleType>		
+	<xsd:simpleType name="StopFileCause">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>			
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="APIName">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>			
+		</xsd:restriction>
+	</xsd:simpleType>		
+	<xsd:simpleType name="APIResource">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>			
+		</xsd:restriction>
+	</xsd:simpleType>	
+		<xsd:simpleType name="APIMethod">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>			
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:complexType name="MessageDetails">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose -Contain instances of message ID meta data as a parent wrapper.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MessageMetaData" type="MessageMetaData" minOccurs="0" maxOccurs="unbounded"/>		
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="APIReference">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Contain API reference details.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="APIName" minOccurs="0"/>		
+			<xsd:element name="Resource" type="APIResource" minOccurs="0"/>
+			<xsd:element name="Method" type="APIMethod" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="MessageMetaData">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Contains an instance of message meta data related to one message id.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TransactionGroup" type="TransactionGroup" minOccurs="0"/>
+			<xsd:element name="Priority" type="TransactionPriority" minOccurs="0"/>
+			<xsd:element name="FromParticipantID" type="PartyIdentifier" minOccurs="0"/>
+			<xsd:element name="MessageID" type="MessageIdentifier" minOccurs="0"/>
+			<xsd:element name="InitiatingMessageID" type="MessageIdentifier" minOccurs="0"/>
+			<xsd:element name="MessageType" type="HubMessageType"/>
+			<xsd:element name="MessageContextID" type="MessageContextID"/>
+			<xsd:element name="ReceivedDateTime" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="FlowControlAlert">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Advise a participant of a new stop file or change  in state.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AlertType" type="AlertType"/>
+			<xsd:element name="Action" type="FlowControlAction" minOccurs="0"/>
+			<xsd:element name="ParticipantID" type="PartyIdentifier"/>
+			<xsd:element name="StopFileName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Cause" type="StopFileCause"/>
+			<xsd:element name="StopDateTime" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="RemoveDateTime" type="xsd:dateTime" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="FlowControlAlerts">
+		<xsd:annotation>
+			<xsd:documentation>List of flow control alerts.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="FlowControlAlert" type="FlowControlAlert" minOccurs="0" maxOccurs="unbounded"/>		
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="RequestParameters">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the parameters for each request.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Parameter" type="RequestParameter" maxOccurs="unbounded"/>		
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="RequestParameter">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Associate a party with a role they are performing or intend to perform.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="ParameterName"/>
+			<xsd:element name="Value" type="ParameterValue"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<!-- Transaction Types -->
+	<xsd:complexType name="PayloadExceptionAlert">
+		<xsd:sequence>
+			<xsd:element name="InitiatingAPIReference" type="APIReference" minOccurs="0"/>
+			<xsd:element name="MessageType" type="HubMessageType"/>
+			<xsd:element name="MessageInitiator" type="PartyIdentifier"/>			
+			<xsd:element name="MessageID" type="MessageIdentifier" minOccurs="0"/>
+			<xsd:element name="InitiatingMessageID" type="MessageIdentifier" minOccurs="0"/>			
+			<xsd:element name="MessageContextID" type="MessageContextID"/>
+			<xsd:element name="AlertDateTime" type="xsd:dateTime"/>	
+			<xsd:element name="Event" type="Event"/>			
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r37" use="optional" default="r37"/>
+	</xsd:complexType>	
+	<xsd:complexType name="HubFlowControlAlertNotification">
+		<xsd:sequence>		
+			<xsd:element name="FlowControlAlerts" type="FlowControlAlerts"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r37" use="optional" default="r37"/>
+	</xsd:complexType>	
+	<xsd:complexType name="HubFlowControlReport">
+		<xsd:sequence>
+			<xsd:element name="RequestParameters" type="RequestParameters" minOccurs="0"/>
+			<xsd:element name="ResultCount" type="xsd:integer"/>			
+			<xsd:element name="FlowControlStandingData" type="FlowControlAlerts"/>	
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r37" use="optional" default="r37"/>
+	</xsd:complexType>	
+	<xsd:complexType name="HubQueueReport">
+		<xsd:sequence>
+			<xsd:element name="RequestParameters" type="RequestParameters" minOccurs="0"/>		
+			<xsd:element name="ResultCount" type="xsd:integer"/>
+			<xsd:element name="MessageDetails" type="MessageDetails"/>			
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r37" use="optional" default="r37"/>
+	</xsd:complexType>	
+</xsd:schema>

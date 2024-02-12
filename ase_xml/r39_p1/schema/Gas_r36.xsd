@@ -1,0 +1,1199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 rel. 2 sp1 (x64) (http://www.altova.com) by ﻿Australian Energy Market Operator (Australian Energy Market Operator) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define gas specific types and the standing data structure used for gas.
+</xsd:documentation>
+	</xsd:annotation>
+	<!-- Basic Types -->
+	<xsd:simpleType name="AnticipatedAnnualConsumption">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="13"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BaseLoad">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="9"/>
+			<xsd:fractionDigits value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CustomerCharacterisation">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Metropolitan Business"/>
+			<xsd:enumeration value="Metropolitan Residential"/>
+			<xsd:enumeration value="Non Metropolitan Business"/>
+			<xsd:enumeration value="Non Metropolitan Residential"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DistributionTariff">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Demand"/>
+			<xsd:enumeration value="Volume"/>
+			<xsd:enumeration value="1A1R"/>
+			<xsd:enumeration value="1A2R"/>
+			<xsd:enumeration value="1B1R"/>
+			<xsd:enumeration value="1B2R"/>
+			<xsd:enumeration value="1B3R"/>
+			<xsd:enumeration value="1A1N"/>
+			<xsd:enumeration value="1A2N"/>
+			<xsd:enumeration value="1B1N"/>
+			<xsd:enumeration value="1B2N"/>
+			<xsd:enumeration value="1B3N"/>
+			<xsd:enumeration value="1D1R"/>
+			<xsd:enumeration value="1D2R"/>
+			<xsd:enumeration value="1D3R"/>
+			<xsd:enumeration value="1D1N"/>
+			<xsd:enumeration value="1D2N"/>
+			<xsd:enumeration value="1D3N"/>
+			<xsd:enumeration value="1K1R"/>
+			<xsd:enumeration value="1K2R"/>
+			<xsd:enumeration value="1K3R"/>
+			<xsd:enumeration value="1K1N"/>
+			<xsd:enumeration value="1K2N"/>
+			<xsd:enumeration value="1K3N"/>
+			<xsd:enumeration value="1V1R"/>
+			<xsd:enumeration value="1V2R"/>
+			<xsd:enumeration value="1V3R"/>
+			<xsd:enumeration value="1V1N"/>
+			<xsd:enumeration value="1V2N"/>
+			<xsd:enumeration value="1V3N"/>
+			<xsd:enumeration value="1Demand"/>
+			<xsd:enumeration value="2Demand"/>
+			<xsd:enumeration value="3Demand"/>
+			<xsd:enumeration value="4Demand"/>
+			<xsd:enumeration value="5Demand"/>
+			<xsd:enumeration value="6Demand"/>
+			<xsd:enumeration value="7Demand"/>
+			<xsd:enumeration value="8Demand"/>
+			<xsd:enumeration value="9Demand"/>
+			<xsd:enumeration value="0Demand"/>
+			<xsd:enumeration value="Commercial"/>
+			<xsd:enumeration value="Negotiated"/>
+			<xsd:enumeration value="NegotiatedVolume"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GasJobCompletionCode1">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="10"/>
+			<xsd:enumeration value="14"/>
+			<xsd:enumeration value="15"/>
+			<xsd:enumeration value="21"/>
+			<xsd:enumeration value="22"/>
+			<xsd:enumeration value="28"/>
+			<xsd:enumeration value="48"/>
+			<xsd:enumeration value="60"/>
+			<xsd:enumeration value="70"/>
+			<xsd:enumeration value="74"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GasJobCompletionCode2">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="02"/>
+			<xsd:enumeration value="03"/>
+			<xsd:enumeration value="04"/>
+			<xsd:enumeration value="06"/>
+			<xsd:enumeration value="10"/>
+			<xsd:enumeration value="11"/>
+			<xsd:enumeration value="12"/>
+			<xsd:enumeration value="13"/>
+			<xsd:enumeration value="15"/>
+			<xsd:enumeration value="16"/>
+			<xsd:enumeration value="17"/>
+			<xsd:enumeration value="18"/>
+			<xsd:enumeration value="22"/>
+			<xsd:enumeration value="23"/>
+			<xsd:enumeration value="24"/>
+			<xsd:enumeration value="30"/>
+			<xsd:enumeration value="37"/>
+			<xsd:enumeration value="40"/>
+			<xsd:enumeration value="42"/>
+			<xsd:enumeration value="46"/>
+			<xsd:enumeration value="55"/>
+			<xsd:enumeration value="60"/>
+			<xsd:enumeration value="64"/>
+			<xsd:enumeration value="70"/>
+			<xsd:enumeration value="78"/>
+			<xsd:enumeration value="79"/>
+			<xsd:enumeration value="86"/>
+			<xsd:enumeration value="98"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GasJobCompletionCode3">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="31"/>
+			<xsd:enumeration value="33"/>
+			<xsd:enumeration value="34"/>
+			<xsd:enumeration value="37"/>
+			<xsd:enumeration value="42"/>
+			<xsd:enumeration value="44"/>
+			<xsd:enumeration value="45"/>
+			<xsd:enumeration value="47"/>
+			<xsd:enumeration value="51"/>
+			<xsd:enumeration value="52"/>
+			<xsd:enumeration value="53"/>
+			<xsd:enumeration value="55"/>
+			<xsd:enumeration value="58"/>
+			<xsd:enumeration value="59"/>
+			<xsd:enumeration value="63"/>
+			<xsd:enumeration value="72"/>
+			<xsd:enumeration value="99"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GasMeterIndexValue">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="7"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GasMeterTypeSizeCode">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StartWorkNoticeNumberType">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DataChangeReasonCode">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+			<xsd:enumeration value="DCR001"/>
+			<xsd:enumeration value="DCR002"/>
+			<xsd:enumeration value="DCR003"/>
+			<xsd:enumeration value="DCR004"/>
+			<xsd:enumeration value="DCR005"/>
+			<xsd:enumeration value="DCR006"/>
+			<xsd:enumeration value="DCR007"/>
+			<xsd:enumeration value="DCR008"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="KPAValueType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="9"/>
+			<xsd:fractionDigits value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterInstallationType">
+		<xsd:annotation>
+			<xsd:documentation>
+				NSW/ACT Meter Installation Types
+				O - Ordinary
+				M - Master Meter
+				S - Sub-meter linked to a master meter
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1"/>
+			<xsd:enumeration value="O"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="S"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterMeasurementUnitType">
+		<xsd:annotation>
+			<xsd:documentation>
+				NSW/ACT Meter Measurement Unit Types
+				M - Metric
+				I - Imperial
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="I"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BillingMethodType">
+		<xsd:annotation>
+			<xsd:documentation>
+				NSW/ACT Meter Billing Method Types
+				O - Ordinary billing
+				C - Central hot water system billing
+				D - Deduct meter billing
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1"/>
+			<xsd:enumeration value="O"/>
+			<xsd:enumeration value="C"/>
+			<xsd:enumeration value="D"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DistanceType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="4"/>
+			<xsd:fractionDigits value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterMultiplierType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="5"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ConsumptionLitresType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="24"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ConsumptionFactorType">
+		<xsd:annotation>
+			<xsd:documentation>
+	A factor based on the calculation of HV * Volume Correction Factor
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="11"/>
+			<xsd:fractionDigits value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CommonFactorType">
+		<xsd:annotation>
+			<xsd:documentation>
+	A factor applicable to hot water meter installations – Energy/Total Litres Heated
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="11"/>
+			<xsd:fractionDigits value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GasMeterReadFrequency">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Bi Monthly"/>
+			<xsd:enumeration value="Monthly"/>
+			<xsd:enumeration value="Quarterly"/>
+			<xsd:enumeration value="Daily"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HeatingValueZone">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndexAdjustmentReasonCode">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Over Read"/>
+			<xsd:enumeration value="Under Read"/>
+			<xsd:enumeration value="Over Estimate"/>
+			<xsd:enumeration value="Under Estimate"/>
+			<xsd:enumeration value="No Change"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntervalMeterCharge">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="9"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="JobEnquiryCode">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AML"/>
+			<xsd:enumeration value="CSL"/>
+			<xsd:enumeration value="CLT"/>
+			<xsd:enumeration value="DFC"/>
+			<xsd:enumeration value="DSD"/>
+			<xsd:enumeration value="EBD"/>
+			<xsd:enumeration value="EBS"/>
+			<xsd:enumeration value="ECO"/>
+			<xsd:enumeration value="EFB"/>
+			<xsd:enumeration value="EMG"/>
+			<xsd:enumeration value="EMT"/>
+			<xsd:enumeration value="EOT"/>
+			<xsd:enumeration value="ESE"/>
+			<xsd:enumeration value="EST"/>
+			<xsd:enumeration value="EXP"/>
+			<xsd:enumeration value="FAP"/>
+			<xsd:enumeration value="FAT"/>
+			<xsd:enumeration value="FHS"/>
+			<xsd:enumeration value="FMN"/>
+			<xsd:enumeration value="FMT"/>
+			<xsd:enumeration value="FSV"/>
+			<xsd:enumeration value="MAP"/>
+			<xsd:enumeration value="MBO"/>
+			<xsd:enumeration value="MCH"/>
+			<xsd:enumeration value="MDM"/>
+			<xsd:enumeration value="MDO"/>
+			<xsd:enumeration value="MFX"/>
+			<xsd:enumeration value="MFXA"/>
+			<xsd:enumeration value="MHA"/>
+			<xsd:enumeration value="MRC"/>
+			<xsd:enumeration value="MRF"/>
+			<xsd:enumeration value="MRG"/>
+			<xsd:enumeration value="MRM"/>
+			<xsd:enumeration value="MRR"/>
+			<xsd:enumeration value="MRT"/>
+			<xsd:enumeration value="MST"/>
+			<xsd:enumeration value="MTE"/>
+			<xsd:enumeration value="MTJ"/>
+			<xsd:enumeration value="MTN"/>
+			<xsd:enumeration value="OTH"/>
+			<xsd:enumeration value="RML"/>
+			<xsd:enumeration value="RSD"/>
+			<xsd:enumeration value="RSR"/>
+			<xsd:enumeration value="SBS"/>
+			<xsd:enumeration value="SCR"/>
+			<xsd:enumeration value="SDR"/>
+			<xsd:enumeration value="SNG"/>
+			<xsd:enumeration value="SPN"/>
+			<xsd:enumeration value="UEF"/>
+			<xsd:enumeration value="UMS"/>
+			<xsd:enumeration value="USR"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterType">
+		<xsd:annotation>
+			<xsd:documentation>
+				NSW/ACT Meter Types
+				G - Gas
+				W - Hot Water
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="G"/>
+			<xsd:enumeration value="W"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GasConnectionType">
+		<xsd:annotation>
+			<xsd:documentation>
+				NSW/ACT Connection Types
+				N - New Home
+				E - Existing Home
+				H - Hot Water Breakdown
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="N"/>
+			<xsd:enumeration value="E"/>
+			<xsd:enumeration value="H"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SupplyPointID">
+		<xsd:annotation>
+			<xsd:documentation>A unique identifier for a Supply Point</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="13"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NetworkTariffCodeType">
+		<xsd:annotation>
+			<xsd:documentation>A unique identifier for Network Tariff Code</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LoadDetailsPerAnnum">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LoadDetailsPerHour">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PressureCorrectionFactor">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="6"/>
+			<xsd:fractionDigits value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ReasonForNoAccess">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Common</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Access Overgrown"/>
+			<xsd:enumeration value="Can't Locate Meter"/>
+			<xsd:enumeration value="Damaged Meter"/>
+			<xsd:enumeration value="Dial Out of Alignment"/>
+			<xsd:enumeration value="Dirty Dial"/>
+			<xsd:enumeration value="Gate Locked"/>
+			<xsd:enumeration value="Key Required"/>
+			<xsd:enumeration value="Locked and No Answer"/>
+			<xsd:enumeration value="Meter Changed"/>
+			<xsd:enumeration value="Meter Obstructed"/>
+			<xsd:enumeration value="Meter Removed"/>
+			<xsd:enumeration value="Other"/>
+			<xsd:enumeration value="Refused Access"/>
+			<xsd:enumeration value="Savage Dog"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- NSW Gas InstallationType-->
+	<xsd:simpleType name="GasInstallationType">
+		<xsd:annotation>
+			<xsd:documentation>
+NSW Gas InstallationType. This is different to the Electricity Installation Type.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+			<xsd:minLength value="4"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterReadingDayNumber">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SupplyPointCode">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Basic"/>
+			<xsd:enumeration value="Interval"/>
+			<xsd:enumeration value="Transmission"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TemperatureSensitivityFactor">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="9"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransmissionZone">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TypeOfRead">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Actual"/>
+			<xsd:enumeration value="Estimated"/>
+			<xsd:enumeration value="Substituted"/>
+			<xsd:enumeration value="Customer Own Read"/>
+			<xsd:enumeration value="Deemed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MIRNStatus">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Commissioned"/>
+			<xsd:enumeration value="Decommissioned"/>
+			<xsd:enumeration value="Deregistered"/>
+			<xsd:enumeration value="Registered"/>
+			<xsd:enumeration value="Unclaimed"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GasMeterStatus">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="No meter"/>
+			<xsd:enumeration value="Turned on"/>
+			<xsd:enumeration value="Turned off"/>
+			<xsd:enumeration value="Plugged"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ExcludedServicesCategory">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+			<xsd:enumeration value="Logger"/>
+			<xsd:enumeration value="Mains"/>
+			<xsd:enumeration value="Meter"/>
+			<xsd:enumeration value="O+M"/>
+			<xsd:enumeration value="Other"/>
+			<xsd:enumeration value="Service"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--Service Order Types-->
+	<xsd:complexType name="GasMeterFixCertification">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="SimpleMeter">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="COCNumber">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="8"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="PlumberLicenceNumber">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="30"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="PlumberContactDetail" type="CustomerDetail" minOccurs="0"/>
+						<xsd:element name="StartWorkNoticeNumber" type="StartWorkNoticeNumberType" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ComplexMeter">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="StartWorkNoticeNumber" type="StartWorkNoticeNumberType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GasMeterFix">
+		<xsd:sequence>
+			<xsd:element name="Certification" type="GasMeterFixCertification"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasNewConnection">
+		<xsd:sequence>
+			<xsd:element name="CustomerCharacterisation" type="CustomerCharacterisation"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LoadDetails">
+		<xsd:sequence>
+			<xsd:element name="PerHour" type="LoadDetailsPerHour"/>
+			<xsd:element name="PerAnnum" type="LoadDetailsPerAnnum" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasSpecialReadNoAccess">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ReasonForNoAccess" type="ReasonForNoAccess"/>
+			<xsd:element name="NextAvailableReadDate" type="xsd:date"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasServiceDetails">
+		<xsd:sequence>
+			<xsd:element name="LoadDetails" type="LoadDetails"/>
+			<xsd:element name="MeterInletPressure" default="1.1" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:decimal">
+						<xsd:totalDigits value="6"/>
+						<xsd:fractionDigits value="2"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="MeterFix" type="GasMeterFix"/>
+				<xsd:element name="NewConnection" type="GasNewConnection"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceOrderGasJobCompletionCodes">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="JobCompletionCode1" type="GasJobCompletionCode1"/>
+			<xsd:element name="JobCompletionCode2" type="GasJobCompletionCode2"/>
+			<xsd:element name="JobCompletionCode3" type="GasJobCompletionCode3" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceOrderGasNoAccessData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="SpecialReadNoAccess" type="GasSpecialReadNoAccess"/>
+			<xsd:element name="DateOfAttemptedAccess" type="xsd:date"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<!-- Base type created for multimeter service order type -->
+	<xsd:complexType name="BaseServiceOrderGasMeterData" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - base types from which all gas meter data for service order transactions are implemented.
+Detail - The only limitation made by this definition is that the content will be complex.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="BaseMultiMeterReadDataType" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - base types from which all gas and hot water meter read data are implemented.
+Detail - The only limitation made by this definition is that the content will be complex. This is done to
+alow NSW/ACT Meters to have specific attributes for meters such as Hot Water Meter.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AdjustmentReasonCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ConsumedEnergy" type="QuantityOfGasMJ" minOccurs="0"/>
+			<xsd:element name="ConsumptionFactor" type="ConsumptionFactorType" minOccurs="0"/>
+			<xsd:element name="EnergyCalculationDatestamp" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="EnergyCalculationTimestamp" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="EstimationSubstitutionReasonCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="EstimationSubstitutionType" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="HiLowFailure" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="IndexValue" type="GasMeterIndexValue" nillable="true" minOccurs="0"/>
+			<xsd:element name="MeterCapacityFailure" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ReadDate" type="xsd:date" nillable="true" minOccurs="0"/>
+			<xsd:element name="ReasonForRead" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="TypeOfRead" type="TypeOfRead" nillable="true" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceOrderGasMeterData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseServiceOrderGasMeterData">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:sequence>
+							<xsd:element name="New" type="GasMeterStandingData" minOccurs="0"/>
+							<xsd:element name="Removed" type="GasMeterStandingData" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:element name="Current" type="GasMeterStandingData"/>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceOrderMultiMeterData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseServiceOrderGasMeterData">
+				<xsd:sequence maxOccurs="999">
+					<xsd:choice>
+						<xsd:sequence>
+							<xsd:element name="New" type="GasMultiMeterStandingDataType" minOccurs="0"/>
+							<xsd:element name="Removed" type="GasMultiMeterStandingDataType" minOccurs="0"/>
+						</xsd:sequence>
+						<xsd:element name="Current" type="GasMultiMeterStandingDataType"/>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GasServiceOrderType">
+		<xsd:complexContent>
+			<xsd:extension base="ServiceOrderTypeBase">
+				<xsd:choice>
+					<xsd:element name="JobEnquiryCode" type="JobEnquiryCode"/>
+					<xsd:sequence>
+						<xsd:element name="SpecialReadReasonCode" type="SpecialReadReasonCode"/>
+						<xsd:element name="MeterSerialNumber" type="MeterSerialNumber" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:choice>
+				<xsd:attribute name="version" type="r13" use="optional" default="r13"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GasServiceOrderDetails">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ServiceOrderRequestData">
+				<xsd:sequence>
+					<xsd:element name="ServiceDetails" type="GasServiceDetails" minOccurs="0"/>
+					<xsd:element name="DateTimeCSRAccessedRecord" type="xsd:dateTime"/>
+					<xsd:element name="DateTimeCSRProcessedTransaction" type="xsd:dateTime"/>
+					<xsd:element name="QuoteReference" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ConnectionType" type="GasConnectionType" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GasServiceOrderNotificationData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ServiceOrderNotificationData">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element name="ServiceOrderCompletion" type="ServiceOrderGasCompletionData"/>
+						<xsd:element name="NoAccess" type="ServiceOrderGasNoAccessData"/>
+					</xsd:choice>
+					<xsd:sequence>
+						<xsd:element name="JobCompletionCodes" type="ServiceOrderGasJobCompletionCodes" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r34" use="optional" default="r34"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceOrderGasCompletionData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="DateServiceOrderCompleted" type="xsd:date"/>
+			<xsd:element name="TimeServiceOrderCompleted" type="xsd:time" minOccurs="0"/>
+			<xsd:element name="MeterData" type="BaseServiceOrderGasMeterData" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Standing Data Types -->
+	<xsd:complexType name="GasMeterReadData">
+		<xsd:sequence>
+			<xsd:element name="IndexValue" type="GasMeterIndexValue" nillable="true" minOccurs="0"/>
+			<xsd:element name="ReadDate" type="xsd:date" nillable="true" minOccurs="0"/>
+			<xsd:element name="TypeOfRead" type="TypeOfRead" nillable="true" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasMultiMeterReadDataType">
+		<xsd:annotation>
+			<xsd:documentation>Read data for NSW/ACT Gas NMI.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseMultiMeterReadDataType">
+				<xsd:sequence>
+					<xsd:element name="AverageHeatingValue" type="xsd:decimal" minOccurs="0"/>
+					<xsd:element name="PressureCorrectionFactor" type="PressureCorrectionFactor" minOccurs="0"/>
+					<xsd:element name="VolumeFlow" type="xsd:decimal" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="HWMultiMeterReadDataType">
+		<xsd:annotation>
+			<xsd:documentation>Read data for NSW/ACT Hotwater NMI.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseMultiMeterReadDataType">
+				<xsd:sequence>
+					<xsd:element name="CommonFactor" type="CommonFactorType" minOccurs="0"/>
+					<xsd:element name="ConsumptionLitres" type="ConsumptionLitresType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GasMultiMeterMasterStandingDataType">
+		<xsd:annotation>
+			<xsd:documentation>Basic standing data associated with a gas NMI.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AnticipatedAnnualConsumption" type="AnticipatedAnnualConsumption" minOccurs="0"/>
+			<xsd:element name="AustralianPostCode" type="AustralianPostCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="BaseLoad" type="BaseLoad" nillable="true" minOccurs="0"/>
+			<xsd:element name="ChargeableDemand" type="QuantityOfGasMJ" minOccurs="0"/>
+			<xsd:element name="CustomerCharacterisation" type="CustomerCharacterisation" minOccurs="0"/>
+			<xsd:element name="CustomerClassificationCode" type="CustomerClassificationCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="CustomerThresholdCode" type="CustomerThresholdCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="Distance" type="DistanceType" minOccurs="0"/>
+			<xsd:element name="DistributionTariff" type="DistributionTariff" minOccurs="0"/>
+			<xsd:element name="HeatingValueZone" type="HeatingValueZone" minOccurs="0"/>
+			<xsd:element name="MIRNAssignmentDate" type="xsd:date" nillable="true" minOccurs="0"/>
+			<xsd:element name="MIRNCommissionedDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="MIRNStatus" type="MIRNStatus" minOccurs="0"/>
+			<xsd:element name="NetworkID" type="NetworkID" minOccurs="0"/>
+			<xsd:element name="NetworkReceiptPointID" type="NetworkReceiptPointID" minOccurs="0"/>
+			<xsd:element name="NetworkTariffCode" type="NetworkTariffCodeType" minOccurs="0"/>
+			<xsd:element name="PrimaryCustodyTransferMeter" type="NMIWithChecksum" minOccurs="0"/>
+			<xsd:element name="SmallUseCustomer" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="TemperatureSensitivityFactor" type="TemperatureSensitivityFactor" nillable="true" minOccurs="0"/>
+			<xsd:element name="TransmissionZone" type="TransmissionZone" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasBasicMeterStandingData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NextScheduledReadDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="ScheduledReadingDayNumber" type="MeterReadingDayNumber" minOccurs="0"/>
+			<xsd:element name="MeterReadFrequency" type="GasMeterReadFrequency" minOccurs="0"/>
+			<xsd:element name="NextScheduledSpecialRead" type="AppointmentDetail" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasBasicMultiMeterStandingData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NextScheduledReadDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="NextScheduledSpecialRead" type="AppointmentDetail" minOccurs="0"/>
+			<xsd:element name="ScheduledReadingDayNumber" type="MeterReadingDayNumber" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasIntervalMeterStandingData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CommunicationEquipmentPresent" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="ExcludedServicesCharges" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ChargeItem" type="GasIntervalMeterCharge" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasIntervalMeterCharge">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Category" type="ExcludedServicesCategory"/>
+			<xsd:element name="Amount" type="IntervalMeterCharge"/>
+			<xsd:element name="ExpiryDate" type="xsd:date"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasStandingData">
+		<xsd:annotation>
+			<xsd:documentation>Standing data associated with an gas NMI.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMIStandingData">
+				<xsd:sequence>
+					<xsd:element name="MasterData" type="GasMasterStandingData" minOccurs="0"/>
+					<xsd:element name="RoleAssignments" type="RoleAssignments" minOccurs="0"/>
+					<xsd:element name="MeterData" type="GasMeterStandingData" minOccurs="0"/>
+					<xsd:element name="SiteData" type="ServicePoint" minOccurs="0"/>
+					<xsd:element name="AdditionalDataToFollow" type="xsd:boolean" minOccurs="0"/>
+					<!-- Fields to be determined -->
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r34" use="optional" default="r34"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GasMasterStandingData">
+		<xsd:annotation>
+			<xsd:documentation>Basic standing data associated with an gas NMI.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AustralianPostCode" type="AustralianPostCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="PrimaryCustodyTransferMeter" type="NMIWithChecksum" minOccurs="0"/>
+			<xsd:element name="BaseLoad" type="BaseLoad" nillable="true" minOccurs="0"/>
+			<xsd:element name="TemperatureSensitivityFactor" type="TemperatureSensitivityFactor" nillable="true" minOccurs="0"/>
+			<xsd:element name="DistributionTariff" type="DistributionTariff" minOccurs="0"/>
+			<xsd:element name="TransmissionZone" type="TransmissionZone" minOccurs="0"/>
+			<xsd:element name="HeatingValueZone" type="HeatingValueZone" minOccurs="0"/>
+			<xsd:element name="CustomerCharacterisation" type="CustomerCharacterisation" minOccurs="0"/>
+			<xsd:element name="CustomerClassificationCode" type="CustomerClassificationCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="CustomerThresholdCode" type="CustomerThresholdCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="MIRNAssignmentDate" type="xsd:date" nillable="true" minOccurs="0"/>
+			<xsd:element name="MIRNStatus" type="MIRNStatus" minOccurs="0"/>
+			<xsd:element name="AnticipatedAnnualConsumption" type="AnticipatedAnnualConsumption" minOccurs="0"/>
+			<xsd:element name="MIRNCommissionedDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="SmallUseCustomer" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="NetworkID" type="NetworkID" minOccurs="0"/>
+			<!-- Fields to be determined -->
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasMeterStandingData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MeterSerialNumber" type="MeterSerialNumber" minOccurs="0"/>
+			<xsd:element name="PressureCorrectionFactor" type="PressureCorrectionFactor" minOccurs="0"/>
+			<xsd:element name="MeterTypeSizeCode" type="GasMeterTypeSizeCode" minOccurs="0"/>
+			<xsd:element name="MeterStatus" type="GasMeterStatus" minOccurs="0"/>
+			<xsd:element name="SupplyPointCode" type="SupplyPointCode" minOccurs="0"/>
+			<xsd:element name="MeterRead" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Current" type="GasMeterReadData" minOccurs="0"/>
+						<xsd:element name="Previous" type="GasMeterReadData" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="BasicMeter" type="GasBasicMeterStandingData" minOccurs="0"/>
+				<xsd:element name="IntervalMeter" type="GasIntervalMeterStandingData" minOccurs="0"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- NSW Types forGas Meter-->
+	<xsd:complexType name="GasMultiMeterStandingDataType">
+		<xsd:annotation>
+			<xsd:documentation>Standing data associated with a NSW/ACT Gas NMI (DPI).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AdjustmentReasonCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="BillingMethod" type="BillingMethodType" minOccurs="0"/>
+			<xsd:element name="KPAValue" type="KPAValueType" minOccurs="0"/>
+			<xsd:element name="MeterInstallationType" type="MeterInstallationType" minOccurs="0"/>
+			<xsd:element name="MeterMeasurementUnit" type="MeterMeasurementUnitType" minOccurs="0"/>
+			<xsd:element name="MeterMultiplier" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="MeterPosition" type="GasMeterPosition" minOccurs="0"/>
+			<xsd:element name="MeterRead" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Current" type="BaseMultiMeterReadDataType" minOccurs="0"/>
+						<xsd:element name="Previous" type="BaseMultiMeterReadDataType" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="MeterReadFrequency" type="GasMeterReadFrequency" minOccurs="0"/>
+			<xsd:element name="MeterReadFrequencyType" type="MeterReadingFrequencyType" minOccurs="0"/>
+			<xsd:element name="MeterSerialNumber" type="MeterSerialNumber" minOccurs="0"/>
+			<xsd:element name="MeterStatus" type="GasMeterStatus" minOccurs="0"/>
+			<xsd:element name="MeterType" type="MeterType" minOccurs="0"/>
+			<xsd:element name="MeterTypeSizeCode" type="GasMeterTypeSizeCode" minOccurs="0"/>
+			<xsd:element name="MeterUnits" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="NumberOfDialsOnDevice" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:totalDigits value="2"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ScheduledReadingDayNumber" type="xsd:int" minOccurs="0"/>
+			<xsd:element name="SupplyPointCode" type="SupplyPointCode" minOccurs="0"/>
+			<xsd:element name="SupplyPointID" type="SupplyPointID" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:element name="BasicMeter" type="GasBasicMultiMeterStandingData" minOccurs="0"/>
+				<xsd:element name="IntervalMeter" type="GasIntervalMeterStandingData" minOccurs="0"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GasMultiMeterStandingData">
+		<xsd:annotation>
+			<xsd:documentation>Standing data associated with a multimeter gas NMI.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMIStandingData">
+				<xsd:sequence>
+					<xsd:element name="MasterData" type="GasMultiMeterMasterStandingDataType" minOccurs="0"/>
+					<xsd:element name="RoleAssignments" type="RoleAssignments" minOccurs="0"/>
+					<xsd:element name="MeterData" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="Meter" type="GasMultiMeterStandingDataType" maxOccurs="999"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="SiteData" type="ServicePoint" minOccurs="0"/>
+					<xsd:element name="AdditionalDataToFollow" type="xsd:boolean" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r34" use="optional" default="r34"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GasStandingDataUpdate">
+		<xsd:complexContent>
+			<xsd:extension base="GasStandingData">
+				<xsd:sequence>
+					<xsd:element name="LastModifiedDateTime" type="xsd:dateTime"/>
+					<xsd:element name="LastModifiedBy" type="PartyIdentifier" minOccurs="0"/>
+					<xsd:element name="DataChangeReasonCode" minOccurs="0">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="DataChangeReasonCode">
+									<xsd:attribute name="description" type="xsd:string"/>
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--GasMultimeterStandingDataUpdate-->
+	<xsd:complexType name="GasMultiMeterStandingDataUpdate">
+		<xsd:complexContent>
+			<xsd:extension base="GasMultiMeterStandingData">
+				<xsd:sequence>
+					<xsd:element name="LastModifiedDateTime" type="xsd:dateTime"/>
+					<xsd:element name="LastModifiedBy" type="PartyIdentifier" minOccurs="0"/>
+					<xsd:element name="DataChangeReasonCode" minOccurs="0">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="DataChangeReasonCode">
+									<xsd:attribute name="description" type="xsd:string"/>
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--MeterDataManagement Types-->
+	<xsd:complexType name="GasMeterVerifyRequestData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMITransactionBase">
+				<xsd:sequence>
+					<xsd:element name="InitiatorReferenceNumber" type="UniqueIdentifier"/>
+					<xsd:element name="CurrentRead" type="GasMeterReadData"/>
+					<xsd:element name="ProposedRead" type="GasMeterReadData" minOccurs="0"/>
+					<xsd:element name="InvestigationCode" type="IndexInvestigationCode"/>
+					<xsd:element name="InvestigationDescription" minOccurs="0">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:maxLength value="100"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r17" use="optional" default="r17"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GasMeterVerifyRequestWithMSNData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement This type has MeterSerialNumber as a mandatory element</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMITransactionBase">
+				<xsd:sequence>
+					<xsd:element name="InitiatorReferenceNumber" type="UniqueIdentifier"/>
+					<xsd:element name="CurrentRead" type="GasMeterReadData"/>
+					<xsd:element name="ProposedRead" type="GasMeterReadData" minOccurs="0"/>
+					<xsd:element name="InvestigationCode" type="IndexInvestigationCode"/>
+					<xsd:element name="InvestigationDescription" minOccurs="0">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:maxLength value="100"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="MeterSerialNumber" type="MeterSerialNumber"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r34" use="optional" default="r34"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GasMeterVerifyResponseData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMITransactionBase">
+				<xsd:sequence>
+					<xsd:element name="InitiatorReferenceNumber" type="UniqueIdentifier"/>
+					<xsd:element name="RevisedRead" type="GasMeterReadData"/>
+					<xsd:element name="AdjustmentReasonCode" type="IndexAdjustmentReasonCode"/>
+					<xsd:element name="Event" type="Event" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r13" use="optional" default="r13"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GasMeterVerifyResponseWithMSNData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMITransactionBase">
+				<xsd:sequence>
+					<xsd:element name="InitiatorReferenceNumber" type="UniqueIdentifier"/>
+					<xsd:element name="RevisedRead" type="GasMeterReadData"/>
+					<xsd:element name="AdjustmentReasonCode" type="IndexAdjustmentReasonCode"/>
+					<xsd:element name="MeterSerialNumber" type="MeterSerialNumber"/>
+					<xsd:element name="Event" type="Event" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r34" use="optional" default="r34"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GasSingleHistoryRequestData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMITransactionBase">
+				<xsd:sequence>
+					<xsd:element name="RequestPeriod" type="Period"/>
+					<xsd:element name="FullHistoryRequired" type="xsd:boolean"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!--Transaction Types-->
+	<xsd:complexType name="GasMeterNotification">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="MeterFix" type="NMIStandingData"/>
+				<xsd:element name="MIRNStatusUpdate" type="NMIStandingData"/>
+			</xsd:choice>
+			<xsd:element name="DateServiceOrderCompleted" type="xsd:date"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r34" use="optional" default="r34"/>
+	</xsd:complexType>
+	<xsd:complexType name="MeteredSupplyPointsCountUpdate">
+		<xsd:sequence>
+			<xsd:element name="Count" type="xsd:integer"/>
+			<xsd:element name="CountDate" type="xsd:date"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+</xsd:schema>

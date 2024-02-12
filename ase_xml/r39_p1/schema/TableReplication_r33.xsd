@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define the transaction exchanges needed by the "Table Replication" application
+Detail - This schema contains the necessary transaction exchnages to support replication of information between parties. It defines a number of "tables", each of which has multiple "rows". The data for an row varies from one table to another, but all rows share a common set of "fields". Note that a table need not correspond directly to a physical table within the system servicing the transaction.
+
+Rows are never deleted, rather their status is changed to inactive and the maintenance date updated.
+
+Where a row only applies for a particular period of time,  a date range is used to indicate the period during which the row was active. Date ranges are "inclusive".
+
+The "Replication Notification" transaction exchange provides unsolicited updates of table information. It consists of a ReplicationNotification transaction.
+
+The "Replication Request" transaction exchange allows a portion of a table's data to be retrieved. It consists of a "ReplicationRequest" and a "Replicationnotification" in reply.
+
+Table Replication is potentially applicable to every application using aseXML. Thus the table replication transactions are defined in terms of abstract types, which each application defining its own types for the specific tables of interest. 
+
+Note that the tablename may remain constant whilst the row type varies. This would be the case where the row definition changes over time. In this case, the row type name will need to carry some version information.
+ </xsd:documentation>
+	</xsd:annotation>
+	<!-- Support Types-->
+	<xsd:simpleType name="ReplicationSequenceNumber">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Uniquely identifies each row within a table
+MSATS Data Model Column - ID_*
+Detail - Sequence numbers on each row allow delivery of large amounts of data via a series of related requests.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ReplicationTableName">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - indicate the table being replicated
+Detail - On previous versions of the schema, valid table names were explicitly listed in an enumeration. In order to make table replication more generic, this validation is now assumed to be performed by the application.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Replication Row Types -->
+	<xsd:complexType name="ReplicationBaseRow" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Base type for all table row definitions
+Detail - Any table to be replicated must support these fields. Sequence numbers provide a way to request table rows in chunks, with the last sequence number seen in one ReplicationNotification providing an input to the ReplicationRequest of the next.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SequenceNumber" type="ReplicationSequenceNumber"/>
+			<xsd:element name="CreationDate" type="xsd:dateTime"/>
+			<xsd:element name="MaintenanceDate" type="xsd:dateTime"/>
+			<xsd:element name="RowStatus" type="ActiveInactive"/>
+			<xsd:element name="UserID" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReplicationDateRangeRow" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Base type for tables employing an effective date range
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ReplicationBaseRow">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:dateTime"/>
+					<xsd:element name="ToDate" type="xsd:dateTime"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Support Types -->
+	<xsd:complexType name="ReplicationBlock">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Container for row data from a table
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Row" type="ReplicationBaseRow" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="tableName" type="ReplicationTableName" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ReplicationParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Define the parameters of a replication request
+Detail - The parameters provided in a replication request are also provided on the response. While unnecessary for batch initiated requests (due to the presence of an initiatingTransactionID on the reponse), it is useful where transactions have been submitted on-line.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TableName" type="ReplicationTableName"/>
+			<xsd:element name="CreationFromDate" type="xsd:dateTime"/>
+			<xsd:element name="CreationToDate" type="xsd:dateTime"/>
+			<xsd:element name="LastSequenceNumber" type="ReplicationSequenceNumber"/>
+			<xsd:element name="MaximumRows" type="xsd:nonNegativeInteger" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Transaction Types -->
+	<xsd:complexType name="ReplicationRequest">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Table Replication
+TransactionExchange - Replication Request
+TransactionGroup - Multiple
+Priority - Low
+Purpose - Request a portion of a table
+Detail - Large amounts of data may need to be transferred via table replication. In order that these requests do not adversely affect system performance, a limit is placed on how many rows may be retrieved by any one request. To "step through" the data required, an initial transaction with a LastSequenceNumber of zero should be used. The logic of the transaction handler should always sort by sequence number and request rows greater than that provided by the LastSequenceNumber element. Subsequent requests should use the largest sequence number seen in the previous response transaction. For efficiency, the data in ReplicationNotifications should be sorted in assending sequence number allowing the sequence number on the last row of the previous response transaction to be used.
+
+The date range provided on the request allows finer grained control over the data provided, and supports a incremental download from a previously established baseline. To obtain all data, use a CreationFromDate  of 2001-01-01T00:00:00+00:00 and a CreationToDate of 9999-12-31T23:59:59+00:00.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ReplicationParameters" type="ReplicationParameters"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r10" use="optional" default="r10"/>
+	</xsd:complexType>
+	<xsd:complexType name="ReplicationNotification">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Table Replication
+TransactionExchange - Replication Notification, Replication Request
+TransactionGroup - Multiple
+Priority - Low
+Purpose - Provide portions of one or more tables
+Detail - Where the notification is the result of a replication request, only data for one table will be present. Where the notification is carrying unsolicited updates, data from multiple tables may be present. If replication parameters are provided, at least one Event element must be present in the response to indicate the success or otherwise of the request.
+
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ReplicationParameters" type="ReplicationParameters" minOccurs="0"/>
+			<xsd:element name="ReplicationBlock" type="ReplicationBlock" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Event" type="Event" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r10" use="optional" default="r10"/>
+	</xsd:complexType>
+</xsd:schema>

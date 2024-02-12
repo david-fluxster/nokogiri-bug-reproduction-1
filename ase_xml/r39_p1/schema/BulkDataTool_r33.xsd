@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define the transaction exchanges needed by the "Table Replication" application
+Detail - This schema contains the necessary transaction exchnages to support replication of information between parties. It defines a number of "tables", each of which has multiple "rows". The data for an row varies from one table to another, but all rows share a common set of "fields". Note that a table need not correspond directly to a physical table within the system servicing the transaction.
+
+Rows are never deleted, rather their status is changed to inactive and the maintenance date updated.
+
+Where a row only applies for a particular period of time,  a date range is used to indicate the period during which the row was active. Date ranges are "inclusive".
+
+The "Replication Notification" transaction exchange provides unsolicited updates of table information. It consists of a ReplicationNotification transaction.
+
+The "Replication Request" transaction exchange allows a portion of a table's data to be retrieved. It consists of a "ReplicationRequest" and a "Replicationnotification" in reply.
+
+Table Replication is potentially applicable to every application using aseXML. Thus the table replication transactions are defined in terms of abstract types, which each application defining its own types for the specific tables of interest. 
+
+Note that the tablename may remain constant whilst the row type varies. This would be the case where the row definition changes over time. In this case, the row type name will need to carry some version information.
+
+ </xsd:documentation>
+	</xsd:annotation>
+	<!-- BDT  Types -->
+	<xsd:complexType name="BDTGrouping">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify NMI grouping 
+
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BDTGroupings">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Container for grouping
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="BDTGrouping" type="BDTGrouping" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityStandingDataBDT">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Standing data associated with an electricity NMI for BDT.
+Detail - The structure supports multiple data streams, meters and role assignments. Note that because this type is derived from the NMIStandingData type, it begins with the elements defined for that type, notably the NMI.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMIStandingData" type="NMIStandingData"/>
+			<xsd:element name="BDTGroupings" type="BDTGroupings"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CATSBulkDataBlock">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Bulk Data Tool
+TransactionExchange - CATSBulkDataResponse
+TransactionGroup - CATS
+Priority - Low
+Purpose - Provide Electricity Standing Data Rows extended with BDTStatus and Event
+Detail - 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI"/>
+			<xsd:element name="BDTGroupings" type="BDTGroupings"/>
+			<xsd:element name="Row" type="ReplicationBaseRow" maxOccurs="unbounded"/>
+			<xsd:element name="Event" type="Event" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Transaction Types -->
+	<xsd:complexType name="CATSBulkDataRequest">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Bulk Data Tool
+TransactionExchange - CATSBulkDataRequest
+TransactionGroup - CATS
+Priority - Low
+Purpose - Provide the Electricity Standing Data for processing by Bulk Data Tool.
+Detail - 
+			</xsd:documentation>
+			<xsd:documentation>
+Application - Separate application for Bulk Data Load - BDTLoadRequest 
+TransactionGroup - CATS
+Priority - Medium
+Purpose - Submit a standing data for multiple NMIs  
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="BulkData" type="ElectricityStandingDataBDT" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+	<xsd:complexType name="CATSBulkDataResponse">
+		<xsd:annotation>
+			<xsd:documentation>
+Application - Bulk Data Tool
+TransactionExchange - CATSBulkDataResponse
+TransactionGroup - CATS
+Priority - Low
+Purpose - Provide Bulk Data Tool processing results. Events may be provided per row and have to be provided per NMI. Events report on success or failure of NMI or row processing.
+Detail - 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CATSBulkDataBlock" type="CATSBulkDataBlock" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+</xsd:schema>

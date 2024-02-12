@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="urn:aseXML:r39_p1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="urn:aseXML:r39_p1" version="r39_p1" xsi:schemaLocation="urn:aseXML:r39_p1 aseXML_r39_p1.xsd">
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Top level aseXML schema
+Detail - This schema should be referenced by all aseXML compliant messages. Details of aseXML may be found in "Guidelines for Development of A Standard for Energy Transactions in XML (aseXML)".
+
+After including the relevant sub-schemas, the aseXML message envelope element is defined. 
+
+Disclaimer and Reservation of Rights
+
+1	Use of the AseXML Standard
+Australian Energy Market Operator (AEMO) grants to you a non-exclusive, non-transferable licence to use, copy, reproduce, communicate, modify and adapt the AseXML Standard (including a right to create derivative works based on the AseXML Standard) solely for purposes relating to your role as an energy market operator in Australia and for the use of participants in the Australian energy market.  
+You must ensure that your Related Entities and your respective Representatives comply with these Terms of Use.
+2	Changes to the AseXML Standard
+(a)	You must not change the AseXML Standard without complying with the ASWG Terms of Reference.
+(b)	AEMO will not change the AseXML Standard without complying with the ASWG Terms of Reference.
+(c)	You must disclose all modifications you make to the AseXML Standard to ASWG and to AEMO (in such form as they request from time to time).  You must also provide ASWG and AEMO with any information and assistance they may reasonably request regarding the modification.
+(d)	You assign (or will procure an assignment) to AEMO of all Intellectual Property Rights you have in any modifications you make to the AseXML Standard.  The assignment will take effect from the creation of the modification.  AEMO licenses you to use the AseXML Standard as part of the licence granted to you under paragraph 1.
+(e)	You warrant that any modifications you make to the AseXML Standard will not infringe the Intellectual Property Rights of any person.
+3	No licence fee
+You are licensed to use the AseXML Standard free of charge.
+4	Independent Confirmation
+Use of the AseXML Standard is solely at your own risk.  AEMO strongly advises that you independently confirm that the AseXML Standard is suitable for your purposes before you use it. 
+5	No Warranty
+The AseXML Standard is supplied “as is” and without any warranty or condition, express or implied.  In particular, AEMO does not warrant or represent that:
+(a)	the AseXML Standard will be suitable for your purposes;
+(b)	the AseXML Standard will be accurate, reliable, complete, or up to date;
+(c)	the AseXML Standard is free from computer viruses (including macro viruses) or other programs that may affect software or systems of users; or
+(d)	use of the AseXML Standard will not infringe the Intellectual Property Rights of any person.
+6	No Liability
+To the maximum extent permitted by law, AEMO has no liability (whether arising from negligence or otherwise) for any loss, damage, costs or expenses that you may suffer or incur in connection with the AseXML Standard or its use.  
+If AEMO is required by law to accept liability to you, AEMO’s liability is limited (at its election) to the re-supply of the particular goods or services or to the cost of this re-supply.
+7	Intellectual Property Rights
+AEMO owns all Intellectual Property Rights in the AseXML Standard.
+You will own all Intellectual Property Rights in any works (including computer programs) created using the AseXML Standard.
+8	Infringement and third party claims
+You must promptly notify AEMO if you become aware of any infringement of AEMO’s rights in the AseXML Standard, or of any unauthorised use of the AseXML Standard.
+You must provide AEMO with all reasonable assistance in connection with any infringement action or third party claim relating to the AseXML Standard.
+9	Termination
+AEMO may terminate these Terms of Use or suspend your rights to the AseXML Standard on written notice to you if:
+(a)	AEMO reasonably suspects that you have breached these Terms of Use;
+(b)	AEMO reasonably suspects or becomes aware (whether as a result of a third party claim or otherwise) that the AseXML Standard, or its use by you, breaches any law or infringes the Intellectual Property Rights of any person.
+Termination of these Terms of Use will not prejudice any right of action or remedy that might have accrued to either party, or affect any terms that by their nature survive termination.
+10	Governing law
+These Terms of Use are governed by the laws of Victoria. The parties submit to the exclusive jurisdiction of the courts Victoria.
+11	Variation
+These Terms of Use must not be varied except in writing signed by both parties.
+12	Assignment
+You must not sub-licence assign or otherwise transfer your rights under these Terms of Use to any other person, or otherwise seek to commercialise or exploit the AseXML Standard, without AEMO’s prior written consent.  
+AEMO may novate or assign its rights or obligations by notice to you and you must immediately execute any documents necessary to give effect to this.
+13	Interpretation
+These meanings apply, unless a contrary intention appears
+(a)	AseXML Standard means the Australian Energy Standard XML language (as developed by or for AEMO) and any modifications developed by or licensed to AEMO.
+(b)	ASWG means the AseXML Standard Working Group. The ASWG is the single, technically focussed working group responsible for managing the aseXML Standard and advising AEMO. 
+(c)	Intellectual Property Rights include all patents, copyright, moral rights, registered designs, registered and unregistered trademarks, trade secrets, know-how and confidential information and all other intellectual property as defined in Article 2 of the Convention Establishing the World Intellectual Property Organisation of July 1967.
+(d)	Related Entity has the meaning given to it by the Corporations Act 2001 (Cth).
+(e)	Representative of a party includes an employee, agent, officer, director, auditor, advisor, partner, consultant, joint venturer, contractor or sub-contractor of that party.
+ A reference to 'you' means [Full Company Name, ABN and address]
+A reference to either party includes its Related Entities and their respective Representatives. 
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Events_r39_p1.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for status reporting
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="Enumerations.xsd"/>
+	<xsd:include schemaLocation="ClientInformation_r36.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for client information (addresses, telephone numbers, people's names)
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="Common_r39.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types common across transactions and fuels 
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="MeterDataManagement_r36.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for Meter Data Management transaction exchanges
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="NMIDataAccess_r39.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for NMI Data Access transaction exchanges
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="CustomerTransfer_r29.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for Customer Transfer transaction exchanges
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="TableReplication_r33.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for Table Replication transaction exchanges
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="Reports_r39.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for Report transaction exchanges
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="Header_r37.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for aseXML message headers
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="CustomerDetails_r38.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for CustomerDetails notification transactions
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="ServiceOrder_r36.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for Service Order transactions
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="NetworkBilling_r34.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for Network Billing transactions
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="Faults_r33.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for Faults managment transactions
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="BulkDataTool_r33.xsd"/>
+	<xsd:include schemaLocation="Electricity_r36.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types common to electricity market transactions
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="ElectricityMasterStandingData_r39.xsd"/>
+	<xsd:include schemaLocation="Gas_r36.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include types common to gas market transactions
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="BAR_r31.xsd"/>
+	<xsd:include schemaLocation="NOSCommon_r38.xsd"/>
+	<xsd:include schemaLocation="NOSBooking_r38.xsd"/>
+	<xsd:include schemaLocation="NOSEquipment_r33.xsd"/>
+	<xsd:include schemaLocation="NOSAssessment_r38.xsd"/>
+	<xsd:include schemaLocation="MarketWholesale_r20.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for common market wholesale functionality.
+	    </xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="GasMarketWholesale_r34.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for gas market wholesale functionality.
+	    </xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="HighSpeedMonitoring_r33.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for HSM transactions
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="ElectricityHighSpeedMonitoring_r26.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include Electricity market data types for HSM transactions
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="Transactions_r38.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for carrying transactions within aseXML
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="Acknowledgements_r15.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for message and transaction acknowledgement
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="CATSTableReplication_r35.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for CATS specific table replications
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="CATSReports_r39.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for CATS specific reports
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="MDMTReports_r39_p1.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for MDM specific reports
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="OneWayNotification_r36.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Include data types for One Way Notification transactions
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="ElectricityMMS_r33.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+        Purpose - Include data types for Electricity MMS transactions
+      </xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="P2P_r36.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+        Purpose - Include data types for Peer to Peer transactions
+      </xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="ElectricityEnumerations.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+        Purpose - Include enumerated simple types for Electricity specific elements that may change more often as non versioned changes.
+      </xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:include schemaLocation="HubManagement_r37.xsd">
+		<xsd:annotation>
+			<xsd:documentation>
+        Purpose - Include data types for Hub management transactions
+      </xsd:documentation>
+		</xsd:annotation>
+	</xsd:include>
+	<xsd:complexType name="Envelope">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Envelope used by all aseXMLcompliant messages
+Detail - The envelope consists of a header element followed by a payload element. The payload may either be one or more transactions, or one or more acknowledgements.
+A detailed description of aseXML may be found in "Guidelines for Development of A Standard for Energy Transactions in XML (aseXML)".
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Header" type="Header"/>
+			<xsd:choice>
+				<xsd:element name="Transactions" type="Transactions"/>
+				<xsd:element name="Acknowledgements" type="Acknowledgements"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="aseXML" type="Envelope">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - The top level element for all aseXML messages
+Detail - The aseXML schemas make extensive use of type definitions, but must define one element in order that instance documents can be created and validated. This element thus forms the document element for all aseXML messages.
+	</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

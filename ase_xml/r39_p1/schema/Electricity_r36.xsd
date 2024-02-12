@@ -1,0 +1,1285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define electricity specific types and the standing data structure for electricity
+</xsd:documentation>
+	</xsd:annotation>
+	<!--NMI Basic Types-->
+	<xsd:simpleType name="NMIClassificationDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe the broad class to whcih the NMI belongs
+MSATS Data Model Column - NMIClassDesc
+Detail - The description is intended to assist in identification of the correct classification. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NMIStatusDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe the status codes for portions of the NMI Standing Data
+MSATS Data Model Column - NMIStatusDesc
+Detail - The description is intended to assist in identification of the correct code. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NMIDataStreamSuffix">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a data stream associated with a NMI
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProfileName">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a profile
+MSATS Data Model Column - ProfileNameID
+Detail - Profiles are applied to consumption meter reads to massage them into a form suitable for settlement of a market based on shorter intervals than provided by the meter read cycle.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProfileDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe a profile
+MSATS Data Model Column - ProfileNameDesc
+Detail - The description is intended to assist in identification of the correct profile. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Meter Register Types -->
+	<xsd:simpleType name="MeterAdditionalSiteInformation">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - AddlSiteInfo
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterAssetManagementPlan">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - AssetMgmtPlan
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterCalibrationTables">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - CalibrationTables
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterCommunicationsEquipmentType">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - CommEquipType
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterCommunicationsProtocol">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - CommProtocol
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterConstant">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterConstant
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterDataConversion">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - DataConv
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterDataValidations">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - DataValidations
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterEstimationInstructions">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - EstInstruct
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterHazard">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterHazard
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterInstallationTypeCode">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterInstallCode
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterInstallationTypeDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe installation type codes
+MSATS Data Model Column - MeterInstallDesc
+Detail - The description is intended to assist in identification of the correct code. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterLocation">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterLocation
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterManufacturer">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterManufacturer
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterMeasurementType">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeasurementType
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterModel">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterModel
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterPassword">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - Password
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterPoint">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterPoint
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterProgram">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterProgram
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterReadTypeCode">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterReadType
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterRemotePhoneNumber">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - RemotePhoneNumber
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterRoute">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterRoute
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterStatusCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Status code of Meter Register Data
+MSATS Data Model Column - MeterStatus
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="C"/>
+			<xsd:enumeration value="D"/>			
+			<xsd:enumeration value="R"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterTestCalibrationProgram">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - TestCalibProgrm
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterTestPerformedBy">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - TestPerformedBy
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterTestResultAccuracy">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - TestResultAccuracy
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="8"/>
+			<xsd:fractionDigits value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterTestResultNotes">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - TestResultNotes
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterTransformerLocation">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - TransformerLocation
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterTransformerRatio">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - TransformerRatio
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterTransformerType">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - TransformerType
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterUse">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterUse
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterUserAccessRights">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - UserAccessRights
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterEstablishmentInstructions">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - EstInstruct
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--WA Meter Register Types-->
+	<xsd:simpleType name="KeyCode">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the type of key and/or location of the key required to access a meter at a site.  This is required in standing data as the Franchise market Retailer still carries responsibility for performing site activities for some areas of the network.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CustomerFundedMeter">
+		<xsd:annotation>
+			<xsd:documentation>Identifies that the customer has funded the purchase of the meter.  This leads to a reduction in the meter charges allocated to the incumbent retailer, and so is needed for the network bill reconciliation. This also has an impact on contracts that can be offered to customers by prospective retailers.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DisplayType">
+		<xsd:annotation>
+			<xsd:documentation>In WA readings are collected from some customers by means of self-reader cards that have blank dials printed on them mimicking the layout of the meter display.  This attribute defines the type of display on the meter and is used to define what style of self read card would be sent to the end-use customer when a retailer request them to be on a self read card arrangement.  This also helps define the type of screen to display for internet captured readings.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Meter Register Identifier Types -->
+	<xsd:simpleType name="MeterConsumptionType">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Actual"/>
+			<xsd:enumeration value="Cumulative"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterControlledLoad">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - ControlledLoad
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterDemand">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - Demand1, Demand2
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterDialFormat">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - DialFormat
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="4"/>
+			<xsd:fractionDigits value="2"/>
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99.99"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterMultiplier">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - Multiplier
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterNetworkAdditionalInformation">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - NTAddInfo
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterRegisterIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identifies a register within a meter
+MSATS Data Model Column - RegisterId
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterRegisterStatusCode">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - RegisterIdStatus
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="C"/>
+			<xsd:enumeration value="R"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterTimeOfDay">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - TimeOfDay
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterUnitOfMeasure">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - UnitOfMeasure
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NMIStandingDataRequestReason">
+		<xsd:annotation>
+			<xsd:documentation>
+The reason for performing NMI Discovery. This will be mandatory in transaction of NMI Discovery of Type 3
+The reasons will be codified in the MSATS back end system. The reasons are not being implemented in schema as enumerations. That is to avoid making a schema version upgrade for a change to reason codes.
+Currently the reasons proposed to be implemented in MSATS backend are 
+MCR - Missed CR1500 error 
+ITD - Incorrect transfer date error 
+NNS - New NMI Setup error 
+TRM - Transfer missed error
+TRI - Transferred in error
+OTR - Other transfer errors
+SAB - Site Aabolishment
+                        </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NMIStandingDataRequestType">
+		<xsd:annotation>
+			<xsd:documentation>
+The type of NMI Discovery. This will be mandatory in transaction of NMI Discovery of Type 3.
+The values will be codified in the MSATS back end system. The types are not being implemented in schema as enumerations. That is to avoid making a schema version upgrade for a change types.
+Currently the reasons proposed to be implemented in MSATS backend are 
+                        </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--WA Meter Register Identifier Types-->
+	<xsd:complexType name="HighLowConsumption">
+		<xsd:annotation>
+			<xsd:documentation>Used to identify the maximum and minimum expected consumption between readings.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="High" type="xsd:integer"/>
+			<xsd:element name="Low" type="xsd:integer"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Basic Types -->
+	<xsd:simpleType name="TransmissionNodeIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Transmission node identfiers 
+MSATS Data Model Column - TNICode
+Detail - Transmission nodes identify the points at which the intra-regional loss factors apply
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransmissionNodeDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Description of a transmission node identifer
+MSATS Data Model Column - TNIDesc
+Detail - The description is intended to assist in identification of the correct node identifier. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DistributionLossFactorCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a distribution loss factor value
+MSATS Data Model Column - DLFCode
+Detail - Whilst the current wholesale market identifies a loss factor value for each NMI, the number of NMIs in the retail market make this approach unwieldy. Multiple NMIs will have identical loss factors, and hence the need for a code to identify each value.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DistributionLossFactorDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe a distribution loss factor code
+MSATS Data Model Column - DLFDesc
+Detail - The description is intended to assist in identification of the correct loss factor. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DistributionLossFactorValue">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Holds the actual value associated with a distribution loss factor code
+MSATS Data Model Column - DLFValue
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="6"/>
+			<xsd:fractionDigits value="5"/>
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EmbeddedNetworkIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify an embedded network
+MSATS Data Model Column - EmbNetIdCode, EmbNetParent, EmbNetChild
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EmbeddedNetworkDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe an embedded network identifier
+MSATS Data Model Column - EmbNetIdDesc
+Detail - The description is intended to assist in identification of the correct identifier. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NetworkTariffCodeDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Provides description of an LNSP specific network tariff code 
+MSATS Data Model Column - NetworkTariffDesc
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AveragedDailyLoad">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - The average daily load for a given data steam
+MSATS Data Model Column - AverageDailyLoad
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DataStreamType">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify data stream type
+MSATS Data Model Column - DataStreamType
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DirectionIndicator">
+		<xsd:annotation>
+			<xsd:documentation>
+This element may be handled using NetworkTariffCode, If so, the corresponding data element is to be removed.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Import"/>
+			<xsd:enumeration value="Export"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeteringType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--WA Basic Types-->
+	<xsd:simpleType name="DistanceFromSubstation">
+		<xsd:annotation>
+			<xsd:documentation>For a number of network tariffs (generally larger customers), the distance to the zone substation is a factor in the calculation of the network access charges.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="7"/>
+			<xsd:fractionDigits value="3"/>
+			<xsd:maxInclusive value="9999.999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="VoltageType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the site is connected at High or Low voltage.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PoleNumber">
+		<xsd:annotation>
+			<xsd:documentation>This information is used to help find remote meters that may not be easily identified by address.   Often it is easier to find the site via reference to a network pole number (generally in sequence on a feeder).  This is required in standing data as the Franchise market Retailer still carries responsibility for performing site activities for some areas of the network.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FeederClass">
+		<xsd:annotation>
+			<xsd:documentation>
+Classification of High Voltage distribution line feeding property.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="RegisterIndexValue">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Meter Register Index value as standalone.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>		
+	
+	<!--License Types-->
+	<xsd:complexType name="DocumentReferenceType">
+		<xsd:sequence>
+			<xsd:element name="FormReference" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="30"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="FormNumber" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="15"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="LicenseNumber">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines the license number as restricted string type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="License">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines license data structure for the tradesman performing the service.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Licensee" type="PersonName" minOccurs="0"/>
+			<xsd:element name="BusinessName" type="BusinessName" minOccurs="0"/>
+			<xsd:element name="PhoneNumber" type="AustralianPhoneNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="LicenseNumber" type="LicenseNumber" minOccurs="0"/>
+			<xsd:element name="SafetyCertificate" type="SafetyCertificateType" minOccurs="0"/>
+			<xsd:element name="DocumentReference" type="DocumentReferenceType" minOccurs="0"/>
+			<xsd:element name="AttendanceRequired" type="xsd:boolean" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Service Order Types-->
+	<xsd:simpleType name="ServiceTimeType">
+		<xsd:annotation>
+			<xsd:documentation> Service Order Service Time Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+			<xsd:enumeration value="Any Time"/>
+			<xsd:enumeration value="Business Hours"/>
+			<xsd:enumeration value="Non-Business Hours"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ServiceOrderType">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines a list of valid Service Order types supported by the particpants</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Re-energisation"/>
+			<xsd:enumeration value="De-energisation"/>
+			<xsd:enumeration value="Special Read"/>
+			<xsd:enumeration value="Miscellaneous"/>
+			<xsd:enumeration value="Metering Service Works"/>
+			<xsd:enumeration value="Supply Service Works"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ServiceOrderSubType">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines a list of valid Service Order types supported by the particpants</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="After Disconnection For Non-Payment"/>
+			<xsd:enumeration value="Remove Fuse"/>
+			<xsd:enumeration value="Disconnect at Pillar-Box Pit Or Pole-Top"/>			
+			<xsd:enumeration value="Install Controlled Load"/>
+			<xsd:enumeration value="Move Meter"/>
+			<xsd:enumeration value="Install Meter"/>
+			<xsd:enumeration value="Remove Meter"/>
+			<xsd:enumeration value="Exchange Meter"/>
+			<xsd:enumeration value="Check Read"/>
+			<xsd:enumeration value="Final Read"/>
+			<xsd:enumeration value="Allocate NMI"/>
+			<xsd:enumeration value="Establish Permanent Supply"/>
+			<xsd:enumeration value="Establish Temporary Supply"/>
+			<xsd:enumeration value="Establish Temporary In Permanent"/>
+			<xsd:enumeration value="Local Meter Disconnection"/>
+			<xsd:enumeration value="Meter Investigation-Inspect"/>
+			<xsd:enumeration value="Meter Investigation-Test"/>			
+			<xsd:enumeration value="Meter Reconfiguration"/>
+			<xsd:enumeration value="Recipient Discretion"/>
+			<xsd:enumeration value="Remote"/>
+			<xsd:enumeration value="Supply Abolishment"/>
+			<xsd:enumeration value="Supply Alteration"/>
+			<xsd:enumeration value="Tariff Change"/>
+			<xsd:enumeration value="Temporary Isolation"/>
+			<xsd:enumeration value="Temporary Isolation-Group Supply"/>			
+			<xsd:enumeration value="Change Timeswitch Settings"/>
+			<xsd:enumeration value="Reseal Device"/>			
+			<xsd:enumeration value="Retrospective Move-in"/>
+			<xsd:enumeration value="Move-in"/>
+			<xsd:enumeration value="New Reading Required"/>
+			<xsd:enumeration value="Physical Visit"/>		
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SupplyPhase">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines a list of valid supply ohase</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="1-phase"/>
+			<xsd:enumeration value="2-phase"/>
+			<xsd:enumeration value="3-phase"/>
+			<xsd:enumeration value="Other Multi-phase"/>
+			<xsd:enumeration value="Unknown"/>			
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="InstallationType">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines a list of valid Installation type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Underground"/>
+			<xsd:enumeration value="Overhead"/>
+			<xsd:enumeration value="Underground To Overhead Mains"/>
+			<xsd:enumeration value="Overhead To Underground Mains"/>
+			<xsd:enumeration value="Transformer Overhead"/>
+			<xsd:enumeration value="Transformer Ground Level"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SORDResponseCode">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines a list of valid response code for different types of service orders</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Customer On-Site"/>
+			<xsd:enumeration value="Customer Prevented"/>
+			<xsd:enumeration value="De-energisation Not Completed Due To A Re-energisation"/>
+			<xsd:enumeration value="Documentation Not Provided"/>
+			<xsd:enumeration value="Metering Problem"/>
+			<xsd:enumeration value="Meter Reading Only Undertaken Due To Prior Re-energisation"/>
+			<xsd:enumeration value="New Customer On-Site"/>
+			<xsd:enumeration value="No Supply"/>
+			<xsd:enumeration value="Other"/>
+			<xsd:enumeration value="Reading Problem"/>
+			<xsd:enumeration value="Request Submitted By Another Initiator"/>
+			<xsd:enumeration value="Initiator Cancellation"/>
+			<xsd:enumeration value="Sensitive Load"/>
+			<xsd:enumeration value="Recipient Cancellation"/>
+			<xsd:enumeration value="Unable To Access"/>
+			<xsd:enumeration value="Unknown Load"/>
+			<xsd:enumeration value="Unsafe"/>
+			<xsd:enumeration value="Tariff Change Not Approved"/>
+			<xsd:enumeration value="Inadequate infrastructure"/>
+			<xsd:enumeration value="No Comms"/>
+			<xsd:enumeration value="Life Support"/>	
+			<xsd:enumeration value="Meter Not Retrieved"/>				
+			<xsd:enumeration value="Metering not compatible with proposed Tariff Change"/>				
+			<xsd:enumeration value="Shared Supply Point"/>				
+			<xsd:enumeration value="Site Already Energised"/>	
+			<xsd:enumeration value="Unknown Connection Status"/>				
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DeviceSerialNumber">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ControlEquipmentSerialNumber">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ControlChannel">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>		
+	<xsd:simpleType name="InstrumentTransformerSerialNumber">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="SwitchingServiceRequired">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>		
+	<xsd:complexType name="InstrumentTransformers">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Parent element for list of instrument transformers.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InstrumentTransformer" type="InstrumentTransformer" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="NetworkDevice">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the structure network device detail.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NetworkDeviceNumber" type="DeviceSerialNumber" minOccurs="0"/>
+			<xsd:element name="NetworkDeviceLocation" type="DeviceLocation" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConnectedMeters">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Parent container for list of connected meters.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SerialNumber" type="MeterSerialNumber"  minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="ControlEquipment">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the structure of Control Equipment detail.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ControlEquipmentNumber" type="ControlEquipmentSerialNumber"  minOccurs="0"/>
+			<xsd:element name="ControlEquipmentType" type="ControlEquipmentType"  minOccurs="0"/>	
+			<xsd:element name="ControlChannel" type="ControlChannel"  minOccurs="0"/>
+			<xsd:element name="ConnectedMeters" type="ConnectedMeters" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="InstrumentTransformer">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define the structure of Instrument transformer details.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TransformerNumber" type="InstrumentTransformerSerialNumber" minOccurs="0"/>
+			<xsd:element name="TransformerType" type="InstrumentTransformerType" minOccurs="0"/>	
+			<xsd:element name="TransformerRatio" type="MeterTransformerRatio" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="NetworkDevices">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Parent container for list of network devices.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NetworkDevice" type="NetworkDevice" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="ControlEquipments">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Parent container for list of Control equipment.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ControlEquipment" type="ControlEquipment" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="ElectricityServiceOrderType">
+		<xsd:complexContent>
+			<xsd:extension base="ServiceOrderTypeBase">
+				<xsd:sequence>
+					<xsd:element name="WorkType">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="ServiceOrderType">
+									<xsd:attribute name="workSubType" type="ServiceOrderSubType" use="optional"/>
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityServiceOrderDetails">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines the data type for new connection and meter additions and alterations
+			v36.1.  WL.  Change LifeSupport to be optional field.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ServiceOrderRequestData">
+				<xsd:sequence>
+					<xsd:element name="CustomerConsultationRequired" type="xsd:boolean"/>
+					<xsd:element name="InstallationType" type="InstallationType" minOccurs="0"/>
+					<xsd:element name="SupplyPhase" type="SupplyPhase" minOccurs="0"/>
+					<xsd:element name="AverageDailyLoad" type="AveragedDailyLoad" minOccurs="0"/>
+					<xsd:element name="CustomerType" type="CustomerType" minOccurs="0"/>
+					<xsd:element name="MeteringType" type="MeteringType" minOccurs="0"/>
+					<xsd:element name="OffPeakRequirements" type="SpecialComments" minOccurs="0"/>
+					<xsd:element name="MaximumDemand" type="MeterDemand" minOccurs="0"/>
+					<xsd:element name="ServiceTime" type="ServiceTimeType" minOccurs="0"/>
+					<xsd:element name="SwitchingServiceRequired" type="SwitchingServiceRequired" minOccurs="0"/>
+					<xsd:element name="ConfirmedDe-energisation" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="License" type="License" minOccurs="0"/>
+					<xsd:element name="MeterLicense" type="License" minOccurs="0"/>				
+					<xsd:element name="De-energisationReason" type="De-energisationReason" minOccurs="0"/>
+					<xsd:element name="LifeSupport" type="YesNo" minOccurs="0"/>	
+					<xsd:element name="Co-ordinationRequired" type="YesNo" minOccurs="0"/>										
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityServiceOrderNotificationData">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Electricity</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="ServiceOrderNotificationData">
+				<xsd:sequence>
+					<xsd:element name="ServiceOrderStatus" type="ServiceOrderStatus"/>
+					<xsd:element name="ResponseCode" type="SORDResponseCode" minOccurs="0"/>
+					<xsd:element name="ActualDateTime" type="xsd:dateTime"/>
+					<xsd:element name="Product" type="Product"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Standing Data Types -->
+	<xsd:complexType name="ElectricityDataStream">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for electricity data stream information
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Suffix" type="NMIDataStreamSuffix" nillable="true"/>
+			<xsd:element name="ProfileName" type="ProfileName" nillable="true" minOccurs="0"/>
+			<xsd:element name="AveragedDailyLoad" type="AveragedDailyLoad" nillable="true" minOccurs="0"/>
+			<xsd:element name="DataStreamType" type="DataStreamType" nillable="true" minOccurs="0"/>
+			<xsd:element name="Status" type="NMIStatusCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="FromDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="ToDate" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityDataStreams">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for information relating to multiple electricity data streams associated with a NMI
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="DataStream" type="ElectricityDataStream" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityMeterRegisterDetail">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for information about a register within an electricity meter
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RegisterID" type="MeterRegisterIdentifier" minOccurs="0"/>
+			<xsd:element name="NetworkTariffCode" type="NetworkTariffCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="NetworkAdditionalInformation" type="MeterNetworkAdditionalInformation" nillable="true" minOccurs="0"/>
+			<xsd:element name="UnitOfMeasure" type="MeterUnitOfMeasure" nillable="true" minOccurs="0"/>
+			<xsd:element name="TimeOfDay" type="MeterTimeOfDay" nillable="true" minOccurs="0"/>
+			<xsd:element name="Multiplier" type="MeterMultiplier" nillable="true" minOccurs="0"/>
+			<xsd:element name="DialFormat" type="MeterDialFormat" nillable="true" minOccurs="0"/>
+			<xsd:element name="Suffix" type="NMIDataStreamSuffix" nillable="true" minOccurs="0"/>
+			<xsd:element name="ControlledLoad" type="MeterControlledLoad" nillable="true" minOccurs="0"/>
+			<xsd:element name="ConsumptionType" type="MeterConsumptionType" nillable="true" minOccurs="0"/>
+			<xsd:element name="Demand1" type="MeterDemand" nillable="true" minOccurs="0"/>
+			<xsd:element name="Demand2" type="MeterDemand" nillable="true" minOccurs="0"/>
+			<xsd:element name="Status" type="MeterRegisterStatusCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="DirectionIndicator" type="DirectionIndicator" nillable="true" minOccurs="0"/>
+			<xsd:element name="PreviousReading" type="ElectricityMeterReadData" nillable="true" minOccurs="0"/>
+			<xsd:element name="HighLowConsumption" type="HighLowConsumption" nillable="true" minOccurs="0"/>
+			<xsd:element name="RegisterIndexValue" type="RegisterIndexValue" nillable="true" minOccurs="0"/>		
+			<xsd:element name="FromDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="ToDate" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityMeterRegisterConfiguration">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for information relating to multiple electricity meter registers associated with a meter
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Register" type="ElectricityMeterRegisterDetail" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityMeter">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for electricity meter information
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SerialNumber" type="MeterSerialNumber" nillable="true" minOccurs="0"/>
+			<xsd:element name="NextScheduledReadDate" type="xsd:date" nillable="true" minOccurs="0"/>
+			<xsd:element name="Location" type="MeterLocation" nillable="true" minOccurs="0"/>
+			<xsd:element name="Hazard" type="MeterHazard" nillable="true" minOccurs="0"/>
+			<xsd:element name="InstallationTypeCode" type="MeterInstallationTypeCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="Route" type="MeterRoute" nillable="true" minOccurs="0"/>
+			<xsd:element name="Use" type="MeterUse" nillable="true" minOccurs="0"/>
+			<xsd:element name="Point" type="MeterPoint" nillable="true" minOccurs="0"/>
+			<xsd:element name="Manufacturer" type="MeterManufacturer" nillable="true" minOccurs="0"/>
+			<xsd:element name="Model" type="MeterModel" nillable="true" minOccurs="0"/>
+			<xsd:element name="TransformerLocation" type="MeterTransformerLocation" nillable="true" minOccurs="0"/>
+			<xsd:element name="TransformerType" type="MeterTransformerType" nillable="true" minOccurs="0"/>
+			<xsd:element name="TransformerRatio" type="MeterTransformerRatio" nillable="true" minOccurs="0"/>
+			<xsd:element name="Constant" type="MeterConstant" nillable="true" minOccurs="0"/>
+			<xsd:element name="LastTestDate" type="xsd:date" nillable="true" minOccurs="0"/>
+			<xsd:element name="NextTestDate" type="xsd:date" nillable="true" minOccurs="0"/>
+			<xsd:element name="TestResultAccuracy" type="MeterTestResultAccuracy" nillable="true" minOccurs="0"/>
+			<xsd:element name="TestResultNotes" type="MeterTestResultNotes" nillable="true" minOccurs="0"/>
+			<xsd:element name="TestPerformedBy" type="MeterTestPerformedBy" nillable="true" minOccurs="0"/>
+			<xsd:element name="MeasurementType" type="MeterMeasurementType" nillable="true" minOccurs="0"/>
+			<xsd:element name="ReadTypeCode" type="MeterReadTypeCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="RemotePhoneNumber" type="MeterRemotePhoneNumber" nillable="true" minOccurs="0"/>
+			<xsd:element name="CommunicationsEquipmentType" type="MeterCommunicationsEquipmentType" nillable="true" minOccurs="0"/>
+			<xsd:element name="CommunicationsProtocol" type="MeterCommunicationsProtocol" nillable="true" minOccurs="0"/>
+			<xsd:element name="DataConversion" type="MeterDataConversion" nillable="true" minOccurs="0"/>
+			<xsd:element name="DataValidations" type="MeterDataValidations" nillable="true" minOccurs="0"/>
+			<xsd:element name="Status" type="MeterStatusCode" minOccurs="0"/>
+			<xsd:element name="Program" type="MeterProgram" nillable="true" minOccurs="0"/>
+			<xsd:element name="AdditionalSiteInformation" type="MeterAdditionalSiteInformation" nillable="true" minOccurs="0"/>
+			<xsd:element name="EstimationInstructions" type="MeterEstimationInstructions" nillable="true" minOccurs="0"/>
+			<xsd:element name="AssetManagementPlan" type="MeterAssetManagementPlan" nillable="true" minOccurs="0"/>
+			<xsd:element name="CalibrationTables" type="MeterCalibrationTables" nillable="true" minOccurs="0"/>
+			<xsd:element name="UserAccessRights" type="MeterUserAccessRights" nillable="true" minOccurs="0"/>
+			<xsd:element name="Password" type="MeterPassword" nillable="true" minOccurs="0"/>
+			<xsd:element name="TestCalibrationProgram" type="MeterTestCalibrationProgram" nillable="true" minOccurs="0"/>
+			<xsd:element name="KeyCode" type="KeyCode" nillable="true" minOccurs="0"/>
+			<xsd:element name="CustomerFundedMeter" type="CustomerFundedMeter" nillable="true" minOccurs="0"/>
+			<xsd:element name="DisplayType" type="DisplayType" nillable="true" minOccurs="0"/>
+			<xsd:element name="SupplyPhase" type="SupplyPhase" minOccurs="0"/>
+			<xsd:element name="GenerationType" type="GenerationType" minOccurs="0"/>
+			<xsd:element name="GeneralSupply" type="YesNo" minOccurs="0"/>		
+			<xsd:element name="InstrumentTransformers" type="InstrumentTransformers" minOccurs="0"/>
+			<xsd:element name="ControlEquipments" type="ControlEquipments" nillable="true" minOccurs="0"/>		
+			<xsd:element name="RegisterConfiguration" type="ElectricityMeterRegisterConfiguration" nillable="true" minOccurs="0"/>
+			<xsd:element name="FromDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="ToDate" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityMeters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for information relating to multiple electricity meters associated with a NMI
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Meter" type="ElectricityMeter" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityStandingData">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Standing data associated with an electricity NMI.
+Detail - The structure supports multiple data streams, meters and role assignments. Note that because this type is derived from the NMIStandingData type, it begins with the elements defined for that type, notably the NMI.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMIStandingData">
+				<xsd:sequence>
+					<xsd:element name="MasterData" type="ElectricityMasterStandingData" minOccurs="0"/>
+					<xsd:element name="RoleAssignments" type="RoleAssignments" minOccurs="0"/>
+					<xsd:element name="DataStreams" type="ElectricityDataStreams" minOccurs="0"/>
+					<xsd:element name="MeterRegister" type="ElectricityMeters" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Electricity MeterDataManagement Types-->
+	<xsd:complexType name="NMIConfigurationType">
+		<xsd:sequence>
+			<xsd:element name="NMISuffix" type="NMIDataStreamSuffix" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityMeterReadData">
+		<xsd:sequence>
+			<xsd:element name="Read">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="15"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ReadDate" type="xsd:date"/>
+			<xsd:element name="Consumption">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:decimal">
+						<xsd:totalDigits value="15"/>
+						<xsd:fractionDigits value="3"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityProvideMeterRequestData">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - used in MeterDataMissingNotification transaction based on NMITransactionBase </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMITransactionBase">
+				<xsd:sequence>
+					<xsd:element name="NMIStandingData" type="NMIStandingData"/>
+					<xsd:element name="RequestPeriod" type="OpenPeriod"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r17" use="optional" default="r17"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ElectricityVerifyMeterRequestData">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - used in MeterDataVerifyRequest transaction based on NMITransactionBase </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="NMITransactionBase">
+				<xsd:sequence>
+					<xsd:element name="NMIStandingData" type="NMIStandingData"/>
+					<xsd:element name="InvestigationCode" type="ElecIndexInvestigationCode"/>
+					<xsd:element name="InvestigationDescription" type="SpecialComments"/>
+					<xsd:element name="RequestPeriod" type="OpenPeriod"/>
+					<xsd:element name="Current" type="ElectricityMeterReadData" minOccurs="0"/>
+					<xsd:element name="NMIConfiguration" type="NMIConfigurationType" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r36" use="optional" default="r36"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

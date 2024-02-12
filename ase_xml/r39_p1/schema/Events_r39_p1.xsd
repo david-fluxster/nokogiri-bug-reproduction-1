@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define the common format to be used to report events.
+Detail - aseXML encourages the use of events in transactions to report status information. They are also used in message and transaction acknowledgements.
+</xsd:documentation>
+	</xsd:annotation>
+	<!-- aseXML Releases -->
+	<xsd:simpleType name="ReleaseIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a release of aseXML
+Details - Release identifiers are used extensively in aseXML to enable versioning of transactions.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="r[0-9]*|r[0-9]*_[a-z][0-9]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r3">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Release r3 identifier
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r4">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Release r4 identifier
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r5">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Release r5 identifier
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r6">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Release r6 identifier
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r7">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Release r7 identifier
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r7"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r8">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Release r8 identifier
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r9">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Common</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r9"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r10">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Common</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r11">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Common</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r11"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r11_p1">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Common</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r11_p1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r12">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r12 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r13">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r13 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r13"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r14">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r14 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r14"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r15">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r15 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r16">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r16 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r16"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r17">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r17 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r17"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r18">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r18 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r18"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r19">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r19 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r19"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r20">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r20 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r21">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r21 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r21"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r22">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r22 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r22"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r23">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r23 identifier. This release contains extensions for High Speed Monitoring (HSM) of  NEM plant. There are new transactions for for discovery, capability and health of HSM monitors configured for continuous data, and request and transmission of data from those monitors. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r23"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r24">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r24 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r24"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r25">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r25 identifier</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r26">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r26 identifier. This release contains extensions for discovery, capability and health of HSM monitors configured for triggered data. There are new transactions for reporting, request and transmission of HSM triggered data. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r26"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r27">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r27 identifier. This release extends the length of element COCNumber to 8. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r27"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r28">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r28 identifier. This release contains extensions for Electricity Market Management Systems and MSATS Web Services</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r28"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r29">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r29 identifier. This release adds CustomerClassificationCode and CustomerThresholdCode to GasMasterStandingData</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r29"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r30">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r30 identifier. This release adds AMDQ Transactions to Gas Wholesale Market to support Web Exchanger Web Services</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r31">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r31 identifier. The release makes the IHNS element in GasIHNType optional</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r31"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r32">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r32 identifier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r32"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r33">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r33 identifier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r33"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r34">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r34 identifier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r34"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+		<xsd:simpleType name="r35">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r35 identifier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r36">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r36 identifier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r36"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r37">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r37 identifier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r37"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r38">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r38 identifier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r38"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r39">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r39 identifier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r39"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="r39_p1">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Release r39_p1 identifier. Patch for release 39</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="ReleaseIdentifier">
+			<xsd:enumeration value="r39_p1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Support Types -->
+	<xsd:simpleType name="EventClass">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Provide a high level categorisation of events
+Detail - Message events pertain to the structure and delivery of aseXML messages.
+Application events are generated by the applications communicating via aseXML.
+Processing events reflect environmental issues associated with running applications.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Message"/>
+			<xsd:enumeration value="Application"/>
+			<xsd:enumeration value="Processing"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventSeverity">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Provide an indication as to the action required as a result of receiving an event
+Detail - The severity dictates the further processing possible after receiving the event.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Information"/>
+			<xsd:enumeration value="Warning"/>
+			<xsd:enumeration value="Error"/>
+			<xsd:enumeration value="Fatal"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventCodeBase">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Helper type in defining EventCode
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:complexType name="EventCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Provide a numeric indentification of the event that has occurred
+Detail - The aseXML guidelines define a set of common codes, as well as ranges for application specfiic errors. Where the receiving system does not know the textual definition of the code, the description attribute should be provided with the code, as per the aseXML guidelines.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="EventCodeBase">
+				<xsd:attribute name="description" type="xsd:string" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="EventKeyInfo">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Provide information to allow identification of the data that triggered the event
+Detail - Where the combination of class and code are insufficient to completely describe an event, KeyInfo may be used to provide further detail as to the information needed to locate the source of the event within the original transaction.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventContext">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify the specific data/condition that caused the event
+Detail - The portion of the input to which the event applies should be provided.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="EventSupportedVersions">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Provide the set of versions supported for a particular transaction
+Detail - Where an unsupported version of a supported transaction is received, the receiver should indicate those versions that are supported, allowing the receiver to choose a compatible transaction version.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Version" type="ReleaseIdentifier" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Main Types/Elements -->
+	<xsd:complexType name="Event">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Common format used to report events
+Detail - aseXML encourages the use of events in transactions to report status information. They are also used in message and transaction acknowledgments. Where possible, an element name of "Event" should be used.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Code" type="EventCode"/>
+			<xsd:element name="KeyInfo" type="EventKeyInfo" minOccurs="0"/>
+			<xsd:element name="Context" type="EventContext" minOccurs="0"/>
+			<xsd:element name="Explanation" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="SupportedVersions" type="EventSupportedVersions" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="class" type="EventClass" use="optional" default="Application"/>
+		<xsd:attribute name="severity" type="EventSeverity" use="optional" default="Fatal"/>
+	</xsd:complexType>
+	<xsd:element name="Event" type="Event">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Top level element used when reporting transport level errors, e.g. decompression failures
+Detail - There may be a number of error conditions detected by a transport receiving an aseXML message, that prevent it detecting a valid message. In order that these can be reported as XML in a consistent fashion, this top level element may be used.
+
+It should be noted that this element is not to be used via the ref="Event" mechanism of XML Schema.
+Rather, this should always be achieved via a type="Event" attribute. For an example, refer to
+the acknowledgements schema.
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

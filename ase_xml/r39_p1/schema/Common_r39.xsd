@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 rel. 2 sp1 (x64) (http://www.altova.com) by ﻿Australian Energy Market Operator (Australian Energy Market Operator) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define data types common across multiple transactions and fuels.
+Details - This schema contains the definitions of common types that are used across multiple transactions within aseXML. These types are not fuel specific.
+</xsd:documentation>
+	</xsd:annotation>
+	<!-- Generic types -->
+	<xsd:simpleType name="YesNo">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Yes/No indication
+Detail - Note that these values are case sensitive.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Yes"/>
+			<xsd:enumeration value="No"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActiveInactive">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Active/Inactive indication
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="I"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AcceptReject">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Accept/Reject indication
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="R"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonZeroLengthString">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - base for generic string type that enforces non-whitespace content</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--Simple Types Added under Development Thread t3c-->
+	<xsd:simpleType name="UnitsOfMeasure">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define Units of Measure. Application logic to decide which of these are valid for a given fuel type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CFF"/>
+			<xsd:enumeration value="CM"/>
+			<xsd:enumeration value="DAY"/>
+			<xsd:enumeration value="EA"/>
+			<xsd:enumeration value="GAL"/>
+			<xsd:enumeration value="GJ"/>
+			<xsd:enumeration value="HR"/>
+			<xsd:enumeration value="KRH"/>
+			<xsd:enumeration value="KV"/>
+			<xsd:enumeration value="KVA"/>
+			<xsd:enumeration value="MTH"/>
+			<xsd:enumeration value="KVB"/>
+			<xsd:enumeration value="KVR"/>
+			<xsd:enumeration value="KW"/>
+			<xsd:enumeration value="KWH"/>
+			<xsd:enumeration value="MJ"/>
+			<xsd:enumeration value="MVA"/>
+			<xsd:enumeration value="MWH"/>
+			<xsd:enumeration value="MW"/>
+			<xsd:enumeration value="PF"/>
+			<xsd:enumeration value="VA"/>
+			<xsd:enumeration value="VAR"/>
+			<xsd:enumeration value="W"/>
+			<xsd:enumeration value="WH"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TimeSplit">
+		<xsd:annotation>
+			<xsd:documentation>(ENUMS!!!) Time of use code</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--Simple Types Added under Development Thread u1c-->
+	<xsd:simpleType name="CommentLine">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Comment Line
+Detail - Maximum of 80 charactors per line
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="SpecialComments">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines the Comments in terms of the CommentLine</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CommentLine" type="CommentLine" maxOccurs="3"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="Priority">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Priority indication
+Detail - Note that these enumerations are case sensitive.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Low"/>
+			<xsd:enumeration value="Medium"/>
+			<xsd:enumeration value="High"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UniqueIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Uniquely identify the associated data element or attribute.
+Detail - Note that unique identifiers do not have to be globally unique, only unique to a particular sender. However, the length has been chosen such that UUIDs can be used as identifiers if considered appropriate, guaranteeing global uniqueness. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="36"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ContactDetail">
+		<xsd:sequence>
+			<xsd:element name="ContactName" type="PersonName"/>
+			<xsd:element name="ContactNumber" type="AustralianPhoneNumber"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Some basic types -->
+	<xsd:simpleType name="ShortUniqueIdentifier">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MethodSent">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Faxed"/>
+			<xsd:enumeration value="Email"/>
+			<xsd:enumeration value="Online"/>
+			<xsd:enumeration value="OnSite"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="SafetyCertificateType">
+		<xsd:sequence>
+			<xsd:element name="ID" type="ShortUniqueIdentifier" minOccurs="0"/>
+			<xsd:element name="MethodSent" type="MethodSent"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OpenPeriod">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - defines the time period as a date range with an optional EndData.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="BeginDate" type="xsd:date"/>
+			<xsd:element name="EndDate" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Period">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - defines the time period as a date range.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="BeginDate" type="xsd:date"/>
+			<xsd:element name="EndDate" type="xsd:date"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="Amount">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines the currency data type as a string of numeric characters in format 15.2 with no units attached to it.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="17"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="AppointmentDateTime">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Appointments</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Date" type="xsd:date"/>
+			<xsd:element name="Time" type="xsd:time" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AppointmentDetail">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Appointments</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Reference" type="UniqueIdentifier" minOccurs="0"/>
+			<xsd:element name="ScheduledDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="Preferred" type="AppointmentDateTime" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="UpdateStatus">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines a list of valid update statuses</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="New"/>
+			<xsd:enumeration value="Update"/>
+			<xsd:enumeration value="Delete"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CustomerClassificationCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Classification of customer type, value assigned by FRMP.Examples might include 'BUS' or 'RES'. This is not related to the CustomerType defined on the Service Order.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CustomerThresholdCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Classification of customer consumption threshold, value assigned by DNSP. Examples might include 'LOW', 'MED', 'HIGH'.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+			<xsd:minLength value="1"/>
+			<xsd:whiteSpace value="collapse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeterSerialNumber">
+		<xsd:annotation>
+			<xsd:documentation>
+MSATS Data Model Column - MeterSerial
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="JurisdictionCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify the jurisdictions of relevance to aseXML
+MSATS Data Model Column - JurisdictionCode
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="JurisdictionDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe the jurisdictions of relevance to aseXML
+MSATS Data Model Column - JurisdictionDesc
+Detail - The description is intended to assist in identification of the correct jurisdiction. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="PartyIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify a communicating party within aseXML
+Detail - This type allows identification of an entity involved within the energy industry.
+
+The context attribute allows differentiation between identification mechanisms for parties.
+
+A value of "ABN" indicates that the value should be treated as an Australian Business Number.
+
+There is no default. If the context attribute is not provided, the PartyIdentifier should be interpreted according to the rules for the market in which it is being used.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="context">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="ABN"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="description" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="RoleIdentifier">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify the roles a party might perform.
+MSATS Data Model Column - RoleID
+Detail - Roles often form the basis for jurisdictional rules.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RoleDescription">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Describe the roles a party might perform.
+MSATS Data Model Column - RoleDesc
+Detail - The description is intended to assist in identification of the correct role. The mapping between codes and descriptions will be provided to participants via the Table Replication transaction exchanges.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="RoleAssignment">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Associate a party with a role they are performing or intend to perform.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Party" type="PartyIdentifier" nillable="true" minOccurs="0"/>
+			<xsd:element name="Role" type="RoleIdentifier"/>
+			<xsd:element name="FromDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="ToDate" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="AccessDetail">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="160"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HazardDescription">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="SiteHazard">
+		<xsd:annotation>
+			<xsd:documentation> Site Hazard</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Code" type="HazardCode" minOccurs="0"/>
+			<xsd:element name="Description" type="HazardDescription"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServicePoint">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Define service point address and other properties</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Address" type="Address" minOccurs="0"/>
+			<xsd:element name="AccessDetails" type="AccessDetail" minOccurs="0"/>
+			<xsd:element name="Hazard" type="SiteHazard" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="MelwayGridReference" minOccurs="0">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="9"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="DogCode" type="GasMeterDogCode" minOccurs="0"/>
+			<xsd:element name="MeterPosition" type="GasMeterPosition" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="HazardCode">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - To define a list of valid hazard codes.  No codes currently defined</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="GasMeterDogCode">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Bluff"/>
+			<xsd:enumeration value="Dog Caution"/>
+			<xsd:enumeration value="Dog OK"/>
+			<xsd:enumeration value="Friendly"/>
+			<xsd:enumeration value="No Dog"/>
+			<xsd:enumeration value="Savage"/>
+			<xsd:enumeration value="Tied"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GasMeterPosition">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BA"/>
+			<xsd:enumeration value="BG"/>
+			<xsd:enumeration value="BH"/>
+			<xsd:enumeration value="BR"/>
+			<xsd:enumeration value="BV"/>
+			<xsd:enumeration value="BW"/>
+			<xsd:enumeration value="BY"/>
+			<xsd:enumeration value="CE"/>
+			<xsd:enumeration value="CP"/>
+			<xsd:enumeration value="DR"/>
+			<xsd:enumeration value="FA"/>
+			<xsd:enumeration value="FD"/>
+			<xsd:enumeration value="FF"/>
+			<xsd:enumeration value="FH"/>
+			<xsd:enumeration value="FL"/>
+			<xsd:enumeration value="FR"/>
+			<xsd:enumeration value="FS"/>
+			<xsd:enumeration value="FV"/>
+			<xsd:enumeration value="FW"/>
+			<xsd:enumeration value="GA"/>
+			<xsd:enumeration value="GR"/>
+			<xsd:enumeration value="KC"/>
+			<xsd:enumeration value="KI"/>
+			<xsd:enumeration value="LS"/>
+			<xsd:enumeration value="OB"/>
+			<xsd:enumeration value="PA"/>
+			<xsd:enumeration value="PO"/>
+			<xsd:enumeration value="PY"/>
+			<xsd:enumeration value="RS"/>
+			<xsd:enumeration value="SH"/>
+			<xsd:enumeration value="SK"/>
+			<xsd:enumeration value="SP"/>
+			<xsd:enumeration value="SR"/>
+			<xsd:enumeration value="TO"/>
+			<xsd:enumeration value="UB"/>
+			<xsd:enumeration value="UC"/>
+			<xsd:enumeration value="UF"/>
+			<xsd:enumeration value="UL"/>
+			<xsd:enumeration value="UP"/>
+			<xsd:enumeration value="UR"/>
+			<xsd:enumeration value="US"/>
+			<xsd:enumeration value="WH"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NetworkID">
+		<xsd:annotation>
+			<xsd:documentation>Network ID has been included in several reports and as a part of meter standing data</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+			<xsd:minLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndexInvestigationCode">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Gas</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Confirm Reading For Vacant Site"/>
+			<xsd:enumeration value="Confirm Zero Consumption"/>
+			<xsd:enumeration value="Incomplete Data"/>
+			<xsd:enumeration value="Invalid MDFF Data"/>
+			<xsd:enumeration value="Invalid Standing Data"/>
+			<xsd:enumeration value="Missing Datastream"/>
+			<xsd:enumeration value="Require Actual Reading or Substitute"/>
+			<xsd:enumeration value="Require Final Substitute"/>
+			<xsd:enumeration value="Require Latest Version"/>
+			<xsd:enumeration value="Scheduled Reading Required"/>
+			<xsd:enumeration value="Service Order Reading Required"/>
+			<xsd:enumeration value="Verify High Reading"/>
+			<xsd:enumeration value="Verify Low Reading"/>
+			<xsd:enumeration value="Customer Away"/>
+			<xsd:enumeration value="Customer Query"/>
+			<xsd:enumeration value="Customer Read"/>
+			<xsd:enumeration value="High Account"/>
+			<xsd:enumeration value="Zero Consumption"/>
+			<xsd:enumeration value="Recipient Not Responsible For The NMI"/>
+			<xsd:enumeration value="Other"/>
+			<xsd:enumeration value="Cross Meter"/>
+			<xsd:enumeration value="MDL Out of Alignment"/>
+			<xsd:enumeration value="Verify/Missing Register"/>
+			<xsd:enumeration value="Require Estimate Data"/>
+			<xsd:enumeration value="Meter Churn"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--CSV Types-->
+	<xsd:complexType name="CSVRequestFormat">
+		<xsd:sequence>
+			<xsd:element name="RecordCount" type="RecordCount"/>
+			<xsd:element name="CSVData" type="xsd:string" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CSVResponseFormat">
+		<xsd:complexContent>
+			<xsd:extension base="CSVRequestFormat">
+				<xsd:sequence>
+					<xsd:element name="Event" type="Event" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:simpleType name="RecordCount">
+		<xsd:annotation>
+			<xsd:documentation>Purpose - Defines the record count data type as a string of numeric characters in format 10.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="CSVDataWithName">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="Name">
+					<xsd:simpleType>
+						<xsd:restriction base="NonZeroLengthString">
+							<xsd:maxLength value="10"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				<xsd:attribute name="Description">
+					<xsd:simpleType>
+						<xsd:restriction base="NonZeroLengthString">
+							<xsd:maxLength value="80"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- Container Types -->
+	<xsd:complexType name="RoleAssignments">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container type for one or more role assignments
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="RoleAssignment" type="RoleAssignment" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- NMI related types -->
+	<xsd:simpleType name="NMIBase">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Helper type to assist in the definition of the NMI type
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NMIChecksum">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Helper type to assist in the definition of the NMI type
+Detail - The checksum is a single numeric digit.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="NMI">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - National Metering Identifier with optional checksum
+Detail - Used to identify electricity and gas metering points
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="NMIBase">
+				<xsd:attribute name="checksum" type="NMIChecksum" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="NMIWithChecksum">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - National Metering Identifier with mandatory checksum
+Detail - Used to identify electricity and gas metering points
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="NMIBase">
+				<xsd:attribute name="checksum" type="NMIChecksum" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="NMIClassificationCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Identify the broad class to which the NMI belongs
+MSATS Data Model Column - NMIClassCode
+Detail - NMI classification often forms the basis for jurisdictional rules.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NMIStatusCode">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Status code of portions of NMI Standing Data
+MSATS Data Model Column - NMIStatusCode
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Latitude">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Provide geographic location coordinate.
+Detail - Geographic latitude.
+The angular measurement North or South of the equator in decimal degrees (to 7 decimal places).   Angles South of the equator will be represented as negative values.   Eg -37.8886755
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="9"/>
+			<xsd:fractionDigits value="7"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Longitude">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Provide geographic location coordinate.
+Detail - Geographic longitude.
+The angular measurement East or West of the prime meridian in decimal degrees (to 7 decimal places).   Angles East of the Prime Meridian (eg Australia) will be represented as positive values.   Eg +145.1410361
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="10"/>
+			<xsd:fractionDigits value="7"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Abstract types which form the basis for fuel specific variants -->
+	<xsd:complexType name="NMIStandingData" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Basis for fuel specific NMI standing data.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="effectiveDateTime" type="xsd:dateTime" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="NMITransactionBase" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose -</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NMI" type="NMI" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GeographicCoordinate">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Coordinates specification</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Latitude" type="Latitude"/>
+			<xsd:element name="Longitude" type="Longitude"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NotifiedParties">
+		<xsd:annotation>
+			<xsd:documentation>
+			Purpose - List Notified parties</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NotifiedPartyID" type="PartyIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PreviousReadDate">
+		<xsd:annotation>
+			<xsd:documentation>
+			Purpose - Date and quality of a previous NMI reading</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ReadDate" type="xsd:date"/>
+			<xsd:element name="ReadQuality">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType >
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PreviousReadDates">
+		<xsd:annotation>
+			<xsd:documentation>
+			Purpose - List dates of previous NMI readings</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="PreviousReadDate" type="PreviousReadDate" maxOccurs="unbounded"/>
+			<xsd:element name="Event" type="Event" maxOccurs="1"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<!--Transaction Types-->
+	<xsd:complexType name="CurrentRetailerConfirmationRequest">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CSVCurrentRetailerData" type="CSVRequestFormat"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+	<xsd:complexType name="CurrentRetailerConfirmationResponse">
+		<xsd:annotation>
+			<xsd:documentation>Schema - MeterDataManagement</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CSVCurrentRetailerData" type="CSVResponseFormat"/>
+		</xsd:sequence>
+		<xsd:attribute name="version" type="r9" use="optional" default="r9"/>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited by Wayne Lee (AEMO) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>File version 2.0.1 
+
+		Modifications. 
+		v2.0  Add life support equipment type as a potential changing list.
+		v2.0.1  Update LifeSupportEqType to be fully spelt out as LifeSupportEquipmentType
+		
+Enumerations file containing the electricity specific enumerations that can be added to at short notice and can be released outside of the standard aseXML change cycle.  
+
+Guidelines for use of this file:
+- Procedure changes to Electricity B2B or B2M requiring changes (in particular additions) to electricity specific enumerated lists.
+- Additions are made via the standard aseXML Change Process cycle
+- Deletions and modifications should be discouraged, but, if necessary, must be made through the standard aseXMl Change Process cycle</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="SiteRequestReason">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Reasons used to request site access details
+			Version 1.0 additions
+			- New Retailer for site 
+			- Records old and need to be updated 
+			- No Access details on file for NMI 
+			- No Hazard Details on file for NMI 
+			- Site Visit Required 
+			- Other 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+			<xsd:enumeration value="New Retailer for site"/>
+			<xsd:enumeration value="Records old and need to be updated"/>
+			<xsd:enumeration value="No Access details on file for NMI"/>
+			<xsd:enumeration value="No Hazard Details on file for NMI"/>
+			<xsd:enumeration value="Site Visit Required"/>
+			<xsd:enumeration value="Other"/>			
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ReasonForInter">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Reasons for interruption
+			Version 1.0 additions
+			- Meter Exchange - Individual 
+			- Meter Exchange - Rollout 
+			- Meter Replacement - Family Maintenance 
+			- Meter Test 
+			- Meter Fault Investigation 
+			- Distribution Works 
+			- Other 
+			Version 1.1 update
+			- Replace en dash in Meter Replacement - Family Maintenance with proper hyphen due to UTF-8 limitation.
+			</xsd:documentation>
+		</xsd:annotation>	
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+			<xsd:enumeration value="Meter Exchange - Individual"/>
+			<xsd:enumeration value="Meter Exchange - Rollout"/>
+			<xsd:enumeration value="Meter Replacement - Family Maintenance"/>
+			<xsd:enumeration value="Meter Test"/>
+			<xsd:enumeration value="Meter Fault Investigation"/>
+			<xsd:enumeration value="Distribution Works"/>						
+			<xsd:enumeration value="Other"/>					
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="ReasonForNotice">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Reasons for Notice
+			Version 1.0 additions
+			- Meter Family Failure 
+			- Accuracy Failure 
+			- Timeswitch/Controlled Load Failure
+			- Contactor Failure 
+			- No Display 
+			- Communication Failure 
+			- Meter Verification 
+			- Malfunction 
+			- Area Event 
+			- Metrology Threshold Breach 
+			- Meter Bypassed 
+			- Physical Damage 
+			- Theft/Tampering 
+			- Other  
+			</xsd:documentation>
+		</xsd:annotation>		
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+			<xsd:enumeration value="Meter Family Failure"/>
+			<xsd:enumeration value="Accuracy Failure"/>
+			<xsd:enumeration value="Timeswitch/Controlled Load Failure"/>
+			<xsd:enumeration value="Contactor Failure"/>
+			<xsd:enumeration value="No Display"/>
+			<xsd:enumeration value="Communication Failure"/> 
+			<xsd:enumeration value="Meter Verification"/> 
+			<xsd:enumeration value="Malfunction"/> 
+			<xsd:enumeration value="Area Event"/> 
+			<xsd:enumeration value="Metrology Threshold Breach"/> 
+			<xsd:enumeration value="Meter Bypassed"/> 
+			<xsd:enumeration value="Physical Damage"/> 
+			<xsd:enumeration value="Theft/Tampering"/>
+			<xsd:enumeration value="Other"/> 			
+		</xsd:restriction>
+	</xsd:simpleType>		
+	<xsd:simpleType name="SupplyOff">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Supply Off list
+			Version 1.0 additions
+			- Remove Fuse 
+			- Remote 
+			- Local Meter Disconnection 
+			- Pillar-Box Pit Or Pole-Top  
+			</xsd:documentation>
+		</xsd:annotation>		
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+			<xsd:enumeration value="Remove Fuse"/> 
+			<xsd:enumeration value="Remote"/> 
+			<xsd:enumeration value="Local Meter Disconnection"/>
+			<xsd:enumeration value="Pillar-Box Pit Or Pole-Top"/> 				
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="WorkType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed work types for metering equipment works.
+			Version 1.0 additions
+			- Exchange Equipment 
+			- Install Equipment 
+			- Remove Equipment 
+			- Relocate 
+			</xsd:documentation>
+		</xsd:annotation>	
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+			<xsd:enumeration value="Exchange Equipment"/> 
+			<xsd:enumeration value="Install Equipment"/> 
+			<xsd:enumeration value="Remove Equipment"/>
+			<xsd:enumeration value="Relocate"/> 				
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="EnergisationStatus">
+		<xsd:annotation>
+			<xsd:documentation>
+The energisation status of the metering installation 
+			Version 1.0 additions
+			- Active 
+			- Not Connected 
+			- Deenergised Before Meter 
+			- Deenergised At Meter 
+			- Deenergised After Meter 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+			<xsd:enumeration value="Active"/> 
+			<xsd:enumeration value="Not Connected"/> 
+			<xsd:enumeration value="Deenergised Before Meter"/>
+			<xsd:enumeration value="Deenergised At Meter"/> 
+			<xsd:enumeration value="Deenergised After Meter"/> 			
+		</xsd:restriction>
+	</xsd:simpleType>	
+		<xsd:simpleType name="PrimaryVoltage">
+		<xsd:annotation>
+			<xsd:documentation>Indicates primary network voltage the metering installation is connected to
+			Version 1.0 additions
+			- 230V 
+			- 400V 
+			- 11KV 
+			- 22KV 
+			- 33KV 
+			- 66KV 
+			- 132KV 
+			- Other HV		
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>
+			<xsd:minLength value="1"/>
+			<xsd:enumeration value="230V"/> 
+			<xsd:enumeration value="400V"/> 
+			<xsd:enumeration value="11KV"/> 
+			<xsd:enumeration value="22KV"/> 
+			<xsd:enumeration value="33KV"/> 
+			<xsd:enumeration value="66KV"/> 
+			<xsd:enumeration value="132KV"/> 
+			<xsd:enumeration value="Other HV"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="GenerationType">
+		<xsd:annotation>
+			<xsd:documentation>
+Indicates whether the meter is configured to measure the import of energy
+			Version 1.0 additions
+			- Net 
+			- Gross 
+			- None 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Net"/>
+			<xsd:enumeration value="Gross"/>
+			<xsd:enumeration value="None"/>			
+		</xsd:restriction>
+	</xsd:simpleType>		
+	<xsd:simpleType name="MeterEquipmentType">
+		<xsd:annotation>
+			<xsd:documentation>
+Indicates the meter equipment type
+			Version 1.0 additions
+			- Basic Meter 
+			- Interval Meter 
+			- Network Device 
+			- Control Equipment 
+			- Instrument Transformer
+			</xsd:documentation>
+		</xsd:annotation>	
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+			<xsd:enumeration value="Basic Meter"/>
+			<xsd:enumeration value="Interval Meter"/>
+			<xsd:enumeration value="Network Device"/>	
+			<xsd:enumeration value="Control Equipment"/>
+			<xsd:enumeration value="Instrument Transformer"/>		
+		</xsd:restriction>
+	</xsd:simpleType>		
+	<xsd:simpleType name="DeviceLocation">
+		<xsd:annotation>
+			<xsd:documentation>
+Indicates the network device location
+			Version 1.0 additions
+			- Before Meter 
+			- After Meter 
+			</xsd:documentation>
+		</xsd:annotation>	
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="14"/>
+			<xsd:enumeration value="Before Meter"/>
+			<xsd:enumeration value="After Meter"/>				
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="ControlEquipmentType">
+		<xsd:annotation>
+			<xsd:documentation>
+Indicates the control equipmeht type
+			Version 1.0 additions
+			- Internal Relay 
+			- External Relay 
+			- Internal Time Switch 
+			- External Time Switch 
+			</xsd:documentation>
+		</xsd:annotation>		
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+			<xsd:enumeration value="Internal Relay"/>
+			<xsd:enumeration value="External Relay"/>	
+			<xsd:enumeration value="Internal Time Switch"/>
+			<xsd:enumeration value="External Time Switch"/>	
+		</xsd:restriction>
+	</xsd:simpleType>		
+	<xsd:simpleType name="InstrumentTransformerType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates instrument transformer type for the meter
+			Version 1.0 additions
+			- CT
+			- VT 	
+			</xsd:documentation>		
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+			<xsd:enumeration value="CT"/>
+			<xsd:enumeration value="VT"/>				
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="De-energisationReason">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Reasons used to request De-energisation
+			Version 1.0 additions	
+			- Customer Requested 
+			- Move Out 
+			- Non-Payment (DNP) 
+			- Unauthorised Usage (DNI) 
+			- Illegal Usage 
+			- No Access 
+			- Safety 
+			- Defect 
+			- Site Works 
+			- Breach of Contract 
+			- Other 		
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+			<xsd:enumeration value="Customer Requested"/> 
+			<xsd:enumeration value="Move Out"/> 
+			<xsd:enumeration value="Non-Payment (DNP)"/> 
+			<xsd:enumeration value="Unauthorised Usage (DNI)"/> 
+			<xsd:enumeration value="Illegal Usage"/> 
+			<xsd:enumeration value="No Access"/> 
+			<xsd:enumeration value="Safety"/> 
+			<xsd:enumeration value="Defect"/> 
+			<xsd:enumeration value="Site Works"/> 
+			<xsd:enumeration value="Breach of Contract"/> 
+			<xsd:enumeration value="Other"/> 		
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ElecIndexInvestigationCode">
+		<xsd:annotation>
+			<xsd:documentation>Schema - Elec</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Confirm Reading For Vacant Site"/>
+			<xsd:enumeration value="Confirm Zero Consumption"/>
+			<xsd:enumeration value="Incomplete Data"/>
+			<xsd:enumeration value="Invalid MDFF Data"/>
+			<xsd:enumeration value="Invalid Standing Data"/>
+			<xsd:enumeration value="Missing Datastream"/>
+			<xsd:enumeration value="Require Actual Reading or Substitute"/>
+			<xsd:enumeration value="Require Final Substitute"/>
+			<xsd:enumeration value="Scheduled Reading Required"/>
+			<xsd:enumeration value="Service Order Reading Required"/>
+			<xsd:enumeration value="Verify High Reading"/>
+			<xsd:enumeration value="Verify Low Reading"/>
+			<xsd:enumeration value="Other"/>
+			<xsd:enumeration value="Verify/Missing Register"/>
+			<xsd:enumeration value="Require Estimate Data"/>
+			<xsd:enumeration value="Meter Churn"/>			
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--CustomerDetails/Life support Types-->
+	<xsd:simpleType name="LifeSupportEquipmentType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Purpose - Define the fixed Life support equipment types used in Life Support notification
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Oxygen Concentrator"/>
+			<xsd:enumeration value="Intermittent Peritoneal Dialysis Machine"/>
+			<xsd:enumeration value="Kidney Dialysis Machine"/>
+			<xsd:enumeration value="Chronic Positive Airways Pressure Respirator"/>
+			<xsd:enumeration value="Crigler Najjar Syndrome Phototherapy Equipment"/>
+			<xsd:enumeration value="Ventilator For Life Support"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
+	</xsd:simpleType>		
+</xsd:schema>

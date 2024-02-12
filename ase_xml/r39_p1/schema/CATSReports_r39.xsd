@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation>This schema file is part of the aseXML schema set, and is subject to the terms and conditions that are detailed in the aseXML_r*.xsd schema file with which this file is used</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+Purpose - Define the CATS specific report parameters and formats
+		</xsd:documentation>
+	</xsd:annotation>
+	<!-- Complex Types for Snapshot Report-->
+	<xsd:complexType name="Tables">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for requested tables
+	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Table" type="ReplicationTableName" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Complex Types for MSATS Limits Report-->
+	<xsd:complexType name="GroupMembers">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for group members
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GroupMember" type="PartyIdentifier" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MsatsLimit">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for MSATS Limit
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="DefaultLimit" type="xsd:integer"/>
+				<xsd:element name="LowerLimit" type="xsd:integer"/>
+			</xsd:choice>
+			<xsd:element name="UpperLimit" type="xsd:integer"/>
+			<xsd:element name="ParticipantActual" type="xsd:integer"/>
+			<xsd:element name="GroupActual" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="StopFlag" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MsatsLimits">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for MSATS Limits
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Participant" type="PartyIdentifier" nillable="false"/>
+			<xsd:element name="Group" type="PartyIdentifier" minOccurs="0"/>
+			<xsd:element name="GroupMembers" type="GroupMembers" minOccurs="0"/>
+			<xsd:element name="Cr" type="MsatsLimit"/>
+			<xsd:element name="CrNotification" type="MsatsLimit"/>
+			<xsd:element name="NsrdNotification" type="MsatsLimit"/>
+			<xsd:element name="NsrdResponse" type="MsatsLimit"/>
+			<xsd:element name="OutboxFile" type="MsatsLimit"/>
+			<xsd:element name="Report" type="MsatsLimit"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Complex Types for Participant System Status Report-->
+	<xsd:complexType name="TransactionGroups">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for transaction groups
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TransactionGroup" type="TransactionGroup" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ParticipantSystemStatus">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for Participant System Status
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="System" type="xsd:string"/>
+			<xsd:element name="ModeType" type="xsd:string"/>
+			<xsd:element name="TransactionGroups" type="TransactionGroups" minOccurs="0"/>			
+			<xsd:element name="Box" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Status" type="xsd:string"/>
+			<xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Reason" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Resolution" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="StartTime" type="xsd:dateTime"/>
+			<xsd:element name="HeartbeatTime" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ParticipantSystemsStatus">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - container for Participant System Status
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ParticipantSystemStatus" type="ParticipantSystemStatus" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- Report Parameter Types -->
+	<xsd:complexType name="CATSNMIAuditReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameters for a CATS NMI Audit Report
+Report Name - NMIAudit
+MSATS Report - C2
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:date"/>
+					<xsd:element name="ToDate" type="xsd:date"/>
+					<xsd:element name="AsAtFromDate" type="xsd:dateTime"/>
+					<xsd:element name="AsAtToDate" type="xsd:dateTime"/>
+					<xsd:element name="NMI" type="NMI"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSChangeManagementReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameters for a CATS Change Management Report
+Report Name - ChangeManagement
+MSATS Report - C3
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:date"/>
+					<xsd:element name="ToDate" type="xsd:date"/>
+					<xsd:element name="AsAtDate" type="xsd:dateTime"/>
+					<xsd:element name="LastSequenceNumber" type="ReplicationSequenceNumber" minOccurs="0"/>
+					<xsd:choice>
+						<xsd:element name="NMI" type="NMI"/>
+						<xsd:sequence>
+							<xsd:element name="NMIClassificationCode" type="NMIClassificationCode"/>
+							<xsd:element name="JurisdictionCode" type="JurisdictionCode"/>
+						</xsd:sequence>
+					</xsd:choice>
+					<xsd:element name="ExcludeParticipant" type="YesNo" minOccurs="0"/>
+					<xsd:element name="Participant" type="PartyIdentifier"/>
+					<xsd:element name="ExcludeRole" type="YesNo" minOccurs="0"/>
+					<xsd:element name="Role" type="RoleIdentifier" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSMasterReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameters for a CATS Master Report
+Report Name - Master
+MSATS Report - C4
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:date"/>
+					<xsd:element name="ToDate" type="xsd:date"/>
+					<xsd:element name="AsAtDate" type="xsd:date"/>
+					<xsd:element name="LastSequenceNumber" type="ReplicationSequenceNumber" minOccurs="0"/>
+					<xsd:choice>
+						<xsd:element name="NMI" type="NMI"/>
+						<xsd:sequence>
+							<xsd:element name="NMIClassificationCode" type="NMIClassificationCode"/>
+							<xsd:element name="JurisdictionCode" type="JurisdictionCode"/>
+						</xsd:sequence>
+					</xsd:choice>
+					<xsd:element name="ExcludeParticipant" type="YesNo" minOccurs="0"/>
+					<xsd:element name="Participant" type="PartyIdentifier"/>
+					<xsd:element name="ExcludeRole" type="YesNo" minOccurs="0"/>
+					<xsd:element name="Role" type="RoleIdentifier"/>
+					<xsd:element name="ReportType">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Summary"/>
+								<xsd:enumeration value="Detailed"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSStatisticsReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameters for a CATS Statistics Report
+Report Name - Statistics
+MSATS Report - C5
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:date"/>
+					<xsd:element name="ToDate" type="xsd:date"/>
+					<xsd:element name="ReportType">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Public"/>
+								<xsd:enumeration value="Internal"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSNMIDiscoveryReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameters for a CATS NMI Discovery Report
+Report Name - NMIDiscovery
+MSATS Report - C6
+Detail - The NMI/Jurisdiction choice is ignored if a report type of Source and Content is selected. One of NMI/Jurisdiction should however be provided for a report type of Statistic.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:date"/>
+					<xsd:element name="ToDate" type="xsd:date"/>
+					<xsd:element name="LastSequenceNumber" type="ReplicationSequenceNumber" minOccurs="0"/>
+					<xsd:choice minOccurs="0">
+						<xsd:element name="NMI" type="NMI"/>
+						<xsd:element name="JurisdictionCode" type="JurisdictionCode"/>
+					</xsd:choice>
+					<xsd:element name="Participant" type="PartyIdentifier"/>
+					<xsd:element name="ReportType">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="SourceContent"/>
+								<xsd:enumeration value="Statistic"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSNewParticipantAccessReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameters for a CATS New Participant Access to Master Record Report
+Report Name - NewParticipantAccess
+MSATS Report - C7
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="RequestID" type="CATSRequestIdentifier"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSSnapshotReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameters for a CATS Snapshot Report. Report Name 
+Snapshot MSATS Report 
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="Participant" type="PartyIdentifier"/>
+					<xsd:element name="AsAtDateTime" type="xsd:dateTime"/>
+					<xsd:element name="Tables" type="Tables"/>
+					<xsd:element name="LastSequenceNumber" type="ReplicationSequenceNumber" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSStandingDataQualityReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for  Standing Data Report
+Report Name - Participant Standing Data  report
+MSATS Report - STANDING_DATA_QUALITY
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="RunDate" type="xsd:dateTime"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r19" use="optional" default="r19"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MDMTMeterDataDeliveryReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for Meter Data Delivery Report
+Report Name - SDD Export
+MSATS Report - MTR_DATA_DEL_XML_CRT
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:date"/>
+					<xsd:element name="ToDate" type="xsd:date"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r19" use="optional" default="r19"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSSDRTrafficLightReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameter definition for  SDR Traffic Light Report
+Report Name - SDR Export
+MSATS Report - STND_DAT_TRAFFICLGHT
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="StatsDate" type="xsd:date"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r19" use="optional" default="r19"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DateRangeReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameters for a CATS Security Report
+Report Name - C8
+
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:sequence>
+					<xsd:element name="FromDate" type="xsd:dateTime"/>
+					<xsd:element name="ToDate" type="xsd:dateTime"/>
+				</xsd:sequence>
+				<xsd:attribute name="version" type="r20" use="optional" default="r20"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSMsatsLimitsReportParameters">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Parameters for a CATS MSATS Limits Report
+Report Name - MsatsLimits
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportParameters">
+				<xsd:attribute name="version" type="r28" use="optional" default="r28"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Report Format Types -->
+	<xsd:complexType name="CATSNewParticipantAccessReportFormat">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Format for a CATS New Participant Access to Master Record Report
+Report Name - NewParticipantAccess
+MSATS Report - C7
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportFormat">
+				<xsd:sequence>
+					<xsd:element name="NMIStandingData" type="NMIStandingData"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSMsatsLimitsReportFormat">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Format for a CATS MSATS Limits Report
+Report Name - MsatsLimits
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportFormat">
+				<xsd:sequence>
+					<xsd:element name="MsatsLimits" type="MsatsLimits"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CATSParticipantSystemStatusReportFormat">
+		<xsd:annotation>
+			<xsd:documentation>
+Purpose - Format for a CATS Participant System Status Report
+Report Name - ParticipantSystemStatus
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BaseReportFormat">
+				<xsd:sequence>
+					<xsd:element name="ParticipantSystemsStatus" type="ParticipantSystemsStatus"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>
